@@ -10,7 +10,7 @@ public class TestDataGenerator {
 
 	  try {
 	      // establish connection to database 
-	      Connection con = DriverManager.getConnection("jdbc:sqlite:myDB.db");
+	      Connection con = DriverManager.getConnection("jdbc:sqlite:../backshop.db");
           Statement stmt = con.createStatement();
           stmt.setQueryTimeout(30);  // set timeout to 30 sec.
 	      
