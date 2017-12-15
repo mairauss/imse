@@ -1,15 +1,35 @@
-
 <?php
-  $user = '';
-  $pass = '';
-  $database = '';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
-
- //var_dump($_GET);
-?>
+    class Backen{
+        private $nr;
+        private $name;
+        
+        public function __construct($nr, $name){
+            $this->setName($name);
+            $this->setNr($nr);
+        }
+        
+        public function __destruct() {
+            unset($this->name);
+            unset($this->nr);
+        }
+        
+        public function getName(){
+            return $this->name;
+        }
+        
+        public function getNr(){
+            return $this->nr;
+        }
+        
+        public function setName($name){
+            $this->name = $name;
+        }
+        
+        public function setNr($nr){
+            $this->nr = $nr;
+        }
+    }
+    ?>
 
 <html>
 <title>Lecker: Backen</title>
