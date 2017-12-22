@@ -1,15 +1,15 @@
 
-<?php
-  $user = '';
-  $pass = '';
-  $database = '';
+//<?php
+//  $user = '';
+//  $pass = '';
+//  $database = '';
  
   // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
+//  $conn = oci_connect($user, $pass, $database);
+//  if (!$conn) exit;
 
  //var_dump($_GET);
-?>
+//?>
 
 <html>
 <title>Lecker: Backen</title>
@@ -49,36 +49,40 @@
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM einkauf WHERE kname like '%" . $_GET['search'] . "%'";
+    $sqlSelect = "SELECT * FROM einkauf WHERE kname like '%" . $_GET['search'] . "%'";
   } else {
-    $sql = "SELECT * FROM einkauf";
+    $sqlSelect = "SELECT * FROM einkauf";
   }
-
-  // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
 ?>
- 
-
+    
 <div>
-
+  <p>Kundennummer</p>
+  <p>Meine Bestellnummer</p>
   <form id='insertform' action='einkauf.php' method='get'>
 <center>
-    Neue "Einkauf" einfuegen:
+    Mein Warenkorb:
 	<table style='border: 5px solid #DDDDDD'>
 	  <thead>
 	    <tr>
-	      <th>Kunden Name</th>
 	      <th>ArtikelNr</th>
+              <th>Herstellungsdatum</th>
+              <th>Preis</th>
+              <th>Menge</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	     <tr>
 	        <td>
-	           <input id='kname' name='kname' type='text' size='50' value='<?php if (isset($_GET['kname'])) echo $_GET['kname']; ?>' />
+	           <input id='artikelnr' name='artikelnr' type='text' size='50' value='<?php if (isset($_GET['artikelnr'])) echo $_GET['artikelnr']; ?>' />
                 </td>
                 <td>
-                   <input id='artikelnr' name='artikelnr' type='number' size='15' value='<?php if (isset($_GET['artikelnr'])) echo $_GET['artikelnr']; ?>' />
+                   <input id='bersdatum' name='bhersdatum' type='text' size='15' value='<?php if (isset($_GET['bhersdatum'])) echo $_GET['bhersdatum']; ?>' />
+                </td>
+                <td>
+                    <input id='bpreis' name='bpreis' type='text' size='15' value='<?php if (isset($_GET['bpreis'])) echo $_GET['bpreis']; ?>' />
+                </td>
+                <td>
+                    <input id='menge' name='menge' type='text' size='15' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
                 </td>
 	      </tr>
            </tbody>
@@ -92,29 +96,22 @@
   //Handle insert
    if (isset($_GET['kname'])) 
   {
-
-
-    //Prepare insert statementd
-    $sql = "INSERT INTO einkauf VALUES('" . $_GET['kname'] . "',"  . $_GET['artikelnr'] . ")";
+    //Prepare insert statement
+    $sqlInsert = "INSERT INTO einkauf VALUES('" . $_GET['kname'] . "',"  . $_GET['artikelnr'] . ")";
     //Parse and execute statement
-    $insert = oci_parse($conn, $sql);
-    oci_execute($insert);
-
-
-    $conn_err=oci_error($conn);
-    $insert_err=oci_error($insert);
+    $insert = new SQLite3('backshop.db');
+    $result = $insert->exec($sqlInsert);
+    $insert->close();
+    unset($insert);
    
-    if(!$conn_err & !$insert_err){
+    if($result){
 	print("Successfully inserted");
  	print("<br>");
     }
     //Print potential errors and warnings
     else{
-       print($conn_err);
-       print_r($insert_err);
-
+       print("FAILURE");
     }
-    oci_free_statement($insert);
   } 
 
 ?>
@@ -128,25 +125,28 @@
     </thead>
     <tbody>
 <?php
+  $num = 0;
+  // execute sql statement
+  $stmt = new SQLite3('backshop.db');
+  $list = $stmt ->query($sqlSelect);
+  $stmt->close();
+  unset($stmt);
   // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
+  while ($row = $list->fetchArray()) {
     echo "<tr>";
     echo "<td>" . $row['KNAME'] . "</td>";
     echo "<td>" . $row['ARTIKELNR'] . "</td>";
     echo "</tr>";
+    $num++;
   }
 ?>
     </tbody>
   </table>
 
-<div>Insgesamt <?php echo oci_num_rows($stmt); ?> "Einkauf" gefunden!</div>
+<div>Insgesamt <?php echo $num; ?> "Artikel" gefunden!</div>
 </center>
 <br></br>
-<?php  oci_free_statement($stmt); ?>
 
-<?php
-oci_close($conn);
-?>
 </div>
 </body>
 </html>

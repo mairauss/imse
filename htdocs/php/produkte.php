@@ -90,7 +90,7 @@
 	    <tr>
            <th>Herstell.Datum</th>
 	   <th>Haltbar.Dauer</th>
-	   <th>Temp°</th>
+	   <th>TempÂ°</th>
 	    </tr>
 	  </thead>
 		<tbody>
@@ -156,7 +156,7 @@
 	<th>Preis</th>
 	<th>Herstell.Datum</th>
 	<th>Haltbar.Dauer</th>
-	<th>Temp°</th>
+	<th>TempÂ°</th>
       </tr>
     </thead>
     <tbody>
