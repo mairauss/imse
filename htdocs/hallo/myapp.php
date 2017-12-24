@@ -13,7 +13,7 @@
         </body>
     </header>
     <?php
-        $buch = new Buch(123, "djhh", $obj1);
+        $buch = new Buch(777777, "LIEBE", $obj1);
         //$buch->createTable();
         $buch->saveBuch();
         
