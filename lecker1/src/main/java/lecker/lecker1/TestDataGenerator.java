@@ -16,44 +16,49 @@ public class TestDataGenerator {
           Statement stmt = con.createStatement();
           stmt.setQueryTimeout(30);  // set timeout to 30 sec.
 
+          stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
+          stmt.executeUpdate("INSERT INTO anschrift VALUES ('Lecker', 'Wehlistraße 27')");
+          stmt.executeUpdate("INSERT INTO kuehlraum VALUES (123, 4, 18.3)");
+          stmt.executeUpdate("INSERT INTO kueche VALUES (987, 32.2, 123)");
+          stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");
 
-	      // insert a single dataset into the database
+          
+
+	      // MITARBEITER
 	     try {
          AtomicInteger id = new AtomicInteger(100);
-         //id.getAndInceremnt()
-
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chloe Spence', 2424, '1975-10-22',"+ id.getAndIncrement()+" , 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Ryker Rollins', 2852, '1984-07-05',"+ id.incrementAndGet()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Devan Vincent', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Xander Medina', 2588, '1984-09-07',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Garcia', 2605, '1971-03-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Holden', 1579, '1965-06-27',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jaylen Jensen', 1825, '1996-06-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Miles Burks', 1601, '1972-03-06',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Cantrell', 1852, '1971-04-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Johan King', 1998, '1973-05-27',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Elianna Brown', 1744, '1990-10-07',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Audrina Cohen', 2489, '1962-03-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Colby Shields', 1694,'1967-08-09',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Caroline Rivers', 2174, '1984-02-17',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kiara Hardin', 2760, '1985-07-23',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jonathan Christensen', 765, '1960-12-26',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jade Gregory', 2492, '1978-10-20',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dayana Mack', 903, '1963-04-19',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kallie Nash', 2424, '1975-10-22',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Rey Bradley', 2852, '1984-07-05',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Campbell Christensen', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dilan Mccow', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Fracik Medina', 2588, '1984-09-07',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Gabriella', 2605, '1971-03-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Dali', 1579, '1965-06-27',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kim Li', 1825, '1996-06-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Donauer Franziska', 1601, '1972-03-06',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Carly', 1852, '1971-04-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Leo Ching', 1998, '1973-05-27',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Lisa Brown', 1744, '1990-10-07',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Audri Cocks', 2489, '1962-03-15',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Mari Avalyan', 1694, '1967-08-09',"+ id.getAndIncrement()+", 'Lecker')");
+         
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Mari Avalyan', 1694, '1967-08-09',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Bill Franz', 765, '1960-12-26',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Devan Vincent', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Xander Medina', 2588, '1984-09-07',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Garcia', 2605, '1971-03-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Holden', 1579, '1965-06-27',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jaylen Jensen', 1825, '1996-06-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Miles Burks', 1601, '1972-03-06',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Cantrell', 1852, '1971-04-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Johan King', 1998, '1973-05-27',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Elianna Brown', 1744, '1990-10-07',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Audrina Cohen', 2489, '1962-03-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Colby Shields', 1694,'1967-08-09',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Caroline Rivers', 2174, '1984-02-17',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kiara Hardin', 2760, '1985-07-23',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jonathan Christensen', 765, '1960-12-26',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jade Gregory', 2492, '1978-10-20',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dayana Mack', 903, '1963-04-19',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kallie Nash', 2424, '1975-10-22',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Rey Bradley', 2852, '1984-07-05',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Campbell Christensen', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dilan Mccow', 848, '1997-06-17',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Fracik Medina', 2588, '1984-09-07',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Gabriella', 2605, '1971-03-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Dali', 1579, '1965-06-27',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kim Li', 1825, '1996-06-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Donauer Franziska', 1601, '1972-03-06',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Carly', 1852, '1971-04-15',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Leo Ching', 1998, '1973-05-27',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Lisa Brown', 1744, '1990-10-07',"+ id.getAndIncrement()+", 'Lecker','2016-11-01')");
+         /*stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Audri Cocks', 2489, '1962-03-15',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jane Raimova', 2174, '1984-02-17',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Ciara Blue', 2760, '1985-07-23',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jonathan Clear', 765, '1960-12-26',"+ id.getAndIncrement()+", 'Lecker')");
@@ -97,8 +102,6 @@ public class TestDataGenerator {
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Clea Pfalnz', 1694, '1967-08-09',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Cari Rurcks', 2174, '1984-02-17',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Waste Rate', 2760, '1985-07-23',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Bill Franz', 765, '1960-12-26',"+ id.getAndIncrement()+", 'Lecker')");
-         stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Thomas Glanz', 2492, '1978-10-20',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dani Berger', 903, '1963-04-19',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Quli Queen', 2424, '1975-10-22', "+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Plank Flin', 2852, '1984-07-05', "+ id.getAndIncrement()+", 'Lecker')");
@@ -122,7 +125,7 @@ public class TestDataGenerator {
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Adelyn Brock', 903, '1963-04-19',"+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Zaniyah Hines', 2424, '1975-10-22', "+ id.getAndIncrement()+", 'Lecker')");
          stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jayden Frye', 2852, '1984-07-05', "+ id.getAndIncrement()+", 'Lecker')");
-
+		*/
 	     } catch (Exception e) {
 	        System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
 	      }
@@ -134,112 +137,35 @@ public class TestDataGenerator {
 	        System.out.println("Number of datasets 'Mitarbeiter' : " + count);
 	      }
 
+	      //BACKWAREN
 	      try {
+	          AtomicInteger artNr = new AtomicInteger(1000);
 
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12341,'Semmel', 0.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12342,'Pizza', 1.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12343,'Apfelstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12344,'Topfenstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12345,'Marillenknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12346,'Weissbrot', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12347,'Napoleon', 2.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12348,'Kaiserschmarren', 2.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12349,'Erdbeerknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12350,'Prjanik', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12351,'Vogelmilch', 2.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12352,'Tschaek-Tschaek', 1.49, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12353,'Watruschka', 0.45, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12354,'Syrniki', 0.10, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12355,'Tiramisu', 1.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12356,'Pudding', 0.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12357,'Brownie', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12358,'Panna Cotta', 1.69, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12359,'Baklava', 2, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12360,'Cupcake', 2.95, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12361,'Muraveinik', 1.25, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12362,'Donut', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12363,'Mischbrot', 1.09, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12364,'Tost', 0.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12365,'Lebkuchen', 1.59, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12366,'Semmel', 0.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12367,'Pizza', 1.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12368,'Apfelstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12369,'Topfenstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12370,'Marillenknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12371,'Weissbrot', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12372,'Napoleon', 2.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12373,'Kaiserschmarren', 2.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12374,'Erdbeerknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12375,'Prjanik', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12376,'Vogelmilch', 2.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12377,'Tschaek-Tschaek', 1.49, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12378,'Watruschka', 0.45, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12379,'Syrniki', 0.10, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12380,'Tiramisu', 1.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12381,'Pudding', 0.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12382,'Brownie', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12383,'Panna Cotta', 1.69, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12384,'Baklava', 2, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12385,'Cupcake', 2.95, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12386,'Muraveinik', 1.25, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12387,'Donut', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12388,'Mischbrot', 1.09, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12389,'Tost', 0.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12390,'Lebkuchen', 1.59, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12391,'Semmel', 0.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12392,'Pizza', 1.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12393,'Apfelstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12394,'Topfenstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12395,'Marillenknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12396,'Weissbrot', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12397,'Napoleon', 2.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12398,'Kaiserschmarren', 2.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12399,'Erdbeerknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12400,'Prjanik', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12401,'Vogelmilch', 2.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12402,'Tschaek-Tschaek', 1.49, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12403,'Watruschka', 0.45, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12404,'Syrniki', 0.10, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12405,'Tiramisu', 1.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12406,'Pudding', 0.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12407,'Brownie', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12408,'Panna Cotta', 1.69, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12409,'Baklava', 2, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12410,'Cupcake', 2.95, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12411,'Muraveinik', 1.25, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12412,'Donut', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12413,'Mischbrot', 1.09, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12414,'Tost', 0.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12415,'Lebkuchen', 1.59, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12416,'Semmel', 0.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12417,'Pizza', 1.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12418,'Apfelstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12419,'Topfenstrudel', 1.75, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12420,'Marillenknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12421,'Weissbrot', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12422,'Napoleon', 2.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12423,'Kaiserschmarren', 2.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12424,'Erdbeerknoedel', 1.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12425,'Prjanik', 1.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12426,'Vogelmilch', 2.15, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12427,'Tschaek-Tschaek', 1.49, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12428,'Watruschka', 0.45, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12429,'Syrniki', 0.10, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12430,'Tiramisu', 1.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12431,'Pudding', 0.55, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12432,'Brownie', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12433,'Panna Cotta', 1.69, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12434,'Baklava', 2, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12435,'Cupcake', 2.95, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12436,'Muraveinik', 1.25, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12437,'Donut', 0.89, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12438,'Mischbrot', 1.09, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12439,'Tost', 0.99, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-	        stmt.executeUpdate("INSERT INTO backwaren VALUES (12440,'Lebkuchen', 1.59, TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'))");
-
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Semmel', 0.15, '2018-01-20', '2018-01-23', 50)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Honigtorte', 2.15, '2018-01-20', '2018-01-23', 20)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Apfelstrudel', 1.75, '2018-01-20','2018-01-23', 15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Topfenstrudel', 1.75, '2018-01-20','2018-01-23', 15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Marillenknoedel', 1.89, '2018-01-20', '2018-01-23', 15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Nussschnecke', 1.99, '2018-01-20', '2018-01-23', 30)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Napoleon', 2.99, '2018-01-20','2018-01-23', 10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Palatschinken', 2.0, '2018-01-20', '2018-01-23', 50)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Erdbeerknoedel', 1.89, '2018-01-20', '2018-01-23', 15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Lebkuchen', 1.99, '2018-01-20','2018-01-23', 20)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Vogelmilchtorte', 2.15, '2018-01-20','2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Tschaek-Tschaek', 1.49, '2018-01-20', '2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Watruschki', 0.45, '2018-01-20','2018-01-23',30)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Syrniki', 0.30, '2018-01-20', '2018-01-23',50)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Tiramisu', 2.55, '2018-01-20','2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Pudding', 0.75, '2018-01-20', '2018-01-23', 30)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Brownie', 1.89, '2018-01-20', '2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Panna Cotta', 1.09, '2018-01-20', '2018-01-23', 15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Baklava', 2.50, '2018-01-20','2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Cupcake', 2.95,'2018-01-20', '2018-01-23',20)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Muraveinik', 1.85, '2018-01-20', '2018-01-23',15)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Donut', 0.99,'2018-01-20','2018-01-23', 30)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Bananenschnitte', 3.0, '2018-01-20', '2018-01-23',10)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Buttercroissant', 0.49,'2018-01-20', '2018-01-23',20)");
+	        stmt.executeUpdate("INSERT INTO backwaren VALUES ("+ artNr.getAndIncrement() +",'Bananen-Nutella Croissant', 0.89, '2018-01-20', '2018-01-23',10)");
 
 	      } catch (Exception e) {
 	        System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
@@ -251,32 +177,60 @@ public class TestDataGenerator {
 	        System.out.println("Number of datasets 'Backwaren' : " + count);
 	      }
 
+	      PreparedStatement pstm = null;
 
-	      try {
-		        /*String insertSql = "INSERT INTO person VALUES ('012345678901', 'Erich', 'Schikuta', 'Wien', 1010, 'Rathausstrasse 19', '12-FEB-2000', 'Wien')";
-		        stmt.executeUpdate(insertSql);*/
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Chloe Spence', 2, 'Kochschule', 15.0, 'Der Ofen')");
-		    	stmt.executeUpdate("INSERT INTO konditor VALUES ('Ryker Rollins', 2, 'Kochschule', 15.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Devan Vincent', 8,'Kochschule', 30.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Xander Medina', 3, 'Kochschule', 15.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Justice Garcia', 4, 'Kochschule', 18.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Salvador Holden', 1, 'Kochschule', 10.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Jaylen Jensen', 3, 'Kochschule', 15.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Miles Burks', 5, 'Kochschule', 30.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Chelsea Cantrell', 4, 'Kochschule', 18.0, 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Johan King', 2,  'Kochschule', 18.0, 'Der Ofen')");
+	      //KONDITOR && KÜCHENGEHILFE
+	     try {
+	    	 
+	    	 for (int i = 0; i < 20; i++) {
+			 if(i<10) {  	
+	    		 String sql = "INSERT INTO konditor VALUES(" + 10+i +","+ i + ",'Kochschule'," + 1+i + ",987)";
+			         pstm=con.prepareStatement(sql);
+				       pstm.executeUpdate();
+				       pstm.close();
+			 }else {
+				 String sql = "INSERT INTO konditor VALUES(" + 1+i +","+ i + ",'Kochschule'," + 1+i + ",987)";
+		         pstm=con.prepareStatement(sql);
+			       pstm.executeUpdate();
+			       pstm.close();
+			 }
+			      }
+	    	 
+		       /* stmt.executeUpdate("INSERT INTO konditor VALUES (100, 2, 'Kochschule', 15.0, 987)");
+		      	stmt.executeUpdate("INSERT INTO konditor VALUES (101, 2, 'Kochschule', 15.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES (102, 8,'Kochschule', 30.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Xander Medina', 3, 'Kochschule', 15.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Justice Garcia', 4, 'Kochschule', 18.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Salvador Holden', 1, 'Kochschule', 10.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Jaylen Jensen', 3, 'Kochschule', 15.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Miles Burks', 5, 'Kochschule', 30.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Chelsea Cantrell', 4, 'Kochschule', 18.0, 987)");
+		        stmt.executeUpdate("INSERT INTO konditor VALUES ('Johan King', 2,  'Kochschule', 18.0, 987)");*/
 
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Elianna Brown', 'Vormittag', to_date('2015-10-07', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Audrina Cohen', 'Vormittag', to_date('2016-03-15', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Colby Shields', 'Vormittag', to_date('2015-08-09', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Caroline Rivers', 'Nachmittag', to_date('2016-02-17', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Kiara Hardin', 'Nachmittag', to_date('2015-07-23', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Jonathan Christensen','Vormittag', to_date('2015-12-26', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Jade Gregory', 'Nachmittag', to_date('2016-10-20', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Dayana Mack', 'Vormittag', to_date('2015-04-19', 'YYYY-MM-DD'),'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Kallie Nash', 'Nachmittag', to_date('2016-10-22', 'YYYY-MM-DD'), 'Kasack', 'Der Ofen')");
-		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES ('Rey Bradley', 'Nachmittag', to_date('2016-07-05', 'YYYY-MM-DD'), 'Kasack', 'Der Ofen')");
-
+	    	  for (int i = 20; i < 25; i++) {  	
+		    		 String sql = "INSERT INTO kuechengehilfe VALUES(" + 1+i +",'Vormittag',987)";
+				         pstm=con.prepareStatement(sql);
+					       pstm.executeUpdate();
+					       pstm.close();
+				 }
+	    	 
+	    	  for (int i = 25; i < 30; i++) {  	
+		    		 String sql = "INSERT INTO kuechengehilfe VALUES(" + 1+i +",'Nachmittag',987)";
+				         pstm=con.prepareStatement(sql);
+					       pstm.executeUpdate();
+					       pstm.close();
+				 }
+		       
+	    	  		/*stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (120, 'Nachmittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (121, 'Vormittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (122, 'Vormittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (123, 'Vormittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (124, 'Nachmittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (125, 'Nachmittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (126, 'Vormittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (127, 'Nachmittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (128, 'Vormittag', 987)");
+		        stmt.executeUpdate("INSERT INTO kuechengehilfe VALUES (129, 'Nachmittag', 987)");*/
 
 		     } catch (Exception e) {
 		        System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
@@ -295,20 +249,48 @@ public class TestDataGenerator {
 		        System.out.println("Number of datasets 'Kuechengehilfe' : " + count);
 		      }
 
-
+		      //BACKEN
 		      try {
-
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Chloe Spence', 12341)");
-			    	stmt.executeUpdate("INSERT INTO backen VALUES ('Ryker Rollins', 12342)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Devan Vincent',12343)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Xander Medina', 12344)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Justice Garcia', 12345)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Salvador Holden', 12346)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Jaylen Jensen', 12347)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Miles Burks', 12348)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Chelsea Cantrell', 12349)");
-			        stmt.executeUpdate("INSERT INTO backen VALUES ('Johan King', 12350)");
-
+		    	  /*for (int i = 0; i < 20; i++) {
+		    		  if(i<10) {
+		 	    		 String sql = "INSERT INTO backen VALUES(" + 10+i +","+ 100+i + ")";
+		 			         pstm=con.prepareStatement(sql);
+		 				       pstm.executeUpdate();
+		 				       pstm.close();
+		    	  		}else {
+		    	  			String sql = "INSERT INTO backen VALUES(" + 1+i +","+ 10+i + ")";
+		 			         pstm=con.prepareStatement(sql);
+		 				       pstm.executeUpdate();
+		 				       pstm.close();
+		    	  			} 
+		    	  		} */
+		    	  
+			        stmt.executeUpdate("INSERT INTO backen VALUES (100, 1000)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (120, 1001)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (101, 1002)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (101, 1003)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (102, 1004)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (103, 1005)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (118, 1006)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (104, 1007)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (100, 1008)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (117, 1009)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (119, 1010)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (105, 1011)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (106, 1012)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (107, 1013)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (108, 1014)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (109, 1015)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (110, 1016)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (111, 1017)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (112, 1018)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (113, 1019)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (114, 1020)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (115, 1021)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (116, 1022)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (108, 1023)");
+			        stmt.executeUpdate("INSERT INTO backen VALUES (108, 1024)");
+			        
 			     } catch (Exception e) {
 			        System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
 			      }
@@ -321,22 +303,44 @@ public class TestDataGenerator {
 			      }
 
 
-			      PreparedStatement pstm = null;
-
-			      for (int i = 1; i <= 1000; i++) {
-			    	String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde"+i+"@gmail.com" + "'," + "to_date('1975-10-22', 'YYYY-MM-DD')" + ",'" + "Lecker" + "')";
+			      
+			     //KUNDE
+			      for (int i = 1; i < 101; i++) {
+			    	String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde"+i+"@gmail.com" + "','1975-10-22', 'Lecker')";
 			         pstm=con.prepareStatement(sql);
 				       pstm.executeUpdate();
 				       pstm.close();
 			      }
 
-			      for (int i = 1; i <= 1000; i++) {
-			    	//  for(double j=0.10; j <=10; j++){
-				    	String sql = "INSERT INTO produkt VALUES(" + "0741852" + i + ",'" + "Produkt"+i + "'," + i + "," + "TO_DATE('20161120', 'YYYYMMDD'), TO_DATE('20161123', 'YYYYMMDD'), 5.3)";
+			      //PRODUKT
+			      /*for (int i = 1; i < 101; i++) {
+				    	String sql = "INSERT INTO produkt VALUES(" + "074185" + i + ",'" + "Produkt"+i + "', 2.3 ,'2018-01-20', '2018-01-23'," + 10+i + ",123)";
 				         pstm=con.prepareStatement(sql);
 					       pstm.executeUpdate();
 					       pstm.close();
-				      }//}
+				      }*/
+			      AtomicInteger artNr = new AtomicInteger(78961);
+
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Salz', 0.30, '2017-05-20', '2018-05-23', 20, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Milch', 1.15, '2017-12-17', '2018-01-19', 70, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Zucker', 1.15, '2017-04-02','2018-03-14', 50, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Margarine', 0.75, '2017-08-23','2018-04-23', 200, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Teabutter', 1.89, '2017-11-20', '2018-01-23', 200, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Banane', 1.99, '2017-12-28', '2018-01-20', 5, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Erdbeere', 3.99, '2017-12-28','2018-01-20', 3, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Eier', 2.75, '2017-11-18', '2018-01-23', 200, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Nutella', 2.89, '2017-07-14', '2018-03-23', 20, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Kochschokolade', 1.99, '2017-03-20','2018-05-13', 100, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Honig', 3.15, '2017-04-20','2018-11-23', 5, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Mehl', 1.09, '2017-01-20', '2018-06-18', 100, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Lebensmittelfarbstoffe', 2.45, '2017-03-20','2019-01-23',10, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Topfen', 2.39, '2017-12-28', '2018-01-23', 10, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Löffelbiskuit', 1.55, '2017-09-30','2018-07-13',10, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Kakaopulver', 1.75, '2016-12-20', '2018-09-23', 10, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Walnuss', 3.89, '2017-06-24', '2018-09-24',12, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Kondensmilch', 1.09, '2017-09-20', '2018-09-23', 50, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Sauerrahm', 0.99, '2017-12-20','2018-01-23', 100, 123)");
+			        stmt.executeUpdate("INSERT INTO produkt VALUES ("+ artNr.getAndIncrement() +",'Dinkelmehl', 2.95,'2017-06-17', '2018-03-23',100, 123)");
 
 
 			   // check number of datasets in person table
@@ -353,10 +357,12 @@ public class TestDataGenerator {
 			        System.out.println("Number of datasets 'Produkt': " + count);
 			      }
 
+			      //ÄNDERN
+			      //EINKAUF
 			      try {
 
 				        stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde1', 12341)");
-				    	stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde2', 12342)");
+				        stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde2', 12342)");
 				        stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde3',12343)");
 				        stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde4', 12344)");
 				        stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde5', 12345)");
@@ -377,8 +383,10 @@ public class TestDataGenerator {
 			        System.out.println("Number of datasets 'Einkauf': " + count);
 			      }
 
-			      for (int i = 1; i <= 9; i++) {
-					    	String sql = "INSERT INTO bestandteil VALUES(" + "1234" + i + "," + "0741852" + i+")";
+			      //ÄNDERN
+			      //BESTANDTEIL
+			      for (int i = 1; i < 10; i++) {
+					    	String sql = "INSERT INTO bestandteil VALUES(" + "1234" + i + "," + "7896" + i+")";
 					         pstm=con.prepareStatement(sql);
 						       pstm.executeUpdate();
 						       pstm.close();
@@ -396,7 +404,7 @@ public class TestDataGenerator {
 		  re.close();
 		  rf.close();
 	      rs.close();
-	      rb.close();
+	      rd.close();
 	      rd.close();
 	      rk.close();
 	      rp.close();
@@ -407,5 +415,5 @@ public class TestDataGenerator {
 	    } catch (Exception e) {
 	      System.err.println(e.getMessage());
 	    }
-  }
-}
+	  }
+	  }
