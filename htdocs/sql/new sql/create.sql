@@ -65,6 +65,7 @@ kname char(50) NOT NULL,
 email char(30) NOT NULL,
 kgeburtsdatum DATE,
 bname char(15) NOT NULL,
+passwort char ( 15 ) NOT NULL,
 PRIMARY KEY (email),
 FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE );
 

@@ -328,7 +328,7 @@ public class TestDataGenerator1 {
 			      PreparedStatement pstm = null;
 
 			      for (int i = 1; i <= 1000; i++) {
-			    	String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde"+i+"@gmail.com" + "'," + "1975-10-22" + ",'" + "Lecker" + "')";
+			    	String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde"+i+"@gmail.com" + "'," + "1975-10-22" + ",'" + "Lecker" + ",'"pass1234"+i + "')";
 			         pstm=con.prepareStatement(sql);
 				       pstm.executeUpdate();
 				       pstm.close();

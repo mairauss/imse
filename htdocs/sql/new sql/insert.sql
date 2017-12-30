@@ -12,8 +12,8 @@ INSERT INTO konditor VALUES (2,'Bill Mustermann','Backwaren - Konditor-5Jahren',
 INSERT INTO konditor VALUES (3, 'Marie Musterfrau', 'McCafe - Konditor-2Jahren', 'Kochkurse',20,123);
 INSERT INTO kuechengehilfe VALUES (4,'Thomas Mustermann','Vormittag', '2016/08/23', 'Kasack',123);
 INSERT INTO kuechengehilfe VALUES (5,'Eva Musterfrau','Nachmittag', '2016/09/02', 'Kasack',123);
-INSERT INTO kunde VALUES ('Georg Mustermann', 'georg@mail.com', '1996/09/01','Lecker');
-INSERT INTO kunde VALUES ('Lisa Musterfrau', 'lisa@mail.com', '1986/11/01', 'Lecker');
+INSERT INTO kunde VALUES ('Georg Mustermann', 'georg@mail.com', '1996/09/01','Lecker','pass1');
+INSERT INTO kunde VALUES ('Lisa Musterfrau', 'lisa@mail.com', '1986/11/01', 'Lecker','pass2');
 INSERT INTO backwaren VALUES (12345,'Semmel', 0.15, '2016/11/20', '2016/11/23');
 INSERT INTO backwaren VALUES (12346,'Pizza', 1.15,'2016/11/20', '2016/11/23');
 INSERT INTO backwaren VALUES (12347,'Apfelstrudel', 1.75, '2016/11/20', '2016/11/23');
