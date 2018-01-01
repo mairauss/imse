@@ -59,7 +59,7 @@ https://www.formget.com/php-data-object/
 */
 if(isset($_POST["submit"])){
 try{
-	require_once('dbconnection.php');
+	require_once('../dbconnection.php');
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	

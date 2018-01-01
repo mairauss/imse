@@ -3,7 +3,7 @@
 <?php
 
     try{
-        require_once('dbconnection.php');
+        require_once('../dbconnection.php');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(Exception $e){
         $error = $e->getMessage();

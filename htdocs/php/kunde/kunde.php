@@ -1,6 +1,6 @@
 <?php
  try{
-	require_once('dbconnection.php');
+	require_once('../dbconnection.php');
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(Exception $e){
 	$error = $e->getMessage();
@@ -35,6 +35,7 @@ if(isset($error)){ echo $error; }
      		<li><a href="../einkauf.php">Einkauf</a></li>
 		<li><a href="../bestand.php">Bestandteil</a></li>	
 		<li><a href="../view.php">Views</a></li>	
+		<li><a href="../session/logout.php">Logout</a></li>	
        </ul>
 
 <br></br>
