@@ -1,7 +1,6 @@
 
 <?php
 // establish database connection
-$dsn = '../../../backshop.db';
-$db = new PDO($dsn, '', '');
+$db = new PDO('sqlite:../../../backshop.db');
 
 ?>

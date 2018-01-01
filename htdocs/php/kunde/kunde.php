@@ -1,8 +1,16 @@
 <?php
-
- $db = new PDO('sqlite:../../../backshop.db');
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
+ 
+if(isset($error)){ echo $error; }
+ 
  $sql = "SELECT * FROM kunde";
  $result = $db->query($sql);
+ 
  ?>
 
 <!DOCTYPE html>
@@ -44,21 +52,27 @@
     </form>
   </div>
   
-  <div class="row"
-	  <table class="table">
+
+	  <table boarder="1">
 		<?php
-		  // check if search view of list view
 		  if (isset($_GET['search'])) {
 			$sql = "SELECT * FROM kunde WHERE kname like '" . $_GET['search'] . "'";
 		  } else {
 			$sql = "SELECT * FROM kunde";
 		  }
-
 		  // execute sql statement
 			$result = $db->query($sql);
-			
 		?>
-
+		
+		<tr>
+			<th>E-mail</th>
+			<th>Name</th>
+			<th>Geburtstag</th>
+			<th>Bname</th>
+			<th>Passwort</th>
+			<th>EXTRAS</th>
+		</tr>
+		
 		<?php 
 			while($r = $result->fetch(PDO::FETCH_ASSOC)){
 			?>
@@ -72,6 +86,9 @@
 			</tr>
 		<?php } ?>
       </table>
-  </div>
+	  
+	  
+	  
+	  
 </body>
 </html>
