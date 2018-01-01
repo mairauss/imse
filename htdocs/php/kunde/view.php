@@ -1,37 +1,51 @@
 
-<?php
-  $user = '...';
-  $pass = '...';
-  $database = '...';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
 
- //var_dump($_GET);
+<?php
+
+    try{
+        require_once('dbconnection.php');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(Exception $e){
+        $error = $e->getMessage();
+    }
+    if(isset($_POST) & !empty($_POST)){
+        $sql = "INSERT INTO crud (kname, email, gender, age) VALUES(:firstname, :lastname, :email, :gender, :age)";
+        $result = $db->prepare($sql);
+        $res = $result->execute(array(':firstname' 	=> $_POST['fname'],
+            ':lastname' 	=> $_POST['lname'],
+            'email' 		=> $_POST['email'],
+            'gender' 		=> $_POST['gender'],
+            'age' 			=> $_POST['age']
+        ));
+        if($res){
+            echo "Successfully inserted data";
+        }else{
+            echo "failed to insert data";
+        }
+    }
 ?>
 
 <html>
 <title>Lecker: Kunden</title>
 <head>
- <link rel="stylesheet" href="index.css" />
+ <link rel="stylesheet" href="../index.css" />
 </head>
 <body>
-<img src="b5.png" alt="logo" width="500" height="300">
+<img src="../b5.png" alt="logo" width="500" height="300">
 <br></br>
 
         <ul> 
-		<li><a href="baeckerei.php">Lecker</a></li>
-		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-		<li><a href="konditor.php">Konditor</a></li>
-		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+		<li><a href="../baeckerei.php">Lecker</a></li>
+		<li><a href="../mitarbeiter.php">Mitarbeiter</a></li>
+		<li><a href="../konditor.php">Konditor</a></li>
+		<li><a href="../kuechengehilfe.php">Kuechengehilfe</a></li>
                 <li><a class="active" href="kunde.php">Kunde</a></li>
-                <li><a href="backwaren.php">Backwaren</a></li>
-                <li><a href="produkte.php">Produkte</a></li>
-		<li><a href="backen.php">Backen</a></li>
-     		<li><a href="einkauf.php">Einkauf</a></li>
-		<li><a href="bestand.php">Bestandteil</a></li>	
-		<li><a href="view.php">Views</a></li>	
+                <li><a href="../backwaren.php">Backwaren</a></li>
+                <li><a href="../produkte.php">Produkte</a></li>
+		<li><a href="../backen.php">Backen</a></li>
+     		<li><a href="../einkauf.php">Einkauf</a></li>
+		<li><a href="../bestand.php">Bestandteil</a></li>	
+		<li><a href="../view.php">Views</a></li>	
        </ul>
 
 <br></br>
