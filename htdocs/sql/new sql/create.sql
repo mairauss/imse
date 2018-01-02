@@ -62,20 +62,23 @@ FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
 CREATE TABLE kunde(
 kname char(50) NOT NULL,
-email char(30) NOT NULL,
+email text	 NOT NULL,
 kgeburtsdatum DATE,
 bname char(15) NOT NULL,
 passwort char ( 15 ) NOT NULL,
 PRIMARY KEY (email),
 FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE );
 
+/*bhersdatum deshalb ein primary key, weil ich eine Backware (zb.: Semmel) mehrmals pro Woche produziere*/
 CREATE TABLE backwaren(
 artikelnr integer NOT NULL,
-gname char(30),
-bpreis double precision,
-bhersdatum DATE,
+bhersdatum DATE NOT NULL,
+gname char(30) NOT NULL,
+bpreis double NOT NULL,
 bhaltdauer DATE,
-PRIMARY KEY (artikelnr) );
+menge int NOT NULL,
+PRIMARY KEY (artikelnr, bhersdatum)
+);
 
 CREATE TABLE produkt(
 barcode integer NOT NULL,
@@ -93,13 +96,24 @@ bezeichnung varchar(3000),
 PRIMARY KEY (kuecheNr),
 FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
+/*einkauf ist eine schwache entität von backwaren*/
 CREATE TABLE einkauf(
-email char(30) NOT NULL,
+email text not null,
 artikelnr integer NOT NULL,
-PRIMARY KEY (email, artikelnr),
+bhersdatum date not null,
+menge int not null,
+bestellnr int not null,
+PRIMARY KEY (bestellnr, artikelnr, bhersdatum),
 FOREIGN KEY (email) REFERENCES kunde ON DELETE CASCADE,
-FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE );
+FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE,
+FOREIGN KEY (bhersdatum) REFERENCES backwaren ON DELETE CASCADE );
 
+/*Tabelle für die fortlaufende nummerierung der bestellnr (1:1 Beziehung mit einkauf)*/
+CREATE TABLE bestellnummerzaehler(
+nr int not null,
+primary key (nr)
+);
+ 
 CREATE TABLE backen(
 personalnr integer NOT NULL,
 artikelnr integer NOT NULL,
@@ -123,6 +137,7 @@ FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE,
 FOREIGN KEY (personalNr) REFERENCES mitarbeiter ON DELETE CASCADE,
 FOREIGN KEY (email) REFERENCES kunde ON DELETE CASCADE);
 
+/*
 CREATE VIEW konditor_count (mname)
 AS
 SELECT COUNT (DISTINCT personalNr)
@@ -142,4 +157,4 @@ CREATE VIEW kunde_count(email)
 AS
 SELECT COUNT (DISTINCT email)
 FROM kunde;
-
+*/

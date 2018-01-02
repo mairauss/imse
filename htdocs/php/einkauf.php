@@ -25,14 +25,14 @@
 		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
 		<li><a href="konditor.php">Konditor</a></li>
 		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-                <li><a href="kunde/kunde.php">Kunde</a></li>
+                <li><a href="kunde.php">Kunde</a></li>
                 <li><a href="backwaren.php">Backwaren</a></li>
                 <li><a href="produkte.php">Produkte</a></li>
            	<li><a href="backen.php">Backen</a></li>
      		<li><a class="active" href="einkauf.php">Einkauf</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>	
-		<li><a href="view.php">Views</a></li>
-		<li><a href="./session/logout.php">Logout</a></li>			
+                <li><a href="view.php">Views</a></li>
+                <li><a href="./session/logout.php">Logout</a></li>
        </ul>
 
 <br></br>
@@ -47,104 +47,140 @@
       <input id='submit' type='submit' class="testbutton" value='Search' />
 </form>
   </div>
+
+<?php
+    require_once 'Artikel.php';
+    require_once 'Warenkorb.php';
+?>
+    
+<?php
+    //Die Bestellung annehmen
+    $order = new Warenkorb('onur@mail.com');
+    $artikelNr = 1000;
+    $ware = new Artikel();
+    $gesamtPreis = 0;
+    $num = 0;
+    //angekommene Informationen über die Bestellung werden in Objekte zusammengefasst
+    for ($i = 0; isset($_POST["artikelnr" . strval($artikelNr)]); $i++){
+        if (isset($_POST[strval($i)]) && $_POST[strval($i)] >= 1){
+          if (isset($_POST['bhaltdauer' . strval($artikelNr)])){
+            $ware = Artikel::constructFull($_POST["artikelnr" . strval($artikelNr)], $_POST["bhersdatum" . strval($artikelNr)], $_POST["gname" . strval($artikelNr)], $ware->mengeToNumber($_POST["preis" . strval($artikelNr)]), $_POST["bhaltdauer" . strval($artikelNr)], $ware->mengeToNumber($_POST["lagermenge" . strval($artikelNr)])); 
+            if ($ware->getLagerMenge() >= $_POST[strval($i)])
+                $ware->setBestellMenge($_POST[strval($i)]);
+            else
+                $ware->setBestellMenge($ware->getLagerMenge());
+            $gesamtPreis = $gesamtPreis + ($ware->getPreis() * $ware->getBestellMenge());
+          } else {
+            $ware = Artikel::construct2($_POST["artikelnr" . strval($artikelNr)], $_POST["bhersdatum" . strval($artikelNr)], $_POST["gname" . strval($artikelNr)], $ware->mengeToNumber($_POST["preis" . strval($artikelNr)]), $ware->mengeToNumber($_POST["lagermenge" . strval($artikelNr)]));
+            if ($ware->getLagerMenge() >= $_POST[strval($i)])
+              $ware->setBestellMenge($_POST[strval($i)]);
+            else
+              $ware->setBestellMenge ($ware->getLagerMenge ());
+            $gesamtPreis = $gesamtPreis + ($ware->getPreis() * $ware->getBestellMenge());
+          }
+          $gesamtPreis = $gesamtPreis + $_POST[strval($i)];
+          $order->setWare($ware);
+          $num++;
+        }
+        $artikelNr++;
+        
+    }
+
+    
+    /*$bestellung = $order->getWaren();
+    for ($i = 0; isset($bestellung[$i]); $i++){
+        echo $bestellung[$i]->getArtikelNr() . " " . $bestellung[$i]->getBestellMenge() . "</br>";
+    }*/
+?>
+    
+    
+    
+   <form id='searchform' action='einkauf.php' method='post'>
 <?php
   // check if search view of list view
-  if (isset($_GET['search'])) {
-    $sqlSelect = "SELECT * FROM einkauf WHERE kname like '%" . $_GET['search'] . "%'";
+  if (isset($_POST['search'])) {
+    $sqlSelect = "SELECT * FROM einkauf WHERE kname like '%" . $_POST['search'] . "%'";
   } else {
     $sqlSelect = "SELECT * FROM einkauf";
   }
 ?>
-    
+   </form>
 <div>
-  <p>Kundennummer</p>
-  <p>Meine Bestellnummer</p>
-  <form id='insertform' action='einkauf.php' method='get'>
+
+    <p>Kunden ID: <?php echo $order->getEmail(); ?></p>
+    <p> <?php if ($gesamtPreis > 0) {$order->setBestellNr(); echo "Meine Bestellnummer: " . $order->getBestellnummer();} ?></p>
+  <form id='insertform' action='confirm.php' method='post'>
 <center>
-    Mein Warenkorb:
+    Warenkorb:
 	<table style='border: 5px solid #DDDDDD'>
 	  <thead>
 	    <tr>
 	      <th>ArtikelNr</th>
+              <th>Bezeichnung</th>
               <th>Herstellungsdatum</th>
-              <th>Preis</th>
+              <th>Preis (inkl. UST)</th>
               <th>Menge</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	     <tr>
-	        <td>
-	           <input id='artikelnr' name='artikelnr' type='text' size='50' value='<?php if (isset($_GET['artikelnr'])) echo $_GET['artikelnr']; ?>' />
-                </td>
-                <td>
-                   <input id='bersdatum' name='bhersdatum' type='text' size='15' value='<?php if (isset($_GET['bhersdatum'])) echo $_GET['bhersdatum']; ?>' />
-                </td>
-                <td>
-                    <input id='bpreis' name='bpreis' type='text' size='15' value='<?php if (isset($_GET['bpreis'])) echo $_GET['bpreis']; ?>' />
-                </td>
-                <td>
-                    <input id='menge' name='menge' type='text' size='15' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
-                </td>
+                <?php
+                    $bestellung = $order->getWaren();
+                    for ($i = 0; isset($bestellung[$i]); $i++){
+                        echo "<tr>";
+                        echo "<td>" . $bestellung[$i]->getArtikelNr() . "</td>";
+                        echo "<td>" . $bestellung[$i]->getGName() . "</td>";
+                        echo "<td>" . $bestellung[$i]->getBhersDatum() . "</td>";
+                        echo "<td>" . $bestellung[$i]->getPreis() . "</td>";
+                        echo "<td>" . $bestellung[$i]->getBestellMenge() . "</td>";
+                        echo "</tr>";
+                        //$gesamtPreis = $gesamtPreis + ($bestellung[$i]->getPreis() * $bestellung[$i]->getBestellMenge());
+                    }
+                ?>
 	      </tr>
+              
            </tbody>
+           
         </table>
+    <br>
+    <?php
+        $ust = $order->getUst($gesamtPreis);
+        $netto = $gesamtPreis - $ust;
+        echo "<tr>";
+        echo "Preis exkl. Umsatzsteuer: " . $netto . " €  <br>";
+        echo "10 % Ust: " . $ust . " € <br>";
+        echo "Rechnungsbetrag inkl. Ust: " . $gesamtPreis . " € <br>";
+        echo "</tr>";
+    ?>
+
 </center>
-        <input id='submit' type='submit' class="testbutton" value='Insert' />
+
+      <br>
+      <div> <?php echo $num; ?> Artikel im Warenkorb</div>
+      <br>
+      <input id ="gesamtpreis" name="gesamtpreis" type="hidden" value="<?php echo $gesamtPreis ?>" /> 
+      <input id="email" name="email" type="hidden" value="<?php echo $order->getEmail() ?>" />
+      <input id="bestellnummer" name="bestellnummer" type="hidden" value="<?php echo $order->getBestellnummer() ?>" />
+        <?php
+        //Informationen für einen Einkauf werden mit Http-Post für die Speicherung bereitgestellt
+        if ($gesamtPreis > 0){
+            $a = 0;
+            for ($gr = 0; isset($bestellung[$gr]); $gr++){
+                echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getArtikelNr() . "' />";
+                $a++;
+                echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getBhersDatum() . "' />";
+                $a++;
+                echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getBestellMenge() . "' />";
+                $a++;
+            }
+            echo "<input id='submit' type='submit' class='testbutton' value='Bestellung bestätigen' />";
+        }
+        else
+            echo "Keine Bestellung angegeben. ";
+        ?>
   </form>
 </div>
-
-<?php
-  //Handle insert
-   if (isset($_GET['kname'])) 
-  {
-    //Prepare insert statement
-    $sqlInsert = "INSERT INTO einkauf VALUES('" . $_GET['kname'] . "',"  . $_GET['artikelnr'] . ")";
-    //Parse and execute statement
-    $insert = new SQLite3('backshop.db');
-    $result = $insert->exec($sqlInsert);
-    $insert->close();
-    unset($insert);
-   
-    if($result){
-	print("Successfully inserted");
- 	print("<br>");
-    }
-    //Print potential errors and warnings
-    else{
-       print("FAILURE");
-    }
-  } 
-
-?>
-
- <table style='border: 5px solid #DDDDDD'>
-    <thead>
-      <tr>
-        <th>Kunden Name</th>
-        <th>ArtikelNr</th>
-      </tr>
-    </thead>
-    <tbody>
-<?php
-  $num = 0;
-  // execute sql statement
-  $stmt = new SQLite3('backshop.db');
-  $list = $stmt ->query($sqlSelect);
-  $stmt->close();
-  unset($stmt);
-  // fetch rows of the executed sql query
-  while ($row = $list->fetchArray()) {
-    echo "<tr>";
-    echo "<td>" . $row['KNAME'] . "</td>";
-    echo "<td>" . $row['ARTIKELNR'] . "</td>";
-    echo "</tr>";
-    $num++;
-  }
-?>
     </tbody>
-  </table>
-
-<div>Insgesamt <?php echo $num; ?> "Artikel" gefunden!</div>
 </center>
 <br></br>
 

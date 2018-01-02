@@ -31,10 +31,22 @@
             return $instance;
         }
         
+        public static function copy($obj){
+            $instance = new self();
+            $instance->artikelnr = $obj->getArtikelNr();
+            $instance->gname = $obj->getGName();
+            $instance->bhaltdauer = $obj->getBhaltdauer();
+            $instance->bhersdatum = $obj->getBhersdatum();
+            $instance->lagerMenge = $obj->getLagerMenge();
+            $instance->preis = $obj->getPreis();
+            $instance->bestellMenge = $obj->getBestellMenge();
+            return $instance;
+        }
+        
         public function insertArtikel(){
-            $db = new SQLite3('backshop.db');
+            $db = new SQLite3('../backshop.db');
             $sql = "INSERT INTO backwaren VALUES "
-                    . "(" . $this->artikelnr .", '" . $this->bhersdatum . "', '" . $this->gname . "', " . $this->preis . ", '" . $this->bhaltdauer . "', " . $this->lagerMenge . ")";
+                    . "(" . $this->artikelnr .", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", '" . $this->bhaltdauer . "', " . $this->lagerMenge . ")";
             $result = $db->exec($sql);
             $db->close();
             unset($db);
@@ -42,13 +54,34 @@
         }
         
         public function insertArtikelOhneBhaltdauer(){
-            $db = new SQLite3('backshop.db');
+            $db = new SQLite3('../backshop.db');
             $sql = "INSERT INTO backwaren (artikelnr, bhersdatum, gname, bpreis, menge) values " .
-                   "(" . $this->artikelnr . ", '" . $this->bhersdatum . "', '" . $this->gname . "', " . $this->preis . ", " . $this->lagerMenge . ")";
+                   "(" . $this->artikelnr . ", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", " . $this->lagerMenge . ")";
             $result = $db->exec($sql);
             $db->close();
             unset($db);
             return $result;
+        }
+        
+        public function updateLagermenge($artikelnr, $bhersdatum, $menge){
+            $db = new SQLite3('../backshop.db');
+            $sql = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelnr . " AND bhersdatum =" . $bhersdatum ."";
+            $result = $db->exec($sql);
+            $db->close();
+            unset($db);
+            return $result;
+        }
+        
+        public function mengeToNumber($menge){
+            $zahl;
+            if (isset($menge[1]) && $menge[1] != '"'){
+                $zahl = $menge[1];
+                for ($i = 2; isset($menge[$i]) && ($menge[$i] != '"'); $i++){
+                    $zahl = $zahl . $menge[$i];
+                }
+                return $zahl;
+            }
+            return null;    
         }
         
         public function sucheArtikel($artikelnummer, $bhersdatum){
@@ -68,7 +101,7 @@
         }
         
         public function getPreis(){
-            return $this->getPreis();
+            return $this->preis;
         }
         
         public function getBHaltDauer(){

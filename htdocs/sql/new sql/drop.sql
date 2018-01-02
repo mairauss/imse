@@ -10,6 +10,7 @@ DROP TABLE kueche;
 DROP TABLE kuechenzeile;
 DROP TABLE kuehlraum;
 DROP TABLE einkauf;
+DROP TABLE bestellnummerzaehler;
 DROP TABLE backen;
 DROP TABLE bestandteil;
 DROP TABLE poss;
