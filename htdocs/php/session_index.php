@@ -3,10 +3,10 @@
 Quellen: 
 https://www.formget.com/login-form-in-php/
 */
-include('login.php'); // Includes Login Script
+include('kunde_login.php');
 
 if(isset($_SESSION['login_user'])){
-header("location: ../backwaren.php");
+header("location: backwaren.php");
 }
 ?>
 <!DOCTYPE html>

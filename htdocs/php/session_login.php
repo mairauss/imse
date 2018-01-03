@@ -17,7 +17,7 @@ if (empty($_POST['email']) || empty($_POST['passwort'])) {
 	$passwort=$_POST['passwort'];
 	// Datenbankverbindung herstellen
 	 try{
-		require_once('../dbconnection.php');
+		require_once('dbconnection.php');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}catch(Exception $e){
 		$error = $e->getMessage();
@@ -30,7 +30,7 @@ if (empty($_POST['email']) || empty($_POST['passwort'])) {
 		// Session starten
 		$_SESSION['login_user']=$email;
 		// Zur Startseite weiterleiten
-		header("location: ../backwaren.php"); // Redirecting To Other Page
+		header("location: backwaren.php"); // Redirecting To Other Page
 	} else {
 		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
 	}
