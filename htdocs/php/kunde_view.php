@@ -28,24 +28,24 @@
 <html>
 <title>Lecker: Kunden</title>
 <head>
- <link rel="stylesheet" href="../index.css" />
+ <link rel="stylesheet" href="index.css" />
 </head>
 <body>
-<img src="../b5.png" alt="logo" width="500" height="300">
+<img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
         <ul> 
-		<li><a href="../baeckerei.php">Lecker</a></li>
-		<li><a href="../mitarbeiter.php">Mitarbeiter</a></li>
-		<li><a href="../konditor.php">Konditor</a></li>
-		<li><a href="../kuechengehilfe.php">Kuechengehilfe</a></li>
+		<li><a href="baeckerei.php">Lecker</a></li>
+		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+		<li><a href="konditor.php">Konditor</a></li>
+		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
                 <li><a class="active" href="kunde.php">Kunde</a></li>
-                <li><a href="../backwaren.php">Backwaren</a></li>
-                <li><a href="../produkte.php">Produkte</a></li>
-		<li><a href="../backen.php">Backen</a></li>
-     		<li><a href="../einkauf.php">Einkauf</a></li>
-		<li><a href="../bestand.php">Bestandteil</a></li>	
-		<li><a href="../view.php">Views</a></li>	
+                <li><a href="backwaren.php">Backwaren</a></li>
+                <li><a href="produkte.php">Produkte</a></li>
+		<li><a href="backen.php">Backen</a></li>
+     		<li><a href="einkauf.php">Einkauf</a></li>
+		<li><a href="bestand.php">Bestandteil</a></li>	
+		<li><a href=".view.php">Views</a></li>	
        </ul>
 
 <br></br>

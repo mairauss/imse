@@ -33,7 +33,7 @@
 		<li><a href="bestand.php">Bestandteil</a></li>	
 		<li><a class="active" href="poss.php">Possessionem</a></li>
 		<li><a href="view.php">Views</a></li>	
-		<li><a href="./session/logout.php">Logout</a></li>	
+		<li><a href="logout.php">Logout</a></li>	
        </ul>
 
 <br></br>
