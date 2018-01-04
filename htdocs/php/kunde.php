@@ -44,12 +44,23 @@ if(isset($error)){ echo $error; }
 <br></br>
 
 
+  <div class="dropdown">
+    <span class="caret"></span></button>
+    <ul class="nav-menu" role="menu" aria-labelledby="menu1">
+		<li><a href="#Suche">Suche</a></li>
+		<li><a href="#Speichern">Speichern</a></li>
+		<li><a href="#Mutieren">Mutieren</a></li>
+		<li><a href="#Loeschen">Löschen</a></li>  
+    </ul>
+  </div><br>
 
 
+<a name="Suche">
 <div class="container">
 <div id="wrapper">
 <center>
   <div>
+  <h2>Kunde Suchen</h2>
     <form id='searchform' action='kunde.php' method='get'>
       <a href='kunde.php'>Alle Kunden</a> ---
       Suche nach Name: 
@@ -88,13 +99,119 @@ if(isset($error)){ echo $error; }
 				<td><?php echo $r['kgeburtsdatum']; ?></td>
 				<td><?php echo $r['bname']; ?></td>
 				<td><?php echo $r['passwort']; ?></td>
-				<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+				<td><a href="#">Edit</a> <a href="kunde_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
 			</tr>
 		<?php } ?>
       </table>
 	  
 	  
-	  
-	  
+	<a name="Speichern">
+	
+	<div class="container">
+		<h2>Kunde Speichern</h2>
+		<div class="row">
+				<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
+						<div class="col-sm-10">
+						  <input type="text" name="email"  class="form-control" id="input1" placeholder="E-Mail" />
+						</div>
+					</div>
+		 
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Name</label>
+						<div class="col-sm-10">
+						  <input type="text" name="kname"  class="form-control" id="input1" placeholder="Name" />
+						</div>
+					</div>
+		 
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
+						<div class="col-sm-10">
+						  <input type="date" name="kgeburtsdatum"  class="form-control" id="input1" placeholder="" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
+						<div class="col-sm-10">
+						  <input type="text" name="bname"  class="form-control" id="input1" placeholder="Unternehmen" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Passwort</label>
+						<div class="col-sm-10">
+						  <input type="text" name="passwort"  class="form-control" id="input1" placeholder="Passwort" />
+						</div>
+					</div>
+		 
+					<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+				</form>
+			</div>
+	</div> 
+	
+	<?php
+		/*
+		Quellen:
+		http://codingcyber.org/simple-crud-application-php-pdo-7284/
+		https://www.w3schools.com/php/php_mysql_insert.asp
+		https://www.formget.com/php-data-object/
+		*/
+		if(isset($_POST["submit"])){
+			try{
+				require_once('dbconnection.php');
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+				
+				$sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort) 
+				VALUES(:email, :kname, :kgeburtsdatum, :bname, :passwort)";
+				
+				
+				$result = $db->prepare($sql);
+				$res = $result->execute(array('email' => $_POST['email'],
+											  'kname' => $_POST['kname'],
+											  'kgeburtsdatum' => $_POST['kgeburtsdatum'],
+											  'bname' => $_POST['bname'],
+											  'passwort' => $_POST['passwort']
+											  ));
+				 if($res){
+					echo "Ihre Daten wurden erfolgreich gespeichert";
+				 }else{
+					echo "Fehler aufgetreten";
+				 }
+				 $db = null;
+			}
+			catch(PDOException $e)
+			{
+			echo $e->getMessage();
+			}
+
+		}
+	?>
+	
+	<a name="Mutieren">
+
+	
+	<a name="Loeschen">
+	<?php
+		/*
+		Quellen:
+		http://codingcyber.org/simple-crud-application-php-pdo-7284/
+		https://www.tutorialspoint.com/sqlite/sqlite_delete_query.htm
+		
+		
+		$DelSqlite = "DELETE FROM 'kunde' WHERE email=gerhard.naegele@testmail.com";
+		$result = $db->prepare($DelSqlite);
+		$res = $result -> execute(array($_GET['id']));
+		if($res){
+			header('location: kunde.php');
+		} 
+		else{
+			echo "Löschen fehlgeschlagen";
+		}
+		*/
+	?>
+	
 </body>
 </html>

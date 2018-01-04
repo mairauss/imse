@@ -62,12 +62,11 @@ FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
 CREATE TABLE kunde(
 kname char(50) NOT NULL,
-email text	 NOT NULL,
+email char(30)	 NOT NULL,
 kgeburtsdatum DATE,
 bname char(15) NOT NULL,
 passwort char ( 15 ) NOT NULL,
-PRIMARY KEY (email),
-FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE );
+PRIMARY KEY (email));
 
 /*bhersdatum deshalb ein primary key, weil ich eine Backware (zb.: Semmel) mehrmals pro Woche produziere*/
 CREATE TABLE backwaren(
