@@ -11,14 +11,14 @@
 				<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
 					<h3>Kundenregistrierung für Lecker</h2>
 					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
+						<label for="input1" class="col-sm-15 control-label">E-Mail Adresse</label>
 						<div class="col-sm-10">
 						  <input type="text" name="email"  class="form-control" id="input1" placeholder="E-Mail" />
 						</div>
 					</div>
 		 
 					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">Name</label>
+						<label for="input1" class="col-sm-15 control-label">Name</label>
 						<div class="col-sm-10">
 						  <input type="text" name="kname"  class="form-control" id="input1" placeholder="Name" />
 						</div>
@@ -46,9 +46,12 @@
 					</div>
 		 
 					<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+
+	
 				</form>
 			</div>
 		</div>
+
 
 		<?php
 		/*

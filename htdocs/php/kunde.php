@@ -49,8 +49,6 @@ if(isset($error)){ echo $error; }
     <ul class="nav-menu" role="menu" aria-labelledby="menu1">
 		<li><a href="#Suche">Suche</a></li>
 		<li><a href="#Speichern">Speichern</a></li>
-		<li><a href="#Mutieren">Mutieren</a></li>
-		<li><a href="#Loeschen">Löschen</a></li>  
     </ul>
   </div><br>
 
@@ -99,7 +97,7 @@ if(isset($error)){ echo $error; }
 				<td><?php echo $r['kgeburtsdatum']; ?></td>
 				<td><?php echo $r['bname']; ?></td>
 				<td><?php echo $r['passwort']; ?></td>
-				<td><a href="#">Edit</a> <a href="kunde_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
+				<td><a href="kunde_update.php?email=<?php echo $r['email']; ?>">Mutieren</a> <a href="kunde_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
 			</tr>
 		<?php } ?>
       </table>
