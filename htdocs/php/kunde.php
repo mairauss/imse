@@ -1,6 +1,5 @@
 <?php
-
-
+ include('session.php');
 
  try{
 	require_once('dbconnection.php');
@@ -13,7 +12,7 @@ if(isset($error)){ echo $error; }
  
  $sql = "SELECT * FROM kunde";
  $result = $db->query($sql);
- 
+
  ?>
 
 <!DOCTYPE html>

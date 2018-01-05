@@ -23,6 +23,6 @@ $user_check=$_SESSION['login_user'];
 if(!isset($login_session)){
 $db = null;
 // Redirecting To Home Page
-header('Location: ../backwaren.php'); 
+//header('Location: backwaren.php'); 
 }
 ?>

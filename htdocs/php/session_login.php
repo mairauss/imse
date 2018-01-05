@@ -30,7 +30,7 @@ if (empty($_POST['email']) || empty($_POST['passwort'])) {
 		// Session starten
 		$_SESSION['login_user']=$email;
 		// Zur Startseite weiterleiten
-		header("location: backwaren.php"); // Redirecting To Other Page
+		header("location: backwaren.php");
 	} else {
 		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
 	}

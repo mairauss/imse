@@ -16,7 +16,10 @@ gehalt double precision,
 mgeburtsdatum DATE,
 personalnr integer NOT NULL,
 bname char(15) NOT NULL,
-PRIMARY KEY (personalnr),
+passwort char ( 15 ) NOT NULL,
+accesslevel integer NOT NULL,
+email char(30)	 NOT NULL,
+PRIMARY KEY (email),
 FOREIGN KEY(bname) REFERENCES baeckerei ON DELETE CASCADE );
 
 CREATE TABLE kuehlraum(
@@ -66,6 +69,7 @@ email char(30)	 NOT NULL,
 kgeburtsdatum DATE,
 bname char(15) NOT NULL,
 passwort char ( 15 ) NOT NULL,
+accesslevel integer NOT NULL,
 PRIMARY KEY (email));
 
 /*bhersdatum deshalb ein primary key, weil ich eine Backware (zb.: Semmel) mehrmals pro Woche produziere*/
