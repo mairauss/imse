@@ -48,7 +48,8 @@ if(isset($error)){ echo $error; }
 		<li><a href="#Suche">Suche</a></li>
 		<li><a href="#Speichern">Speichern</a></li>
     </ul>
-  </div><br>
+  </div>
+  <br>
 
 
 <a name="Suche">
@@ -188,28 +189,6 @@ if(isset($error)){ echo $error; }
 		}
 	?>
 	
-	<a name="Mutieren">
-
-	
-	<a name="Loeschen">
-	<?php
-		/*
-		Quellen:
-		http://codingcyber.org/simple-crud-application-php-pdo-7284/
-		https://www.tutorialspoint.com/sqlite/sqlite_delete_query.htm
-		
-		
-		$DelSqlite = "DELETE FROM 'kunde' WHERE email=gerhard.naegele@testmail.com";
-		$result = $db->prepare($DelSqlite);
-		$res = $result -> execute(array($_GET['id']));
-		if($res){
-			header('location: kunde.php');
-		} 
-		else{
-			echo "Löschen fehlgeschlagen";
-		}
-		*/
-	?>
 	
 </body>
 </html>
