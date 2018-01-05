@@ -1,5 +1,4 @@
 <?php
- include('session.php');
 
  try{
 	require_once('dbconnection.php');
@@ -25,7 +24,7 @@ if(isset($error)){ echo $error; }
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-        <ul> 
+    <ul> 
 		<li><a href="baeckerei.php">Lecker</a></li>
 		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
 		<li><a href="konditor.php">Konditor</a></li>
@@ -38,12 +37,12 @@ if(isset($error)){ echo $error; }
 		<li><a href="bestand.php">Bestandteil</a></li>	
 		<li><a href="view.php">Views</a></li>	
 		<li><a href="session_logout.php">Logout</a></li>	
-       </ul>
-
-<br></br>
+    </ul>
 
 
-  <div class="dropdown">
+
+
+  <div class="undermenu">
     <span class="caret"></span></button>
     <ul class="nav-menu" role="menu" aria-labelledby="menu1">
 		<li><a href="#Suche">Suche</a></li>
@@ -84,6 +83,7 @@ if(isset($error)){ echo $error; }
 			<th>Geburtstag</th>
 			<th>Bname</th>
 			<th>Passwort</th>
+			<th>AccesLevel</th>
 			<th>EXTRAS</th>
 		</tr>
 		
@@ -96,6 +96,7 @@ if(isset($error)){ echo $error; }
 				<td><?php echo $r['kgeburtsdatum']; ?></td>
 				<td><?php echo $r['bname']; ?></td>
 				<td><?php echo $r['passwort']; ?></td>
+				<td><?php echo $r['accesslevel']; ?></td>
 				<td><a href="kunde_update.php?email=<?php echo $r['email']; ?>">Mutieren</a> <a href="kunde_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
 			</tr>
 		<?php } ?>
@@ -161,8 +162,8 @@ if(isset($error)){ echo $error; }
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 				
-				$sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort) 
-				VALUES(:email, :kname, :kgeburtsdatum, :bname, :passwort)";
+				$sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort, accesslevel) 
+				VALUES(:email, :kname, :kgeburtsdatum, :bname, :passwort, 1)";
 				
 				
 				$result = $db->prepare($sql);

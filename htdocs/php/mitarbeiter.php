@@ -1,15 +1,18 @@
-
 <?php
-  $user = '...';
-  $pass = '...';
-  $database = '...';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
 
- //var_dump($_GET);
-?>
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
+ 
+if(isset($error)){ echo $error; }
+ 
+ $sql = "SELECT * FROM mitarbeiter";
+ $result = $db->query($sql);
+
+ ?>
 
 <html>
 <title>Lecker: Mitarbeiter</title>
@@ -25,7 +28,7 @@
 		<li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
 		<li><a href="konditor.php">Konditor</a></li>
 		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-                <li><a href="kunde/kunde.php">Kunde</a></li>
+                <li><a href="kunde.php">Kunde</a></li>
                 <li><a href="backwaren.php">Backwaren</a></li>
                 <li><a href="produkte.php">Produkte</a></li>
 		<li><a href="backen.php">Backen</a></li>
@@ -34,189 +37,176 @@
 		<li><a href="logout.php">Logout</a></li>	
        </ul>
 
-<br></br>
+  <div class="undermenu">
+    <span class="caret"></span></button>
+    <ul class="nav-menu" role="menu" aria-labelledby="menu1">
+		<li><a href="#Suche">Suche</a></li>
+		<li><a href="#Speichern">Speichern</a></li>
+    </ul>
+  </div>
+  <br>
 
+<a name="Suche">
+<div class="container">
 <div id="wrapper">
 <center>
   <div>
+  <h2>Mitarbeiter Suchen</h2>
     <form id='searchform' action='mitarbeiter.php' method='get'>
       <a href='mitarbeiter.php'>Alle Mitarbeiter</a> ---
       Suche nach Name: 
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
-      <input id='submit' type='submit' class="testbutton" value='Search' />
     </form>
   </div>
-<?php
-  // check if search view of list view
-  if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM mitarbeiter WHERE mname like '%" . $_GET['search'] . "%'";
-  } else {
-    $sql = "SELECT * FROM mitarbeiter";
-  }
+  
+	  <table boarder="1">
+		<?php
+		  if (isset($_GET['search'])) {
+			$sql = "SELECT * FROM mitarbeiter WHERE mname like '" . $_GET['search'] . "'";
+		  } else {
+			$sql = "SELECT * FROM mitarbeiter";
+		  }
+		  // execute sql statement
+			$result = $db->query($sql);
+		?>
+		
+		<tr>
+			<th>Name</th>
+			<th>Gehalt</th>
+			<th>Geburtstag</th>
+			<th>PersonalNr</th>
+			<th>BNAME</th>
+			<th>Passwort</th>
+			<th>AccessLevel</th>
+			<th>EMail</th>
+			<th>EXTRAS</th>
+		</tr>
+		
+		<?php 
+			while($r = $result->fetch(PDO::FETCH_ASSOC)){
+			?>
+			<tr>
+				<td><?php echo $r['mname']; ?></td>
+				<td><?php echo $r['gehalt']; ?></td>
+				<td><?php echo $r['mgeburtsdatum']; ?></td>
+				<td><?php echo $r['personalnr']; ?></td>
+				<td><?php echo $r['bname']; ?></td>
+				<td><?php echo $r['passwort']; ?></td>
+				<td><?php echo $r['accesslevel']; ?></td>
+				<td><?php echo $r['email']; ?></td>
+				<td><a href="mitarbeiter_update.php?email=<?php echo $r['email']; ?>">Mutieren</a> <a href="mitarbeiter_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
+			</tr>
+		<?php } ?>
+      </table>
 
-  // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
-?>
 
- <div>
- <form id='searchabt' action='mitarbeiter.php' method='get'>
-   Suche PersonalNr einer bestimmter Mitarbeiter (name):
-     <input id='nachname' name='nachname' type='text' size='20' value='<?php if (isset($_GET['mmname'])) echo $_GET['nachname']; ?>' />
-      <input id='submit' type='submit' class="testbutton" value='Search' />
-
- </form>
-</div>
-
- <?php
- //Handle Stored Procedure
- if (isset($_GET['nachname']))
- {
-    //Call Stored Procedure  
-    $nachname = $_GET['nachname'];
-    $abtnr='';
-    $sproc = oci_parse($conn, 'begin persnr(:p1, :p2); end;');
-    //Bind variables, p1=input (nachname), p2=output (abtnr)
-    oci_bind_by_name($sproc, ':p1', $nachname);
-    oci_bind_by_name($sproc, ':p2', $abtnr, 20);
-    oci_execute($sproc);
-    $conn_err=oci_error($conn);
-    $proc_err=oci_error($sproc);
-    //If there have been no Connection or Database errors, print department
-    if(!$conn_err && !$proc_err){
-       echo("<br><b>" . $nachname . " hat PersonalNr =  " . $abtnr . "</b><br>" );  // prints OUT parameter of stored procedure
-    }
-    else{
-      //Print potential errors and warnings
-      print($conn_err);
-      print_r($proc_err);
-    }  
- }
-?>
 
 
 <br></br>
 
+	<a name="Speichern">
+	
+	<div class="container">
+		<h2>Mitarbeiter Speichern</h2>
+		<div class="row">
+				<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Name</label>
+						<div class="col-sm-10">
+						  <input type="text" name="mname"  class="form-control" id="input1" placeholder="Name" />
+						</div>
+					</div>
 
-<div>
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Gehalt</label>
+						<div class="col-sm-10">
+						  <input type="text" name="gehalt"  class="form-control" id="input1" placeholder="Gehalt" />
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
+						<div class="col-sm-10">
+						  <input type="date" name="mgeburtsdatum"  class="form-control" id="input1" placeholder="" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">PersonalNr</label>
+						<div class="col-sm-10">
+						  <input type="text" name="personalnr"  class="form-control" id="input1" placeholder="PersonalNr" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
+						<div class="col-sm-10">
+						  <input type="text" name="bname"  class="form-control" id="input1" placeholder="Unternehmen" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">Passwort</label>
+						<div class="col-sm-10">
+						  <input type="text" name="passwort"  class="form-control" id="input1" placeholder="Passwort" />
+						</div>
+					</div>
+				
+				
+					<div class="form-group">
+						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
+						<div class="col-sm-10">
+						  <input type="text" name="email"  class="form-control" id="input1" placeholder="E-Mail" />
+						</div>
+					</div>
+		  
+					<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+				</form>
+			</div>
+	</div> 
+	
+	<?php
+		/*
+		Quellen:
+		http://codingcyber.org/simple-crud-application-php-pdo-7284/
+		https://www.w3schools.com/php/php_mysql_insert.asp
+		https://www.formget.com/php-data-object/
+		*/
+		if(isset($_POST["submit"])){
+			try{
+				require_once('dbconnection.php');
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  <form id='insertform' action='mitarbeiter.php' method='get'>
+				
+				$sql = "INSERT INTO mitarbeiter (mname, gehalt, mgeburtsdatum, personalnr, bname, passwort, accesslevel, email) 
+				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, :bname, :passwort, 9, :email)";
+				
+				
+				$result = $db->prepare($sql);
+				$res = $result->execute(array('mname' => $_POST['mname'],
+											  'gehalt' => $_POST['gehalt'],
+											  'mgeburtsdatum' => $_POST['mgeburtsdatum'],
+											  'personalnr' => $_POST['personalnr'],
+											  'bname' => $_POST['bname'],
+											  'passwort' => $_POST['passwort'],
+											  'email' => $_POST['email'],
+											  ));
+				 if($res){
+					echo "Ihre Daten wurden erfolgreich gespeichert";
+				 }else{
+					echo "Fehler aufgetreten";
+				 }
+				 $db = null;
+			}
+			catch(PDOException $e)
+			{
+			echo $e->getMessage();
+			}
 
-    Neue Mitarbeiter einfuegen:
-<center>
-	<table style='border: 5px solid #DDDDDD'>
-	  <thead>
-	    <tr>
-          <th>Name</th>
-          <th>Gehalt</th>
-          </tr>
-	  </thead>
+		}
+	?>
 
-          <tbody>
-	     <tr>
-                <td>
-                   <input id='mname' name='mname' type='text' size='50' value='<?php if (isset($_GET['mname'])) echo $_GET['mname']; ?>' />
-                </td>
-                <td>
-                   <input id='gehalt' name='gehalt' type='number' size='20' value='<?php if (isset($_GET['gehalt'])) echo $_GET['gehalt']; ?>' />
-                </td>
-                </tr>
-           </tbody>
-           </table>
-
-<table style='border: 5px solid #DDDDDD'>
-	<thead>
-	    <tr>
-          <th>Geburtsdatum</th>
-          <th>Baeckerei</th>
-	    </tr>
-	  </thead>
-		<tbody>
-	        <tr>
-         	<td>
-                   <input id='mgeburtsdatum' name='mgeburtsdatum' type='text' size='12' value='<?php if (isset($_GET['mgeburtsdatum'])) echo $_GET['mgeburtsdatum']; ?>' />
-                </td>
-                <td>
-                   <input id='bname' name='bname' type='text' size='12' value='<?php if (isset($_GET['bname'])) echo $_GET['bname']; ?>' />
-                </td>
-	      </tr>
-           </tbody>
- 	</table>
-        
-
-        <input id='submit' type='submit' class="testbutton" value='Insert' />
-</center>
-  </form>
-</div>
-
-<?php
-  //Handle insert
-
-   if (isset($_GET['mname'])) 
-  {
-    //Prepare insert statementd
-    $sql = "INSERT INTO mitarbeiter VALUES('" . $_GET['mname'] . "'," . $_GET['gehalt'] .
- ",to_date('" . $_GET['mgeburtsdatum'] . "','yyyymmdd')  ," . " mitar_persnr.nextval" . ",'"  . $_GET['bname'] . "')";    
-//Parse and execute statement
-    $insert = oci_parse($conn, $sql);
-    oci_execute($insert);
-
-
-    $conn_err=oci_error($conn);
-    $insert_err=oci_error($insert);
    
-    if(!$conn_err & !$insert_err){
-	print("Successfully inserted");
- 	print("<br>");
-    }
-    //Print potential errors and warnings
-    else{
-       print($conn_err);
-       print_r($insert_err);
-
-    }
-    oci_free_statement($insert);
-  } 
-
-?>
-
-
-
- <table style='border: 5px solid #DDDDDD'>
-    <thead>
-      <tr>
-          <th>PersonalNr</th>
-          <th>Name</th>
-          <th>Gehalt</th>
-          <th>Geburtsdatum</th>
-          <th>Baeckerei</th>
-      </tr>
-    </thead>
-    <tbody>
-<?php
-  // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['PERSONALNR'] . "</td>";
-    echo "<td>" . $row['MNAME'] . "</td>";      
-    echo "<td>" . $row['GEHALT'] . "</td>";
-    echo "<td>" . $row['MGEBURTSDATUM'] . "</td>";
-    echo "<td>" . $row['BNAME'] . "</td>";
-    echo "</tr>";
-  }
-?>
-    </tbody>
-  </table>
-
-<div>Insgesamt <?php echo oci_num_rows($stmt); ?> Mitarbeiter gefunden!</div>
-</center>
-<br></br>
-<?php  oci_free_statement($stmt); ?>
-
-
-<?php
-oci_close($conn);
-?>
 </div>
 </body>
 </html>
