@@ -113,35 +113,35 @@ if(isset($error)){ echo $error; }
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
 						<div class="col-sm-10">
-						  <input type="text" name="email"  class="form-control" id="input1" placeholder="E-Mail" />
+						  <input type="email" name="email"  required class="form-control" id="input1" placeholder="E-Mail" />
 						</div>
 					</div>
 		 
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Name</label>
 						<div class="col-sm-10">
-						  <input type="text" name="kname"  class="form-control" id="input1" placeholder="Name" />
+						  <input type="text" name="kname"  required class="form-control" id="input1" placeholder="Name" />
 						</div>
 					</div>
 		 
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
 						<div class="col-sm-10">
-						  <input type="date" name="kgeburtsdatum"  class="form-control" id="input1" placeholder="" />
+						  <input type="date" max="2000-01-01" name="kgeburtsdatum" required  class="form-control" id="input1" placeholder="" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
 						<div class="col-sm-10">
-						  <input type="text" name="bname"  class="form-control" id="input1" placeholder="Unternehmen" />
+						  <input type="text" name="bname" required class="form-control" id="input1" placeholder="Unternehmen" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Passwort</label>
 						<div class="col-sm-10">
-						  <input type="text" name="passwort"  class="form-control" id="input1" placeholder="Passwort" />
+						  <input type="text" name="passwort" required class="form-control" id="input1" placeholder="Passwort" />
 						</div>
 					</div>
 		 

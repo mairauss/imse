@@ -66,42 +66,42 @@
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Name</label>
 						<div class="col-sm-10">
-						  <input type="text" name="mname"  class="form-control" value="<?php echo $r['mname']?>" placeholder="Name" />
+						  <input type="text" name="mname" required class="form-control" value="<?php echo $r['mname']?>" placeholder="Name" />
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Gehalt</label>
 						<div class="col-sm-10">
-						  <input type="text" name="gehalt"  class="form-control" value="<?php echo $r['gehalt']?>" placeholder="Gehalt" />
+						  <input type="number" min="0"  name="gehalt" required class="form-control" value="<?php echo $r['gehalt']?>" placeholder="Gehalt" />
 						</div>
 					</div>					
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
 						<div class="col-sm-10">
-						  <input type="date" name="mgeburtsdatum"  class="form-control" value="<?php echo $r['mgeburtsdatum']?>" placeholder="" />
+						  <input type="date" max="2000-01-01" name="mgeburtsdatum" required class="form-control" value="<?php echo $r['mgeburtsdatum']?>" placeholder="" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">PersonalNr</label>
 						<div class="col-sm-10">
-						  <input type="text" name="personalnr"  class="form-control" value="<?php echo $r['personalnr']?>" placeholder="PersonalNr" />
+						  <input type="text" name="personalnr" required class="form-control" value="<?php echo $r['personalnr']?>" placeholder="PersonalNr" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
 						<div class="col-sm-10">
-						  <input type="text" name="bname"  class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
+						  <input type="text" name="bname" required class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Passwort</label>
 						<div class="col-sm-10">
-						  <input type="text" name="passwort"  class="form-control" value="<?php echo $r['passwort']?>" placeholder="Passwort" />
+						  <input type="text" name="passwort" required class="form-control" value="<?php echo $r['passwort']?>" placeholder="Passwort" />
 						</div>
 					</div>
 				
@@ -109,7 +109,7 @@
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
 						<div class="col-sm-10">
-						  <input type="text" name="email"  class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
+						  <input type="email" name="email" required class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
 						</div>
 					</div>
 		 

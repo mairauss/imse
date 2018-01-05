@@ -64,35 +64,35 @@
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
 						<div class="col-sm-10">
-						  <input type="text" name="email"  class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
+						  <input type="text" name="email" required class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
 						</div>
 					</div>
 		 
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Name</label>
 						<div class="col-sm-10">
-						  <input type="text" name="kname"  class="form-control" value="<?php echo $r['kname']?>" placeholder="Name" />
+						  <input type="text" name="kname" required class="form-control" value="<?php echo $r['kname']?>" placeholder="Name" />
 						</div>
 					</div>
 		 
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
 						<div class="col-sm-10">
-						  <input type="date" name="kgeburtsdatum"  class="form-control" value="<?php echo $r['kgeburtsdatum']?>" placeholder="" />
+						  <input type="date" max="2000-01-01" name="kgeburtsdatum" required class="form-control" value="<?php echo $r['kgeburtsdatum']?>" placeholder="" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
 						<div class="col-sm-10">
-						  <input type="text" name="bname"  class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
+						  <input type="text" name="bname" required class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Passwort</label>
 						<div class="col-sm-10">
-						  <input type="text" name="passwort"  class="form-control" value="<?php echo $r['passwort']?>" placeholder="Passwort" />
+						  <input type="text" name="passwort" required class="form-control" value="<?php echo $r['passwort']?>" placeholder="Passwort" />
 						</div>
 					</div>
 		 
