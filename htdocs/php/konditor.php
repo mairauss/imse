@@ -72,9 +72,9 @@
           <th>Personal Nr.</th>
           <th>Berufserfahrung</th>
           <th>Ausbildung</th>
-            <th>Bonus</th>
-            <th>E-mail</th>
-	     <th>Kueche Nr.</th>
+          <th>Bonus</th>
+          <th>E-mail</th>
+          <th>Kueche Nr.</th>
       </tr>
     </thead>
     <tbody>
@@ -130,6 +130,7 @@
 </div>
 </div>
 
+
 <div class="form-group">
 <label for="input1" class="col-sm-5 control-label">E-mail</label>
 <div class="col-sm-10">
@@ -137,12 +138,6 @@
 </div>
 </div>
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Kueche Nr.</label>
-<div class="col-sm-10">
-<input type="integer" name="kuecheNr" required  class="form-control" id="input1" placeholder="Kueche Nr." />
-</div>
-</div>
 <input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
 
 </form>
@@ -163,7 +158,7 @@
             
             
             $sql = "INSERT INTO konditor (personalnr, berufserfahrung, ausbildung, bonus, email, kuecheNr)
-            VALUES(:personalNr, :berufserfahrung, :ausbildung, :bonus, :email, :kuecheNr)";
+            VALUES(:personalnr, :berufserfahrung, :ausbildung, :bonus, :email, 987)";
             
             
             $result = $db->prepare($sql);
@@ -172,7 +167,6 @@
                                           'ausbildung' => $_POST['ausbildung'],
                                           'bonus' => $_POST['bonus'],
                                           'email' => $_POST['email'],
-                                          'kuecheNr' => $_POST['kuecheNr'],
                                           ));
             if($res){
                 echo "Ihre Daten wurden erfolgreich gespeichert";

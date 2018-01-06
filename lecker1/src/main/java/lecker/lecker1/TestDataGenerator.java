@@ -310,13 +310,13 @@ public class TestDataGenerator {
 			for (int i = 0; i < 20; i++) {
 				if (i < 10) {
 					String sql = "INSERT INTO konditor VALUES(" + 10 + i + "," + i + ",'Kochschule'," + 1 + i
-							+ ",987,'mitarbeiter" + id3.getAndIncrement() + "@gmail.com')";
+							+ ",'mitarbeiter" + id3.getAndIncrement() + "@gmail.com', 987)";
 					pstm = con.prepareStatement(sql);
 					pstm.executeUpdate();
 					pstm.close();
 				} else {
-					String sql = "INSERT INTO konditor VALUES(" + 1 + i + "," + i + ",'Kochschule'," + 1 + i
-							+ ",987)";
+					String sql = "INSERT INTO konditor VALUES(" + 1 + i + "," + i + ",'Kochschule',"  + i
+							+ ",'mitarbeiter" + id3.getAndIncrement() + "@gmail.com', 987)";
 					pstm = con.prepareStatement(sql);
 					pstm.executeUpdate();
 					pstm.close();
