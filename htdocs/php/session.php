@@ -40,6 +40,6 @@ $user_check=$_SESSION['login_user'];
 	
 if(!isset($login_session)){
   // Redirecting To Home Page
-  header('Location: session_index.php'); 
+  header('Location: baeckerei.php'); 
 }
 ?>

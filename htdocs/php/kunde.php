@@ -1,4 +1,6 @@
 <?php
+    include('session.php');
+
     try{
         require_once('dbconnection.php');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -10,6 +12,8 @@
     
     $sql = "SELECT * FROM kunde";
     $result = $db->query($sql);
+		
+	
     ?>
 
 <!DOCTYPE html>
