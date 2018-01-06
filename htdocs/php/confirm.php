@@ -31,7 +31,6 @@
            	<li><a href="backen.php">Backen</a></li>
      		<li><a class="active" href="einkauf.php">Einkauf</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>	
-		<li><a href="view.php">Views</a></li>	
        </ul>
 
 <br>
