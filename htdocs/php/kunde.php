@@ -13,6 +13,23 @@
     $sql = "SELECT * FROM kunde";
     $result = $db->query($sql);
 		
+
+	$logedinuser = $login_session;
+	    if (isset($logedinuser)) {
+        $sql = "SELECT * FROM kunde WHERE email  '$logedinuser'";
+		$result = $db->query($ses_sql);
+		$data = $result->fetch(PDO::FETCH_ASSOC);
+			//Administrator Rechte
+			if($data['accesslevel'] == 9){
+				echo "Access Level 0";
+			} else{
+				echo "Access Level ungleich 9 unzureichende Berechtigung";
+				header('Location: baeckerei.php');
+			};
+		} else {
+        echo "Unzeireichende User Berechtigung";
+		}
+
 	
     ?>
 

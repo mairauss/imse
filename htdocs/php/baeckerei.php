@@ -49,7 +49,6 @@ td{
 		<div id="main">
 			<h1>Login Lecker</h1>
 			<div id="login">
-				<h2>Login Form</h2>
 				<form action="" method="post">
 					<label>E-Mail :</label>
 					<input id="name" name="email" placeholder="e-mail adresse" type="text">
@@ -57,6 +56,15 @@ td{
 					<input id="passwort" name="passwort" placeholder="**********" type="password">
 					<input name="submit" type="submit" value=" Login ">
 					<span><?php echo $error; ?></span>
+				</form>
+			</div>
+		</div>
+		
+		<div id="main">
+			<h1>Register Lecker</h1>
+			<div id="login">
+				<form action="" method="post">
+					<button type="button" onclick="href="kunde_register.php">Click Me!</button>
 				</form>
 			</div>
 		</div>

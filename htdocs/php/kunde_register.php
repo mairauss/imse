@@ -1,11 +1,16 @@
-<!DOCTYPE html>
 <html>
-	<head>
-		<title>Kundenregistrierung Lecker</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" >
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" ></script>
-	</head>
-	<body>
+<title>Lecker: Kunden</title>
+<head>
+<link rel="stylesheet" href="index.css" />
+</head>
+<body>
+<img src="b5.png" alt="logo" width="500" height="300">
+<br></br>
+
+<ul>
+<li><a href="baeckerei.php">Login</a></li>
+</ul>
+
 		<div class="container">
 			<div class="row">
 				<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
