@@ -14,7 +14,7 @@
 <?php
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
-	include('session.php');
+	//include('session.php');
 ?>
 
 <html>
@@ -41,7 +41,7 @@
             </ul>
 
             <br></br>
-<b id="welcome">Welcome Backware : <i><?php echo $login_session; ?></i></b>
+
 
         <div id="wrapper">
             <center>
@@ -132,7 +132,7 @@
                 $insertstmt = "INSERT INTO backwaren VALUES(" . $_POST['artikelnr'] . ",'"  . $_POST['bhersdatum'] . "', '" . $_POST['gname'] .
                               "', ". $_POST['bpreis'] . ", '" . $_POST['bhaltdauer'] . "', " . $_POST['menge'] . ")";
                 //Parse and execute statement
-                $insert = new SQLite3('../backshop.db');
+                $insert = new SQLite3('../../backshop.db');
                 $result = $insert ->exec($insertstmt);
                 $insert->close();
                 unset($insert);
