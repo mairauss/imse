@@ -19,12 +19,11 @@
  
 		 if(isset($_POST) & !empty($_POST)){
 
-			$sql = "UPDATE kunde SET email=:email, kname=:kname, kgeburtsdatum=:kgeburtsdatum, bname=:bname, passwort=:passwort WHERE email=:email";
+			$sql = "UPDATE kunde SET email=:email, kname=:kname, kgeburtsdatum=:kgeburtsdatum, passwort=:passwort WHERE email=:email";
 			$result = $db->prepare($sql);
 			$res = $result->execute(array(    'email' => $_POST['email'],
 										      'kname' => $_POST['kname'],
 											  'kgeburtsdatum' => $_POST['kgeburtsdatum'],
-											  'bname' => $_POST['bname'],
 											  'passwort' => $_POST['passwort']
 											  ));
 				 if($res){
@@ -81,13 +80,7 @@
 						  <input type="date" max="2000-01-01" name="kgeburtsdatum" required class="form-control" value="<?php echo $r['kgeburtsdatum']?>" placeholder="" />
 						</div>
 					</div>
-					
-					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
-						<div class="col-sm-10">
-						  <input type="text" name="bname" required class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
-						</div>
-					</div>
+				
 					
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Passwort</label>

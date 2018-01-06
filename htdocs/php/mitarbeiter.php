@@ -140,13 +140,6 @@ if(isset($error)){ echo $error; }
 					</div>
 					
 					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
-						<div class="col-sm-10">
-						  <input type="text" name="bname" required class="form-control" id="input1" placeholder="Unternehmen" />
-						</div>
-					</div>
-					
-					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">Passwort</label>
 						<div class="col-sm-10">
 						  <input type="text" name="passwort" required class="form-control" id="input1" placeholder="Passwort" />
@@ -181,7 +174,7 @@ if(isset($error)){ echo $error; }
 
 				
 				$sql = "INSERT INTO mitarbeiter (mname, gehalt, mgeburtsdatum, personalnr, bname, passwort, accesslevel, email) 
-				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, :bname, :passwort, 9, :email)";
+				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, 'Lecker', :passwort, 9, :email)";
 				
 				
 				$result = $db->prepare($sql);

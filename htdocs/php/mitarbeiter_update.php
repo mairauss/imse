@@ -19,13 +19,11 @@
  
 		 if(isset($_POST) & !empty($_POST)){
 
-			$sql = "UPDATE mitarbeiter SET mname=:mname, gehalt=:gehalt, mgeburtsdatum=:mgeburtsdatum, personalnr=:personalnr, bname=:bname, passwort=:passwort WHERE email=:email";
+			$sql = "UPDATE mitarbeiter SET mname=:mname, gehalt=:gehalt, mgeburtsdatum=:mgeburtsdatum, passwort=:passwort WHERE email=:email";
 			$result = $db->prepare($sql);
 			$res = $result->execute(array(	  'mname' => $_POST['mname'],
 											  'gehalt' => $_POST['gehalt'],
 											  'mgeburtsdatum' => $_POST['mgeburtsdatum'],
-											  'personalnr' => $_POST['personalnr'],
-											  'bname' => $_POST['bname'],
 											  'passwort' => $_POST['passwort'],
 											  'email' => $_POST['email'],
 										));
@@ -81,20 +79,6 @@
 						<label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
 						<div class="col-sm-10">
 						  <input type="date" max="2000-01-01" name="mgeburtsdatum" required class="form-control" value="<?php echo $r['mgeburtsdatum']?>" placeholder="" />
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">PersonalNr</label>
-						<div class="col-sm-10">
-						  <input type="text" name="personalnr" required class="form-control" value="<?php echo $r['personalnr']?>" placeholder="PersonalNr" />
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
-						<div class="col-sm-10">
-						  <input type="text" name="bname" required class="form-control" value="<?php echo $r['bname']?>" placeholder="Unternehmen" />
 						</div>
 					</div>
 					

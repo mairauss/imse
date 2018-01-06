@@ -130,13 +130,6 @@ Suche nach Name:
 </div>
 
 <div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Unternehmen</label>
-<div class="col-sm-10">
-<input type="text" name="bname" required class="form-control" id="input1" placeholder="Unternehmen" />
-</div>
-</div>
-
-<div class="form-group">
 <label for="input1" class="col-sm-5 control-label">Passwort</label>
 <div class="col-sm-10">
 <input type="text" name="passwort" required class="form-control" id="input1" placeholder="Passwort" />
@@ -161,14 +154,13 @@ Suche nach Name:
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort, accesslevel)
-            VALUES(:email, :kname, :kgeburtsdatum, :bname, :passwort, 1)";
+            VALUES(:email, :kname, :kgeburtsdatum, 'Lecker' , :passwort, 1)";
             
             
             $result = $db->prepare($sql);
             $res = $result->execute(array('email' => $_POST['email'],
                                           'kname' => $_POST['kname'],
                                           'kgeburtsdatum' => $_POST['kgeburtsdatum'],
-                                          'bname' => $_POST['bname'],
                                           'passwort' => $_POST['passwort']
                                           ));
             if($res){
