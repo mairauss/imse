@@ -2,11 +2,12 @@
 /*
 Quellen: 
 https://www.formget.com/login-form-in-php/
+http://www.genecasanova.com/labs/memberships/form-sessions-php.html
 */
 include('session_login.php');
 
 if(isset($_SESSION['login_user'])){
-header("location: backwaren.php");
+	header("location: session_profile.php");
 }
 ?>
 <!DOCTYPE html>

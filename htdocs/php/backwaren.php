@@ -1,4 +1,4 @@
-//<?php
+<?php
 //USER MUSS SICH ZUERST EINLOGGEN, DAMIT DIE SEITE AUFGERUFEN WERDEN KANN
 //  $user = '';
 //  $pass = '';
@@ -14,6 +14,7 @@
 <?php
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
+	include('session.php');
 ?>
 
 <html>
@@ -36,10 +37,11 @@
      		<li><a href="einkauf.php">Einkauf</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>	
 		<li><a href="view.php">Views</a></li>	
-                <li><a href="logout.php">Logout</a></li>	
+                <li><a href="session_logout.php">Logout</a></li>	
             </ul>
 
             <br></br>
+<b id="welcome">Welcome Backware : <i><?php echo $login_session; ?></i></b>
 
         <div id="wrapper">
             <center>

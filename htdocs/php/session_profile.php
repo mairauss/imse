@@ -9,7 +9,7 @@ include('session.php');
 </head>
 	<body>
 		<div id="profile">
-			<b id="welcome">Willkomen : <i><?php echo $login_session; ?></i></b>
+			<b id="welcome">Willkomen Gerhard : <i><?php echo $login_session; ?></i></b>
 
 		</div>
 	</body>

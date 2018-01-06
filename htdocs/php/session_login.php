@@ -2,6 +2,7 @@
 /*
 Quellen:
 https://www.formget.com/login-form-in-php/
+http://www.genecasanova.com/labs/memberships/form-sessions-php.html
 */
 // Starting Session for User Restriction
 session_start(); 
@@ -9,8 +10,8 @@ session_start();
 $error=''; 
 
 if (isset($_POST['submit'])) {
-if (empty($_POST['email']) || empty($_POST['passwort'])) {	
-	$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
+	if (empty($_POST['email']) || empty($_POST['passwort'])) {	
+		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
 } else {
 	// Initializing $email and $passwort
 	$email=$_POST['email'];
@@ -23,14 +24,14 @@ if (empty($_POST['email']) || empty($_POST['passwort'])) {
 		$error = $e->getMessage();
 	}
 	// SQL Select for all Registered Users
-	$sql = "select * from kunde where passwort='$passwort' AND email='$email'";
+	$sql = "SELECT * FROM kunde where passwort='$passwort' AND email='$email'";
 	$rows = count($sql);
 	//$result = $db->query($sql);
 	if ($rows == 1) {
 		// Session starten
 		$_SESSION['login_user']=$email;
 		// Zur Startseite weiterleiten
-		header("location: backwaren.php");
+		header("location: session_profile.php");
 	} else {
 		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
 	}

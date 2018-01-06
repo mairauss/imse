@@ -3,6 +3,10 @@
 /*
 Quellen:
 https://www.formget.com/login-form-in-php/
+http://php.net/manual/en/sqlite3result.fetcharray.php
+http://www.genecasanova.com/labs/memberships/form-sessions-php.html
+https://stackoverflow.com/questions/28597617/convert-pdofetch-assoc-to-sqlite
+http://php.net/manual/en/sqlite3result.fetcharray.php
 */
 // Datenbankverbindung herstellen
 	 try{
@@ -17,12 +21,25 @@ session_start();
 $user_check=$_SESSION['login_user'];
 
 // SQL Select for all Registered Users
-	$ses_sql = "select email from kunde where='$user_check'";
-	$row = count($ses_sql);
-	$login_session =$row['email'];
+	$ses_sql = "SELECT * FROM kunde WHERE email='$user_check'";
+	//$row = fetchArray($ses_sql);
+	$result = $db->query($ses_sql);
+
+	$result_items = array();
+	while($data = $result->fetch(PDO::FETCH_ASSOC)) {
+		//print_r($data);
+		if(!isset($data['email'])) continue;
+		
+			$login_session =$data['email'];
+
+	}
+
+	
+	
+
+	
 if(!isset($login_session)){
-$db = null;
-// Redirecting To Home Page
-//header('Location: backwaren.php'); 
+  // Redirecting To Home Page
+  header('Location: session_index.php'); 
 }
 ?>

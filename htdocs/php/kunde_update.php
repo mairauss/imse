@@ -64,7 +64,7 @@
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
 						<div class="col-sm-10">
-						  <input type="text" name="email" required class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
+						  <input type="email" name="email" required class="form-control" value="<?php echo $r['email']?>" placeholder="E-Mail" />
 						</div>
 					</div>
 		 
