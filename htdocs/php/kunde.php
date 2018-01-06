@@ -32,10 +32,9 @@
 <li><a href="konditor.php">Konditor</a></li>
 <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
 <li><a class="active" href="kunde.php">Kunde</a></li>
-<li><a href="backwaren.php">Backwaren</a></li>
+<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
 <li><a href="produkte.php">Produkte</a></li>
 <li><a href="backen.php">Backen</a></li>
-<li><a href="einkauf.php">Einkauf</a></li>
 <li><a href="bestand.php">Bestandteil</a></li>
 <li><a href="session_logout.php">Logout</a></li>
 </ul>
