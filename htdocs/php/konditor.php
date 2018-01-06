@@ -46,7 +46,7 @@
   <div>
     <form id='searchform' action='konditor.php' method='get'>
       <a href='konditor.php'>Alle Konditoren</a> ---
-      Suche nach Name: 
+      Suche nach Personal Nr.: 
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
       <input id='submit' type='submit' class="testbutton" value='Search' />
     </form>

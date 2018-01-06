@@ -347,15 +347,17 @@ public class TestDataGenerator {
 			 * );
 			 */
 
-			/*for (int i = 20; i < 25; i++) {
-				String sql = "INSERT INTO kuechengehilfe VALUES(" + 1 + i + ",'Vormittag',987)";
+			for (int i = 20; i < 25; i++) {
+				String sql = "INSERT INTO kuechengehilfe VALUES(" + 1 + i + ",'Vormittag'"+
+			    ",'mitarbeiter" + id3.getAndIncrement() + "@gmail.com', 987)";
 				pstm = con.prepareStatement(sql);
 				pstm.executeUpdate();
 				pstm.close();
 			}
 
 			for (int i = 25; i < 30; i++) {
-				String sql = "INSERT INTO kuechengehilfe VALUES(" + 1 + i + ",'Nachmittag',987)";
+				String sql = "INSERT INTO kuechengehilfe VALUES(" + 1 + i + ",'Nachmittag'"+ 
+			    ",'mitarbeiter" + id3.getAndIncrement() + "@gmail.com', 987)";
 				pstm = con.prepareStatement(sql);
 				pstm.executeUpdate();
 				pstm.close();

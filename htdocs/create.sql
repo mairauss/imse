@@ -40,8 +40,6 @@ FOREIGN KEY (kuehlraumNr) REFERENCES kuehlraum ON DELETE CASCADE );
 CREATE TABLE kuechengehilfe(
 personalnr integer NOT NULL,
 betriebsmodus char(15),
-einstelldatum DATE,
-kkleidung char(50),
 kuecheNr integer NOT NULL,
 email char(30)     NOT NULL,
 PRIMARY KEY (personalnr),
