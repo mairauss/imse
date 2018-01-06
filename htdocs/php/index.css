@@ -137,6 +137,10 @@ li a:hover:not(.active) {
 .active {
     background-color: #663300;
 }
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
 
 /* Textfield */
 input[type=text2] {
@@ -165,7 +169,6 @@ h1{
 	text-align: center;
 }
 #wrapper{
-	box-shadow:0 0 0 128px rgba(235, 242 ,255, 0.3) inset;
 	
     border-radius: 10px;
     text-align: center;

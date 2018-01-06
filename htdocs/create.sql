@@ -16,22 +16,22 @@ gehalt double precision,
 mgeburtsdatum DATE,
 personalnr integer NOT NULL,
 bname char(15) NOT NULL,
-PRIMARY KEY (personalnr),
+passwort char ( 15 ) NOT NULL,
+accesslevel integer NOT NULL,
+email char(30)	 NOT NULL,
+PRIMARY KEY (email),
 FOREIGN KEY(bname) REFERENCES baeckerei ON DELETE CASCADE );
 
 CREATE TABLE kuehlraum(
 kuehlraumNr integer NOT NULL,
 temp double precision DEFAULT '4' NOT NULL,
 grundflaeche double precision,
-regelung varchar(1000),
-ausstattung varchar(80),
 PRIMARY KEY (kuehlraumNr),
 CHECK (temp<8 AND temp>=0)
 );
 
 CREATE TABLE kueche(
 kuecheNr integer NOT NULL,
-ausstattung varchar(80) NOT NULL,
 grundflaeche double precision,
 kuehlraumNr integer NOT NULL,
 PRIMARY KEY (kuecheNr),
@@ -39,35 +39,35 @@ FOREIGN KEY (kuehlraumNr) REFERENCES kuehlraum ON DELETE CASCADE );
 
 CREATE TABLE kuechengehilfe(
 personalnr integer NOT NULL,
-mname char(50) NOT NULL,
 betriebsmodus char(15),
 einstelldatum DATE,
 kkleidung char(50),
 kuecheNr integer NOT NULL,
-PRIMARY KEY (personalNr),
+email char(30)     NOT NULL,
+PRIMARY KEY (personalnr),
 CHECK (betriebsmodus='Vormittag' OR betriebsmodus='Nachmittag'),
-FOREIGN KEY (personalNr) REFERENCES mitarbeiter ON DELETE CASCADE,
+FOREIGN KEY (email) REFERENCES mitarbeiter ON DELETE CASCADE,
 FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
 CREATE TABLE konditor(
 personalnr integer NOT NULL,
-mname char(50) NOT NULL,
 berufserfahrung integer NOT NULL,
 ausbildung varchar(80),
 bonus double precision DEFAULT '30',
+email char(30)     NOT NULL,
 kuecheNr integer NOT NULL,
 PRIMARY KEY (personalnr),
-FOREIGN KEY (personalnr) REFERENCES mitarbeiter ON DELETE CASCADE,
+FOREIGN KEY (email) REFERENCES mitarbeiter ON DELETE CASCADE,
 FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
 CREATE TABLE kunde(
 kname char(50) NOT NULL,
-email text	 NOT NULL,
+email char(30)	 NOT NULL,
 kgeburtsdatum DATE,
 bname char(15) NOT NULL,
 passwort char ( 15 ) NOT NULL,
-PRIMARY KEY (email),
-FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE );
+accesslevel integer NOT NULL,
+PRIMARY KEY (email));
 
 /*bhersdatum deshalb ein primary key, weil ich eine Backware (zb.: Semmel) mehrmals pro Woche produziere*/
 CREATE TABLE backwaren(
@@ -86,6 +86,7 @@ pname char(50) UNIQUE,
 ppreis double precision,
 phersdatum DATE,
 phaltdauer DATE,
+menge integer,
 kuehlraumNr integer NOT NULL,
 PRIMARY KEY (barcode),
 FOREIGN KEY (kuehlraumNr) REFERENCES kuehlraum ON DELETE CASCADE );
