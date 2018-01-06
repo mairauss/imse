@@ -45,7 +45,7 @@
   <div>
     <form id='searchform' action='kuechengehilfe.php' method='get'>
       <a href='kuechengehilfe.php'>Alle Kuechengehilfe(n)</a> ---
-      Suche nach Personal Nr.: 
+      Suche nach Personal Nr.:
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
       <input id='submit' type='submit' class="testbutton" value='Search' />
     </form>
