@@ -18,7 +18,7 @@ public class TestDataGenerator {
 			stmt.setQueryTimeout(30); // set timeout to 30 sec.
 
 		stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
-			stmt.executeUpdate("INSERT INTO anschrift VALUES ('Lecker', 'Wehlistraße 27')");
+			stmt.executeUpdate("INSERT INTO anschrift VALUES ('Lecker', 'Wien, 1200, Wehlistraße 27')");
 			stmt.executeUpdate("INSERT INTO kuehlraum VALUES (123, 4, 18.3)");
 			stmt.executeUpdate("INSERT INTO kueche VALUES (987, 32.2, 123)");
 			stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");
@@ -306,11 +306,11 @@ public class TestDataGenerator {
 
 		// KONDITOR && KÜCHENGEHILFE
 		try {
-
+			AtomicInteger id3 = new AtomicInteger(100);
 			for (int i = 0; i < 20; i++) {
 				if (i < 10) {
 					String sql = "INSERT INTO konditor VALUES(" + 10 + i + "," + i + ",'Kochschule'," + 1 + i
-							+ ",987)";
+							+ ",987,'mitarbeiter" + id3.getAndIncrement() + "@gmail.com')";
 					pstm = con.prepareStatement(sql);
 					pstm.executeUpdate();
 					pstm.close();
@@ -347,7 +347,7 @@ public class TestDataGenerator {
 			 * );
 			 */
 
-			for (int i = 20; i < 25; i++) {
+			/*for (int i = 20; i < 25; i++) {
 				String sql = "INSERT INTO kuechengehilfe VALUES(" + 1 + i + ",'Vormittag',987)";
 				pstm = con.prepareStatement(sql);
 				pstm.executeUpdate();
@@ -524,7 +524,7 @@ public class TestDataGenerator {
 		// EINKAUF
 		try {
 
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde1', 12341)");
+		/*	stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde1', 12341)");
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde2', 12342)");
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde3',12343)");
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde4', 12344)");
@@ -533,7 +533,7 @@ public class TestDataGenerator {
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde7', 12347)");
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde8', 12348)");
 			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde9', 12349)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde10', 12350)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde10', 12350)");*/
 
 		} catch (Exception e) {
 			System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());

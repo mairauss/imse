@@ -1,16 +1,21 @@
 
-<?php
-  $user = '...';
-  $pass = '...';
-  $database = '...';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
+<<?php
+    
+    try{
+        require_once('dbconnection.php');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(Exception $e){
+        $error = $e->getMessage();
+    }
+    
+    if(isset($error)){ echo $error; }
+    
+    $sql = "SELECT * FROM kunde";
+    $result = $db->query($sql);
+    
+    ?>
 
- //var_dump($_GET);
-?>
-
+<!DOCTYPE html>
 <html>
 <title>Lecker: Produkte</title>
 <head>
@@ -34,7 +39,12 @@
 		<li><a href="view.php">Views</a></li>
 		<li><a href="logout.php">Logout</a></li>			
        </ul>
-
+<div class="undermenu">
+<span class="caret"></span></button>
+<ul class="nav-menu" role="menu" aria-labelledby="menu1">
+<li><a href="#Speichern">Speichern</a></li>
+</ul>
+</div>
 <br></br>
 
 <div id="wrapper">
@@ -47,6 +57,8 @@
       <input id='submit' type='submit' class="testbutton" value='Search' />
     </form>
   </div>
+
+<table boarder="1">
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
@@ -56,100 +68,10 @@
   }
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
-?>
-<div>
-
-  <form id='insertform' action='produkte.php' method='get'>
-<center>
-    Neue Produkt einfuegen:
-	<table style='border: 5px solid #DDDDDD'>
-	  <thead>
-	    <tr>
-	      <th>Barcode</th>
-	      <th>Name</th>
-  	      <th>Preis</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	     <tr>
-	        <td>
-	           <input id='barcode' name='barcode' type='number' size='10' value='<?php if (isset($_GET['barcode'])) echo $_GET['barcode']; ?>' />
-                </td>
-                <td>
-                   <input id='pname' name='pname' type='text' size='30' value='<?php if (isset($_GET['pname'])) echo $_GET['pname']; ?>' />
-                </td>
-		<td>
-                   <input id='ppreis' name='ppreis' type='number' size='10' value='<?php if (isset($_GET['ppreis'])) echo $_GET['ppreis']; ?>' />
-                </td>
-	      </tr>
-           </tbody>
-
-	<table style='border: 5px solid #DDDDDD'>
-	<thead>
-	    <tr>
-           <th>Herstell.Datum</th>
-	   <th>Haltbar.Dauer</th>
-	   <th>Temp°</th>
-	    </tr>
-	  </thead>
-		<tbody>
-	        <tr>
-         	<td>
-                   <input id='phersdatum' name='phersdatum' type='text' size='10' value='<?php if (isset($_GET['phersdatum'])) echo $_GET['phersdatum']; ?>' />
-                </td>
-		<td>
-                   <input id='phaltdauer' name='phaltdauer' type='text' size='10' value='<?php if (isset($_GET['phaltdauer'])) echo $_GET['phaltdauer']; ?>' />
-                </td>
-		<td>
-                   <input id='temp' name='temp' type='text' size='5' value='<?php if (isset($_GET['temp'])) echo $_GET['temp']; ?>' />
-                </td>
-
-       	      </tr>
-           </tbody>
- 	</table>
-
-        </table>
-</center>
-        <input id='submit' type='submit' class="testbutton" value='Insert' />
-  </form>
-</div>
-
-<?php
-  //Handle insert
-   if (isset($_GET['barcode'])) 
-  {
-
-
-    //Prepare insert statementd
-    $sql = "INSERT INTO produkt VALUES(" . $_GET['barcode'] . ",'"  . $_GET['pname'] . "'," . $_GET['ppreis'] .
- ",to_date('" . $_GET['phersdatum'] . "','yyyymmdd')  , to_date('" . $_GET['phaltdauer'] . "','yyyymmdd')," . $_GET['temp'] . ")";
-    //Parse and execute statement
-    $insert = oci_parse($conn, $sql);
-    oci_execute($insert);
-
-
-    $conn_err=oci_error($conn);
-    $insert_err=oci_error($insert);
-   
-    if(!$conn_err & !$insert_err){
-	print("Successfully inserted");
- 	print("<br>");
-    }
-    //Print potential errors and warnings
-    else{
-       print($conn_err);
-       print_r($insert_err);
-
-    }
-    oci_free_statement($insert);
-  } 
-
+    $result = $db->query($sql);
 ?>
 
-
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
         <th>Barcode</th>
@@ -157,36 +79,130 @@
 	<th>Preis</th>
 	<th>Herstell.Datum</th>
 	<th>Haltbar.Dauer</th>
-	<th>Temp°</th>
+	<th>Menge</th>
+    <th>Kuehlraum Nr.</th>
       </tr>
     </thead>
     <tbody>
+
 <?php
-  // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['BARCODE'] . "</td>";
-    echo "<td>" . $row['PNAME'] . "</td>";
-    echo "<td>" . $row['PPREIS'] . "</td>";
-    echo "<td>" . $row['PHERSDATUM'] . "</td>";
-    echo "<td>" . $row['PHALTDAUER'] . "</td>";
-    echo "<td>" . $row['TEMP'] . "</td>";
-    echo "</tr>";
-  }
-?>
+    while($r = $result->fetch(PDO::FETCH_ASSOC)){
+        ?>
+<tr>
+<td><?php echo $r['barcode']; ?></td>
+<td><?php echo $r['pname']; ?></td>
+<td><?php echo $r['ppreis']; ?></td>
+<td><?php echo $r['phersdatum']; ?></td>
+<td><?php echo $r['phaltdauer']; ?></td>
+<td><?php echo $r['menge']; ?></td>
+<td><?php echo $r['kuehlraumNr']; ?></td>
+<td><a href="produkte_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
+</tr>
+<?php } ?>
     </tbody>
   </table>
-
-<div>Insgesamt <?php echo oci_num_rows($stmt); ?> Produkt(e) gefunden!</div>
 </center>
-<br></br>
-<?php  oci_free_statement($stmt); ?>
 
+<a name="Speichern">
+<div class="container">
+<h2>Produkte Speichern</h2>
+<div class="row">
+<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Barcode</label>
+<div class="col-sm-10">
+<input type="integer" name="barcode"  required class="form-control" id="input1" placeholder="Barcode" />
+</div>
+</div>
 
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Name</label>
+<div class="col-sm-10">
+<input type="char" name="pname"  required class="form-control" id="input1" placeholder="Name" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Preis</label>
+<div class="col-sm-10">
+<input type="double precision" name="ppreis"  required class="form-control" id="input1" placeholder="Preis" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Herstell.Datum</label>
+<div class="col-sm-10">
+<input type="date" name="phersdatum" required  class="form-control" id="input1" placeholder="" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Haltbar.Dauer</label>
+<div class="col-sm-10">
+<input type="date" name="phaltdauer" required  class="form-control" id="input1" placeholder="" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Menge</label>
+<div class="col-sm-10">
+<input type="integer" name="menge" required class="form-control" id="input1" placeholder="Menge" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Kuehlraum Nr.</label>
+<div class="col-sm-10">
+<input type="integer" name="kuehlraumNr" required class="form-control" id="input1" placeholder="Kuehlraum Nr." />
+</div>
+</div>
+
+<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+</form>
+</div>
+</div>
 
 <?php
-oci_close($conn);
-?>
+    /*
+     Quellen:
+     http://codingcyber.org/simple-crud-application-php-pdo-7284/
+     https://www.w3schools.com/php/php_mysql_insert.asp
+     https://www.formget.com/php-data-object/
+     */
+    if(isset($_POST["submit"])){
+        try{
+            require_once('dbconnection.php');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            
+            $sql = "INSERT INTO produkt (barcode, pname, ppreis, phersdatum, phaltdauer, menge, kuehlraumNr)
+            VALUES(:barcode, :pname, :ppreis, :phersdatum, :phaltdauer, :menge, :kuehlraumNr)";
+            
+            
+            $result = $db->prepare($sql);
+            $res = $result->execute(array('barcode' => $_POST['barcode'],
+                                          'pname' => $_POST['pname'],
+                                          'ppreis' => $_POST['ppreis'],
+                                          'phersdatum' => $_POST['phersdatum'],
+                                          'phaltdauer' => $_POST['phaltdauer'],
+                                          'menge' => $_POST['menge'],
+                                          'kuehlraumNr' => $_POST['kuehlraumNr']
+                                          ));
+            if($res){
+                echo "Ihre Daten wurden erfolgreich gespeichert";
+            }else{
+                echo "Fehler aufgetreten";
+            }
+            $db = null;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+        
+    }
+    ?>
+
 </div>
 </body>
 </html>

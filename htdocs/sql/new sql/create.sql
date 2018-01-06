@@ -26,15 +26,12 @@ CREATE TABLE kuehlraum(
 kuehlraumNr integer NOT NULL,
 temp double precision DEFAULT '4' NOT NULL,
 grundflaeche double precision,
-regelung varchar(1000),
-ausstattung varchar(80),
 PRIMARY KEY (kuehlraumNr),
 CHECK (temp<8 AND temp>=0)
 );
 
 CREATE TABLE kueche(
 kuecheNr integer NOT NULL,
-ausstattung varchar(80) NOT NULL,
 grundflaeche double precision,
 kuehlraumNr integer NOT NULL,
 PRIMARY KEY (kuecheNr),
@@ -42,7 +39,7 @@ FOREIGN KEY (kuehlraumNr) REFERENCES kuehlraum ON DELETE CASCADE );
 
 CREATE TABLE kuechengehilfe(
 personalnr integer NOT NULL,
-mname char(50) NOT NULL,
+//mname char(50) NOT NULL,
 betriebsmodus char(15),
 einstelldatum DATE,
 kkleidung char(50),
@@ -54,7 +51,7 @@ FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE );
 
 CREATE TABLE konditor(
 personalnr integer NOT NULL,
-mname char(50) NOT NULL,
+//mname char(50) NOT NULL,
 berufserfahrung integer NOT NULL,
 ausbildung varchar(80),
 bonus double precision DEFAULT '30',
@@ -89,6 +86,7 @@ pname char(50) UNIQUE,
 ppreis double precision,
 phersdatum DATE,
 phaltdauer DATE,
+menge integer,
 kuehlraumNr integer NOT NULL,
 PRIMARY KEY (barcode),
 FOREIGN KEY (kuehlraumNr) REFERENCES kuehlraum ON DELETE CASCADE );

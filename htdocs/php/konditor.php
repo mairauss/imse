@@ -1,16 +1,20 @@
-
 <?php
-  $user = '...';
-  $pass = '...';
-  $database = '...';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
+    
+    try{
+        require_once('dbconnection.php');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(Exception $e){
+        $error = $e->getMessage();
+    }
+    
+    if(isset($error)){ echo $error; }
+    
+    $sql = "SELECT * FROM konditor";
+    $result = $db->query($sql);
+    
+    ?>
 
- //var_dump($_GET);
-?>
-
+<!DOCTYPE html>
 <html>
 <title>Lecker: Konditoren</title>
 <head>
@@ -50,190 +54,140 @@
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM konditor WHERE mname like '%" . $_GET['search'] . "%'";
+    $sql = "SELECT * FROM konditor WHERE personalnr like '%" . $_GET['search'] . "%'";
   } else {
     $sql = "SELECT * FROM konditor";
   }
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
-?>
-
-<div>
-
-  <form id='insertform' action='konditor.php' method='get'>
-
-    Neue Konditor einfuegen:
-<center>
-	<table style='border: 5px solid #DDDDDD'>
-	  <thead>
-	    <tr>
-          <th>Name</th>
-	<th>Bonus</th>          	
-	  <th>Berufserfahrung</th>
-          </tr>
-	  </thead>
-
-          <tbody>
-	     <tr>
-                <td>
-                   <input id='mname' name='mname' type='text' size='30' value='<?php if (isset($_GET['mname'])) echo $_GET['mname']; ?>' />
-                </td>
-                <td>
-                   <input id='bonus' name='bonus' type='number' size='10' value='<?php if (isset($_GET['bonus'])) echo $_GET['bonus']; ?>' />
-                </td>
-		 <td>
-                   <input id='berufserfahrung' name='berufserfahrung' type='number' size='10' value='<?php if (isset($_GET['berufserfahrung'])) echo $_GET['berufserfahrung']; ?>' />
-                </td>
-                </tr>
-           </tbody>
-           </table>
-
-<table style='border: 5px solid #DDDDDD'>
-	<thead>
-	    <tr>
-           <th>Ausbildung</th>
-	    </tr>
-	  </thead>
-		<tbody>
-	        <tr>
-         	<td>
-                   <input id='ausbildung' name='ausbildung' type='text' size='80' value='<?php if (isset($_GET['ausbildung'])) echo $_GET['ausbildung']; ?>' />
-                </td>
-       	      </tr>
-           </tbody>
- 	</table>
-        
-              <table style='border: 5px solid #DDDDDD'>
-		<thead>
-		    <tr>
-		<th>Ausstattung</th>
-		</tr>
-		  </thead>
-		<tbody>
-		<tr>
-		 <td>
-                   <input id='ausstattung' name='ausstattung' type='text' size='80' value='<?php if (isset($_GET['ausstattung'])) echo $_GET['ausstattung']; ?>' />
-                </td>
- 		</tr>
-           </tbody>
-           </table>
-
-        <input id='submit' type='submit' class="testbutton" value='Insert' />
-</center>
-  </form>
-</div>
-
-<?php
-  //Handle insert
-
-   if (isset($_GET['mname'])) 
-  {
-    //Prepare insert statementd
-    $sql = "INSERT INTO konditor VALUES('" .  $_GET['mname'] . "'," . $_GET['berufserfahrung'] . ",'" . $_GET['ausbildung'] .
- "'," . $_GET['bonus'] . ",'"  . $_GET['ausstattung'] . "')";    
-//Parse and execute statement
-    $insert = oci_parse($conn, $sql);
-    oci_execute($insert);
-
-
-    $conn_err=oci_error($conn);
-    $insert_err=oci_error($insert);
-   
-    if(!$conn_err & !$insert_err){
-	print("Successfully inserted");
- 	print("<br>");
-    }
-    //Print potential errors and warnings
-    else{
-       print($conn_err);
-       print_r($insert_err);
-
-    }
-    oci_free_statement($insert);
-  } 
+    $result = $db->query($sql);
 
 ?>
 
-
-<div>
- <form id='delete' action='konditor.php' method='get'>
-  Loeschen die Konditoren (Name):
-     <input id='mmname' name='mmname' type='text' size='30' value='<?php if (isset($_GET['mmname'])) echo $_GET['mmname']; ?>' />
-    <input id='submit' type='submit' class="testbutton" value='Delete' />
- </form>
-</div>
-
-<?php
- //Handle Stored Procedure
- if (isset($_GET['mmname']))
- {
-    //Call Stored Procedure  
-    $nachname = $_GET['mmname'];
-    $sproc = oci_parse($conn, 'begin kon(:p1); end;');
-    //Bind variables, p1=input (nachname)
-    oci_bind_by_name($sproc, ':p1', $nachname);
-    oci_execute($sproc);
-    $conn_err=oci_error($conn);
-    $proc_err=oci_error($sproc);
-    //If there have been no Connection or Database errors, print department
-    if(!$conn_err && !$proc_err){
-if(!$nachname)
-{
-echo("<br><b>" . " Geben Sie bitte PersonalNr ein! ");
-}
-else
-{
- echo("<br><b>" . $nachname . " wurde geloescht! ");
-     oci_free_statement($sproc);
-}      
-}
-    else{
-      //Print potential errors and warnings
-      print($conn_err);
-      print_r($proc_err);
-    }  
- }
- // clean up connections
-?>
 
 <br></br>
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
-          <th>Name</th>
- 	  <th>Bonus</th>
+          <th>Personal Nr.</th>
           <th>Berufserfahrung</th>
-          <th>Ausbildung</th>	
-	  <th>Ausstattung</th>
+          <th>Ausbildung</th>
+            <th>Bonus</th>
+            <th>E-mail</th>
+	     <th>Kueche Nr.</th>
       </tr>
     </thead>
     <tbody>
 <?php
   // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['MNAME'] . "</td>";  
-    echo "<td>" . $row['BONUS'] . "</td>";
-    echo "<td>" . $row['BERUFSERFAHRUNG'] . "</td>";
-    echo "<td>" . $row['AUSBILDUNG'] . "</td>";
-    echo "<td>" . $row['AUSSTATTUNG'] . "</td>";
-    echo "</tr>";
-  }
-?>
+  while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+      ?>
+<tr>
+<td><?php echo $r['personalnr']; ?></td>
+<td><?php echo $r['berufserfahrung']; ?></td>
+<td><?php echo $r['ausbildung']; ?></td>
+<td><?php echo $r['bonus']; ?></td>
+<td><?php echo $r['email']; ?></td>
+<td><?php echo $r['kuecheNr']; ?></td>
+</tr>
+<?php } ?>
     </tbody>
   </table>
-
-<div>Insgesamt <?php echo oci_num_rows($stmt); ?> Konditor(en) gefunden!</div>
 </center>
 <br></br>
-<?php  oci_free_statement($stmt); ?>
 
 
-<?php 
-oci_close($conn);
-?>
+<a name="Speichern">
+<div class="container">
+<h2>Konditor Speichern</h2>
+<div class="row">
+<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Personal Nr.</label>
+<div class="col-sm-10">
+<input type="integer" name="personalnr"  required class="form-control" id="input1" placeholder="Personal Nr." />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Berufserfahrung</label>
+<div class="col-sm-10">
+<input type="integer" name="berufserfahrung"  required class="form-control" id="input1" placeholder="Berufserfahrung" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Ausbildung</label>
+<div class="col-sm-10">
+<input type="varchar" name="ausbildung"  required class="form-control" id="input1" placeholder="Ausbildung" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Bonus</label>
+<div class="col-sm-10">
+<input type="double precision" name="bonus" required  class="form-control" id="input1" placeholder="Bonus" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">E-mail</label>
+<div class="col-sm-10">
+<input type="char" name="email" required  class="form-control" id="input1" placeholder="E-mail" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Kueche Nr.</label>
+<div class="col-sm-10">
+<input type="integer" name="kuecheNr" required  class="form-control" id="input1" placeholder="Kueche Nr." />
+</div>
+</div>
+<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+
+</form>
+</div>
+</div>
+
+<?php
+    /*
+     Quellen:
+     http://codingcyber.org/simple-crud-application-php-pdo-7284/
+     https://www.w3schools.com/php/php_mysql_insert.asp
+     https://www.formget.com/php-data-object/
+     */
+    if(isset($_POST["submit"])){
+        try{
+            require_once('dbconnection.php');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            
+            $sql = "INSERT INTO konditor (personalnr, berufserfahrung, ausbildung, bonus, email, kuecheNr)
+            VALUES(:personalNr, :berufserfahrung, :ausbildung, :bonus, :email, :kuecheNr)";
+            
+            
+            $result = $db->prepare($sql);
+            $res = $result->execute(array('personalnr' => $_POST['personalnr'],
+                                          'berufserfahrung' => $_POST['berufserfahrung'],
+                                          'ausbildung' => $_POST['ausbildung'],
+                                          'bonus' => $_POST['bonus'],
+                                          'email' => $_POST['email'],
+                                          'kuecheNr' => $_POST['kuecheNr'],
+                                          ));
+            if($res){
+                echo "Ihre Daten wurden erfolgreich gespeichert";
+            }else{
+                echo "Fehler aufgetreten";
+            }
+            $db = null;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+        
+    }
+    ?>
 
 </div>
 </body>

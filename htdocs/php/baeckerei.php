@@ -1,20 +1,30 @@
-
 <?php
-  $user = '';
-  $pass = '';
-  $database = '';
- 
-  // establish database connection
-  $conn = oci_connect($user, $pass, $database);
-  if (!$conn) exit;
+    
+    try{
+        require_once('dbconnection.php');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(Exception $e){
+        $error = $e->getMessage();
+    }
+    
+    if(isset($error)){ echo $error; }
+    
+    $sql = "SELECT * FROM baeckerei";
+    $result = $db->query($sql);
+    
+    ?>
 
- //var_dump($_GET);
-?>
 
+<!DOCTYPE html>
 <html>
 <title>Lecker</title>
 <head>
  <link rel="stylesheet" href="index.css" />
+<style>
+td{
+    text-align: center;
+}
+</style>
 </head>
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
@@ -47,11 +57,11 @@
   
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
+    $result= $db->query($sql);
+
 ?>
   <h1>Baeckerei</h1>
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
         <th>Baeckerei</th>
@@ -61,13 +71,13 @@
     <tbody>
 <?php
   // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['BNAME'] . "</td>";
-    echo "<td>" . $row['FIRMANR'] . "</td>";
-    echo "</tr>";
-  }
-?>
+  while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+      ?>
+<tr>
+    <td><?php echo $r['bname']; ?></td>
+    <td><?php echo  $r['firmanr']; ?></td>
+</tr>
+<?php } ?>
     </tbody>
   </table>
 
@@ -78,25 +88,25 @@
   
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
+    $result= $db->query($sql);
+
 ?>
 
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
-        <th>Anschrift</th>
+        <th>Adresse</th>
       </tr>
     </thead>
     <tbody>
 <?php
-  // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['BEZEICHNUNG'] . "</td>";
-    echo "</tr>";
-  }
-?>
+    // fetch rows of the executed sql query
+    while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+        ?>
+<tr>
+<td><?php echo $r['bezeichnung']; ?></td>
+</tr>
+<?php } ?>
     </tbody>
   </table>
 
@@ -109,29 +119,29 @@
   
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
+    $result= $db->query($sql);
 ?>
 
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
-        <th>Ausstattung</th>
+        <th>Kueche Nr.</th>
         <th>Grundflaeche</th>
-        <th>Temp.</th>
+        <th>Kuehlraum Nr.</th>
       </tr>
     </thead>
     <tbody>
 <?php
-  // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['AUSSTATTUNG'] . "</td>";
-    echo "<td>" . $row['GRUNDFLAECHE'] . "</td>";
-    echo "<td>" . $row['TEMP'] . "</td>";
-    echo "</tr>";
-  }
-?>
+    // fetch rows of the executed sql query
+    while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+        ?>
+<tr>
+<td><?php echo $r['kuecheNr']; ?></td>
+<td><?php echo  $r['grundflaeche']; ?></td>
+<td><?php echo  $r['kuehlraumNr']; ?></td>
+</tr>
+<?php } ?>
+
     </tbody>
   </table>
 
@@ -143,42 +153,35 @@
   
 
   // execute sql statement
-  $stmt = oci_parse($conn, $sql);
-  oci_execute($stmt);
+    $result= $db->query($sql);
+
 ?>
 
-  <table style='border: 5px solid #DDDDDD'>
+<table style="width:70%">
     <thead>
       <tr>
+        <th>Kuehlraum Nr.</th>
         <th>Temp.</th>
         <th>Grundflaeche</th>
-        <th>Regelung </th>
-	<th>Ausstattung</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
 <?php
-  // fetch rows of the executed sql query
-  while ($row = oci_fetch_assoc($stmt)) {
-    echo "<tr>";
-    echo "<td>" . $row['TEMP'] . "</td>";
-    echo "<td>" . $row['GRUNDFLAECHE'] . "</td>";
-    echo "<td>" . $row['REGELUNG'] . "</td>";
-    echo "<td>" . $row['AUSSTATTUNG'] . "</td>";
-    echo "</tr>";
-  }
-?>
+    // fetch rows of the executed sql query
+    while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+        ?>
+<tr>
+<td><?php echo $r['kuehlraumNr']; ?></td>
+<td><?php echo  $r['temp']; ?></td>
+<td><?php echo  $r['grundflaeche']; ?></td>
+</tr>
+<?php } ?>
+
     </tbody>
   </table>
 
 </center>
 <br></br>
-<?php  oci_free_statement($stmt); ?>
-
-
-<?php
-oci_close($conn);
-?>
 </div>
 </body>
 </html>
