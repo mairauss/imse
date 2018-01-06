@@ -86,6 +86,77 @@
 <?php } ?>
     </tbody>
   </table>
+
+
+<a name="Speichern">
+<div class="container">
+<h2>Kuechengehilfe Speichern</h2>
+<div class="row">
+<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Personal Nr.</label>
+<div class="col-sm-10">
+<input type="integer" name="personalnr"  required class="form-control" id="input1" placeholder="Personal Nr." />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">Betriebsmodus</label>
+<div class="col-sm-10">
+<input type="char" name="betriebsmodus"  required class="form-control" id="input1" placeholder="Betriebsmodus" />
+</div>
+</div>
+
+<div class="form-group">
+<label for="input1" class="col-sm-5 control-label">E-mail</label>
+<div class="col-sm-10">
+<input type="char" name="email" required  class="form-control" id="input1" placeholder="E-mail" />
+</div>
+</div>
+
+<input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit" />
+
+</form>
+</div>
+</div>
+
+<?php
+    /*
+     Quellen:
+     http://codingcyber.org/simple-crud-application-php-pdo-7284/
+     https://www.w3schools.com/php/php_mysql_insert.asp
+     https://www.formget.com/php-data-object/
+     */
+    if(isset($_POST["submit"])){
+        try{
+            require_once('dbconnection.php');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            
+            $sql = "INSERT INTO kuechengehilfe (personalnr, betriebsmodus, email, kuecheNr)
+            VALUES(:personalnr, :betriebsmodus, :email, 987)";
+            
+            
+            $result = $db->prepare($sql);
+            $res = $result->execute(array('personalnr' => $_POST['personalnr'],
+                                          'betriebsmodus' => $_POST['betriebsmodus'],
+                                          'email' => $_POST['email'],
+                                          ));
+            if($res){
+                echo "Ihre Daten wurden erfolgreich gespeichert";
+            }else{
+                echo "Fehler aufgetreten";
+            }
+            $db = null;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+        
+    }
+    ?>
+
 </div>
 </body>
 </html>
