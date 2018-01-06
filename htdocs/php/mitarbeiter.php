@@ -54,7 +54,7 @@ if(isset($error)){ echo $error; }
   <h2>Mitarbeiter Suchen</h2>
     <form id='searchform' action='mitarbeiter.php' method='get'>
       <a href='mitarbeiter.php'>Alle Mitarbeiter</a> ---
-      Suche nach Name: 
+      Suche nach PersonalNr: 
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
 <input id='submit' type='submit' class="testbutton" value='Search' />
     </form>
@@ -63,7 +63,7 @@ if(isset($error)){ echo $error; }
 <table style="width:80%">
 		<?php
 		  if (isset($_GET['search'])) {
-			$sql = "SELECT * FROM mitarbeiter WHERE mname like '" . $_GET['search'] . "'";
+			$sql = "SELECT * FROM mitarbeiter WHERE personalnr like '" . $_GET['search'] . "'";
 		  } else {
 			$sql = "SELECT * FROM mitarbeiter";
 		  }
