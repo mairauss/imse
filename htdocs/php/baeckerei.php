@@ -1,5 +1,6 @@
 <?php
-    
+    include('session_login.php');
+	
     try{
         require_once('dbconnection.php');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -35,17 +36,33 @@ td{
 		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
 		<li><a href="konditor.php">Konditor</a></li>
 		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-                <li><a href="kunde/kunde.php">Kunde</a></li>
+                <li><a href="kunde.php">Kunde</a></li>
                 <li><a href="backwaren.php">Backwaren</a></li>
                 <li><a href="produkte.php">Produkte</a></li>
                 <li><a href="backen.php">Backen</a></li>
      		<li><a href="einkauf.php">Einkauf</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>	
 		<li><a href="view.php">Views</a></li>
-		<li><a href="./session/logout.php">Logout</a></li>			
+		<li><a href="logout.php">Logout</a></li>			
        </ul>
 
 <br></br>
+
+		<div id="main">
+			<h1>Login Lecker</h1>
+			<div id="login">
+				<h2>Login Form</h2>
+				<form action="" method="post">
+					<label>E-Mail :</label>
+					<input id="name" name="email" placeholder="e-mail adresse" type="text">
+					<label>Passwort :</label>
+					<input id="passwort" name="passwort" placeholder="**********" type="password">
+					<input name="submit" type="submit" value=" Login ">
+					<span><?php echo $error; ?></span>
+				</form>
+			</div>
+		</div>
+
 
 <div id="wrapper">
 <center>

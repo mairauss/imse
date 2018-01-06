@@ -182,7 +182,6 @@ if(isset($error)){ echo $error; }
 											  'gehalt' => $_POST['gehalt'],
 											  'mgeburtsdatum' => $_POST['mgeburtsdatum'],
 											  'personalnr' => $_POST['personalnr'],
-											  'bname' => $_POST['bname'],
 											  'passwort' => $_POST['passwort'],
 											  'email' => $_POST['email'],
 											  ));
