@@ -57,7 +57,7 @@
 <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
 <li><a class="active" href="produkte.php">Produkte</a></li>
 <li><a href="backen.php">Backen</a></li>
-<li><a href="bestand.php">Backen</a></li>
+<li><a href="bestand.php">Bestandteil</a></li>
 <li><a href="session_logout.php">Logout</a></li>
 </ul>
 <div class="undermenu">
