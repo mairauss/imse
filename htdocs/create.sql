@@ -75,8 +75,7 @@ gname char(30) NOT NULL,
 bpreis double NOT NULL,
 bhaltdauer DATE,
 menge int NOT NULL,
-PRIMARY KEY (artikelnr, bhersdatum)
-);
+PRIMARY KEY (artikelnr, bhersdatum) );
 
 CREATE TABLE produkt(
 barcode integer NOT NULL,
@@ -123,6 +122,8 @@ FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE );
 CREATE TABLE bestandteil(
 artikelnr integer NOT NULL,
 barcode integer NOT NULL,
+pname char(50),
+gname char(30) NOT NULL,
 PRIMARY KEY (artikelnr, barcode),
 FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE,
 FOREIGN KEY (barcode) REFERENCES produkt ON DELETE CASCADE );

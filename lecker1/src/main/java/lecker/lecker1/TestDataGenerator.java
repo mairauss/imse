@@ -452,7 +452,8 @@ public class TestDataGenerator {
 
 		// KUNDE
 		for (int i = 1; i < 101; i++) {
-			String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde" + i + "@gmail.com" + "'," + "1975-10-22" + ",'" + "Lecker" + "','" + "pass" + i + "'" + "," + 1 +")";
+			String sql = "INSERT INTO kunde VALUES('" + "Kunde" + i + "','" + "kunde" + i 
+			+ "@gmail.com" + "'," + "1975-10-22" + ",'" + "Lecker" + "','" + "pass" + i + "'" + "," + 1 +")";
 			pstm = con.prepareStatement(sql);
 			pstm.executeUpdate();
 			pstm.close();
@@ -550,12 +551,11 @@ public class TestDataGenerator {
 
 		// ÄNDERN
 		// BESTANDTEIL
-		for (int i = 1; i < 10; i++) {
-			String sql = "INSERT INTO bestandteil VALUES(" + "1234" + i + "," + "7896" + i + ")";
-			pstm = con.prepareStatement(sql);
-			pstm.executeUpdate();
-			pstm.close();
-		}
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78961,'Salz','Semmel')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78962,'Milch','Semmel')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78962,'Milch','Honigtorte')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1002,78964,'Margarine','Apfelstrudel')");		
+
 
 		// check number of datasets in person table
 		ResultSet bt = stmt.executeQuery("SELECT COUNT(*) FROM bestandteil");
@@ -576,7 +576,6 @@ public class TestDataGenerator {
 		pstm.close();
 			stmt.close();
 			con.close();
-
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
