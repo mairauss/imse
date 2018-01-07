@@ -12,10 +12,13 @@
 		}
 		
 		$DelSqlite = "DELETE FROM 'produkt' WHERE barcode=?";
+        $DelSqlite1 = "DELETE FROM 'bestandteil' WHERE barcode=?";
 		$result = $db->prepare($DelSqlite);
+        $result1 = $db->prepare($DelSqlite1);
 		echo "löschen";
 		echo $DelSqlite;
 		$res = $result -> execute(array($_GET['barcode']));
+        $res1 = $result1 -> execute(array($_GET['barcode']));
 		if($res){
 			header('location: produkte.php');
 		} 

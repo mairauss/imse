@@ -22,17 +22,10 @@
 <br></br>
 
         <ul> 
-		<li><a href="baeckerei.php">Lecker</a></li>
-		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-		<li><a href="konditor.php">Konditor</a></li>
-		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-        <li><a href="kunde/kunde.php">Kunde</a></li>
-        <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+		<li><a href="baeckerei_kunde.php">Lecker</a></li>
         <li><a href="backwaren.php">Backwaren</a></li>
-        <li><a href="produkte.php">Produkte</a></li>
-        <li><a href="backen.php">Backen</a></li>
-        <li><a href="einkauf.php">Einkauf</a></li>
 		<li><a class="active" href="bestand.php">Bestandteil</a></li>
+        <li><a href="einkauf.php">Einkauf</a></li>
 		<li><a href="./session/logout.php">Logout</a></li>	
        </ul>
 

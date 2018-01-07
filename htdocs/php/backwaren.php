@@ -26,10 +26,10 @@
             <img src="b5.png" alt="logo" width="500" height="300">
             <br></br>
             <ul> 
-		<li><a href="baeckerei.php">Lecker</a></li>
+		<li><a href="baeckerei_kunde.php">Lecker</a></li>
         <li><a class="active" href="backwaren.php">Backwaren</a></li>
-     	<li><a href="einkauf.php">Einkauf</a></li>
-		<li><a href="bestand.php">Bestandteil</a></li>	
+		<li><a href="bestand.php">Bestandteil</a></li>
+        <li><a href="einkauf.php">Einkauf</a></li>
         <li><a href="session_logout.php">Logout</a></li>	
             </ul>
 
