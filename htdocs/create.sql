@@ -27,8 +27,7 @@ kuehlraumNr integer NOT NULL,
 temp double precision DEFAULT '4' NOT NULL,
 grundflaeche double precision,
 PRIMARY KEY (kuehlraumNr),
-CHECK (temp<8 AND temp>=0)
-);
+CHECK (temp<8 AND temp>=0) );
 
 CREATE TABLE kueche(
 kuecheNr integer NOT NULL,
@@ -65,7 +64,7 @@ kgeburtsdatum DATE,
 bname char(15) NOT NULL,
 passwort char ( 15 ) NOT NULL,
 accesslevel integer NOT NULL,
-PRIMARY KEY (email));
+PRIMARY KEY (email) );
 
 /*bhersdatum deshalb ein primary key, weil ich eine Backware (zb.: Semmel) mehrmals pro Woche produziere*/
 CREATE TABLE backwaren(
@@ -110,8 +109,7 @@ FOREIGN KEY (bhersdatum) REFERENCES backwaren ON DELETE CASCADE );
 /*Tabelle für die fortlaufende nummerierung der bestellnr (1:1 Beziehung mit einkauf)*/
 CREATE TABLE bestellnummerzaehler(
 nr int not null,
-primary key (nr)
-);
+primary key (nr) );
  
 CREATE TABLE backen(
 personalnr integer NOT NULL,
@@ -135,33 +133,11 @@ FOREIGN KEY (menge) REFERENCES produkt ON DELETE CASCADE,
 FOREIGN KEY (masseinheit) REFERENCES produkt ON DELETE CASCADE,
 FOREIGN KEY (barcode) REFERENCES produkt ON DELETE CASCADE );
 
-CREATE TABLE poss(
-bname char(15) NOT NULL,
+CREATE TABLE putzen(
+betriebsmodus char(15),
 personalnr integer NOT NULL,
-email char(30) NOT NULL,
+kuecheNr integer NOT NULL,
 PRIMARY KEY (bname,personalNr,email),
-FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE,
-FOREIGN KEY (personalNr) REFERENCES mitarbeiter ON DELETE CASCADE,
-FOREIGN KEY (email) REFERENCES kunde ON DELETE CASCADE);
-
-/*
-CREATE VIEW konditor_count (mname)
-AS
-SELECT COUNT (DISTINCT personalNr)
-FROM konditor;
-
-CREATE VIEW priseAVG(bpreis)
-AS
-SELECT AVG(bpreis)
-FROM backwaren;
-
-CREATE VIEW priseSUM(bpreis)
-AS
-SELECT SUM(bpreis)
-FROM backwaren;
-
-CREATE VIEW kunde_count(email)
-AS
-SELECT COUNT (DISTINCT email)
-FROM kunde;
-*/
+FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE,
+FOREIGN KEY (personalNr) REFERENCES kuechengehilfe ON DELETE CASCADE,
+FOREIGN KEY (betriebsmodus) REFERENCES kuechengehilfe ON DELETE CASCADE );
