@@ -24,57 +24,52 @@
 		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
         <li><a href="kunde.php">Kunde</a></li>
         <li><a href="backwaren.php">Backwaren</a></li>
-        <li><a class="active" href="produkte.php">Produkte</a></li>
+        <li><a href="produkte.php">Produkte</a></li>
 		<li><a href="backen.php">Backen</a></li>
-		<li><a href="bestand.php">Bestandteil</a></li>
+		<li><a class="active" href="bestand.php">Bestandteil</a></li>
 		<li><a href="session_logout.php">Logout</a></li>
        </ul>
 <div class="undermenu">
 <span class="caret"></span></button>
 <ul class="nav-menu" role="menu" aria-labelledby="menu1">
-<li><a class="active" href="produkte_save.php">Speichern</a></li>
+<li><a class="active" href="bestand_save.php">Speichern</a></li>
 </ul>
 </div>
 
 <div id="wrapper">
-<center><h2>Produkte Speichern</h2>
+<center><h2>Bestandteile Speichern</h2>
 
 <div style="width: 500px; margin: 20px auto;">
 <table width="100%" cellpadding="5" cellspacing="1" border="1">
 <form action="" method="post">
 
 <tr>
-<td>Barcode</td>
-<td><input type="integer" name="barcode"  required class="form-control" id="input1" placeholder="Barcode" />
+<td>Backware Artikel Nr.</td>
+<td><input type="integer" name="artikelnr"  required class="form-control" id="input1" placeholder="Artikel Nr." />
+</td>
+</tr>
+
+<tr>
+<td>Produkt Barcode</td>
+<td><input type="integer" name="barcode"  required class="form-control" id="input1" placeholder="Barcode" /> </td>
+</tr>
+
+
+<tr>
+<td>Produkt Name</td>
+<td><input type="char" name="pname"  required class="form-control" id="input1" placeholder="Produkt Name" />
 </td>
 </tr>
 
 
 <tr>
-<td>Name</td>
-<td><input type="char" name="pname"  required class="form-control" id="input1" placeholder="Name" />
+<td>Backware Name</td>
+<td><input type="char" name="gname" required  class="form-control" id="input1" placeholder="Backware Name" />
 </td>
 </tr>
 
 <tr>
-<td>Preis</td>
-<td><input type="double precision" name="ppreis"  required class="form-control" id="input1" placeholder="Preis" /> </td>
-</tr>
-
-<tr>
-<td>Herstell.Datum</td>
-<td><input type="date" name="phersdatum" required  class="form-control" id="input1" placeholder="yyyy-mm-dd" />
-</td>
-</tr>
-
-<tr>
-<td>Haltbar.Dauer</td>
-<td><input type="date" name="phaltdauer" required  class="form-control" id="input1" placeholder="yyyy-mm-dd" />
-</td>
-</tr>
-
-<tr>
-<td>Menge</td>
+<td>Produkt Menge</td>
 <td><input type="integer" name="menge" required class="form-control" id="input1" placeholder="Menge" />
 </td>
 </tr>
@@ -87,7 +82,7 @@
 
 <br></br>
 <tr>
-<td><a href="produkte.php">Back</a></td>
+<td><a href="bestand.php">Back</a></td>
 <td><input type="submit" class="testbutton" value="Insert" name="submit" /></td>
 </tr>
 
@@ -102,18 +97,18 @@
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             
-            $sql = "INSERT INTO produkt (barcode, pname, ppreis, phersdatum, phaltdauer, menge, masseinheit, kuehlraumNr)
-            VALUES(:barcode, :pname, :ppreis, :phersdatum, :phaltdauer, :menge, :masseinheit, 123)";
+            $sql = "INSERT INTO bestandteil (artikelnr ,barcode, pname, gname, menge, masseinheit)
+            VALUES(:artikelnr, :barcode, :pname, :gname, :menge, :masseinheit)";
             
             
             $result = $db->prepare($sql);
-            $res = $result->execute(array('barcode' => $_POST['barcode'],
+            $res = $result->execute(array(
+                                          'artikelnr' => $_POST['artikelnr'],
+                                          'barcode' => $_POST['barcode'],
                                           'pname' => $_POST['pname'],
-                                          'ppreis' => $_POST['ppreis'],
-                                          'phersdatum' => $_POST['phersdatum'],
-                                          'phaltdauer' => $_POST['phaltdauer'],
+                                          'gname' => $_POST['gname'],
+                                          'menge' => $_POST['menge'],
                                           'masseinheit' => $_POST['masseinheit'],
-                                          'menge' => $_POST['menge']
                                           ));
             if($res){
                 echo "Ihre Daten wurden erfolgreich gespeichert";

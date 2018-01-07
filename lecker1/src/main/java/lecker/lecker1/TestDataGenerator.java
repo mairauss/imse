@@ -549,12 +549,19 @@ public class TestDataGenerator {
 			System.out.println("Number of datasets 'Einkauf': " + count);
 		}
 
-		// ÄNDERN
+	
 		// BESTANDTEIL
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78961,'Salz','Semmel', 7, 'g')");
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78962,'Milch','Semmel', 250, 'ml')");		
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78962,'Milch','Honigtorte', 300, 'ml')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78961,'Salz','Semmel', 10, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78962,'Milch','Semmel', 50, 'ml')");	
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78963,'Zucker','Semmel', 50, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78964,'Margarine','Semmel', 50, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78972,'Mehl','Semmel', 200, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78962,'Milch','Honigtorte', 300, 'ml')");	
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78971,'Honig','Honigtorte', 500, 'ml')");		
 		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1002,78964,'Margarine','Apfelstrudel', 250, 'g')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1002,78972,'Mehl','Apfelstrudel', 250, 'g')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1003,78974,'Topfen','Topfenstrudel', 300, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1004,78972,'Mehl','Marillenknoedel', 300, 'g')");
 
 
 		// check number of datasets in person table

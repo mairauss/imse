@@ -33,14 +33,18 @@
 <li><a class="active" href="bestand.php">Bestandteil</a></li>
 <li><a href="session_logout.php">Logout</a></li>
 </ul>
-
+<div class="undermenu">
+<span class="caret"></span></button>
+<ul class="nav-menu" role="menu" aria-labelledby="menu1">
+<li><a href="bestand_save.php">Speichern</a></li>
+</ul>
+</div>
 <br></br>
 
 <div id="wrapper">
 <center>
   <div>
     <form id='searchform' action='bestand.php' method='get'>
-      <a href='bestand.php'>Alles</a> ---
       Geben Sie Backware Name ein:
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
       <input id='submit' type='submit' class="testbutton" value='Search' />
