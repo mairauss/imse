@@ -79,7 +79,7 @@ PRIMARY KEY (artikelnr, bhersdatum) );
 
 CREATE TABLE produkt(
 barcode integer NOT NULL,
-pname char(50) UNIQUE,
+pname char(50) NOT NULL,
 ppreis double precision,
 phersdatum DATE,
 phaltdauer DATE,
@@ -127,8 +127,12 @@ pname char(50),
 gname char(30) NOT NULL,
 menge integer,
 masseinheit char(10),
-PRIMARY KEY (artikelnr, barcode),
+PRIMARY KEY (artikelnr,barcode),
 FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE,
+FOREIGN KEY (gname) REFERENCES backwaren ON DELETE CASCADE,
+FOREIGN KEY (pname) REFERENCES produkt ON DELETE CASCADE,
+FOREIGN KEY (menge) REFERENCES produkt ON DELETE CASCADE,
+FOREIGN KEY (masseinheit) REFERENCES produkt ON DELETE CASCADE,
 FOREIGN KEY (barcode) REFERENCES produkt ON DELETE CASCADE );
 
 CREATE TABLE poss(

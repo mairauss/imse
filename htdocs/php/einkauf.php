@@ -87,7 +87,6 @@
 ?>
     
     
-    
    <form id='searchform' action='einkauf.php' method='post'>
 <?php
   // check if search view of list view
