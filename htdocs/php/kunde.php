@@ -16,19 +16,20 @@
 
 	$logedinuser = $login_session;
 	    if (isset($logedinuser)) {
-        $sql = "SELECT * FROM kunde WHERE email  '$logedinuser'";
-		$result = $db->query($ses_sql);
-		$data = $result->fetch(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM (SELECT email,accesslevel from kunde UNION select email,accesslevel from mitarbeiter) AS U where U.email '$logedinuser'";
+		$resultsession = $db->query($ses_sql);
+		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
 			//Administrator Rechte
 			if($data['accesslevel'] == 9){
-				echo "Access Level 0";
+				echo "Access Level 9";
 			} else{
 				echo "Access Level ungleich 9 unzureichende Berechtigung";
-				header('Location: baeckerei.php');
+				//header('Location: baeckerei.php');
 			};
 		} else {
         echo "Unzeireichende User Berechtigung";
 		}
+
 	
     ?>
 

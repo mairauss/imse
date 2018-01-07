@@ -8,7 +8,6 @@ http://www.genecasanova.com/labs/memberships/form-sessions-php.html
 session_start(); 
 // Variable To Store Error Message
 $error=''; 
-
 if (isset($_POST['submit'])) {
 	if (empty($_POST['email']) || empty($_POST['passwort'])) {	
 		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
@@ -24,14 +23,16 @@ if (isset($_POST['submit'])) {
 		$error = $e->getMessage();
 	}
 	// SQL Select for all Registered Users
-	$sql = "SELECT * FROM kunde where passwort='$passwort' AND email='$email'";
-	$rows = count($sql);
-	//$result = $db->query($sql);
-	if ($rows == 1) {
+	$sql = "SELECT * FROM (SELECT email,passwort from kunde UNION select email,passwort from mitarbeiter) AS U where u.passwort='$passwort' AND u.email='$email'";
+	$result = $db->query($sql);
+	$data = $result->fetch(PDO::FETCH_ASSOC);
+	if($data){
+		if ($data['email'] == $email && $data['passwort'] == $passwort ) {
 		// Session starten
 		$_SESSION['login_user']=$email;
 		// Zur Startseite weiterleiten
 		header("location: backwaren.php");
+		}
 	} else {
 		$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
 	}

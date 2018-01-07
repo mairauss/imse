@@ -21,7 +21,7 @@ session_start();
 $user_check=$_SESSION['login_user'];
 
 // SQL Select for all Registered Users
-	$ses_sql = "SELECT * FROM kunde WHERE email='$user_check'";
+	$ses_sql = "SELECT * FROM (SELECT email,passwort,accesslevel from kunde UNION select email,passwort,accesslevel from mitarbeiter) AS U where U.email= '$user_check'";
 	//$row = fetchArray($ses_sql);
 	$result = $db->query($ses_sql);
 
