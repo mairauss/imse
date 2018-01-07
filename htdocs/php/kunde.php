@@ -29,7 +29,6 @@
 		} else {
         echo "Unzeireichende User Berechtigung";
 		}
-
 	
     ?>
 
