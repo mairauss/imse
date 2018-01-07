@@ -9,7 +9,7 @@
     ?>
 
 <!DOCTYPE html><html>
-<title>Lecker: Kuechengehilfen</title>
+<title>Lecker: Produkte</title>
 <head>
  <link rel="stylesheet" href="index.css" />
 </head>
@@ -38,62 +38,58 @@
 
 <div id="wrapper">
 <center><h2>Produkte Speichern</h2>
-<div class="row">
-<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Barcode</label>
-<div class="col-sm-10">
-<input type="integer" name="barcode"  required class="form-control" id="input1" placeholder="Barcode" />
-</div>
-</div>
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Name</label>
-<div class="col-sm-10">
-<input type="char" name="pname"  required class="form-control" id="input1" placeholder="Name" />
-</div>
-</div>
+<div style="width: 500px; margin: 20px auto;">
+<table width="100%" cellpadding="5" cellspacing="1" border="1">
+<form action="" method="post">
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Preis</label>
-<div class="col-sm-10">
-<input type="double precision" name="ppreis"  required class="form-control" id="input1" placeholder="Preis" />
-</div>
-</div>
+<tr>
+<td>Barcode</td>
+<td><input type="integer" name="barcode"  required class="form-control" id="input1" placeholder="Barcode" />
+</td>
+</tr>
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Herstell.Datum</label>
-<div class="col-sm-10">
-<input type="date" name="phersdatum" required  class="form-control" id="input1" placeholder="" />
-</div>
-</div>
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Haltbar.Dauer</label>
-<div class="col-sm-10">
-<input type="date" name="phaltdauer" required  class="form-control" id="input1" placeholder="" />
-</div>
-</div>
+<tr>
+<td>Name</td>
+<td><input type="char" name="pname"  required class="form-control" id="input1" placeholder="Name" />
+</td>
+</tr>
 
-<div class="form-group">
-<label for="input1" class="col-sm-5 control-label">Menge</label>
-<div class="col-sm-10">
-<input type="integer" name="menge" required class="form-control" id="input1" placeholder="Menge" />
-</div>
-</div>
+<tr>
+<td>Preis</td>
+<td><input type="double precision" name="ppreis"  required class="form-control" id="input1" placeholder="Preis" /> </td>
+</tr>
+
+<tr>
+<td>Herstell.Datum</td>
+<td><input type="date" name="phersdatum" required  class="form-control" id="input1" placeholder="yyyy-mm-dd" />
+</td>
+</tr>
+
+<tr>
+<td>Haltbar.Dauer</td>
+<td><input type="date" name="phaltdauer" required  class="form-control" id="input1" placeholder="yyyy-mm-dd" />
+</td>
+</tr>
+
+<tr>
+<td>Menge</td>
+<td><input type="integer" name="menge" required class="form-control" id="input1" placeholder="Menge" />
+</td>
+</tr>
+
 <br></br>
+<tr>
+<td><a href="produkte.php">Back</a></td>
+<td><input type="submit" class="testbutton" value="Insert" name="submit" /></td>
+</tr>
 
-<input type="submit" class="testbutton" value="Insert" name="submit" />
 </form>
 </div>
 </center>
+
 <?php
-    /*
-     Quellen:
-     http://codingcyber.org/simple-crud-application-php-pdo-7284/
-     https://www.w3schools.com/php/php_mysql_insert.asp
-     https://www.formget.com/php-data-object/
-     */
     if(isset($_POST["submit"])){
         try{
             require_once('dbconnection.php');
