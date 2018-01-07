@@ -10,14 +10,12 @@
     if( isset($_POST['submit_data']) ){
         
         // Gets the data from post
-        $artikelnr = $_POST['artikelnr'];
-        $barcode = $_POST['barcode'];
-        $pname = $_POST['pname'];
+        $bestandteilNr = $_POST['bestandteilNr'];
         $menge = $_POST['menge'];
         $masseinheit = $_POST['masseinheit'];
         
         // Makes query with post data
-        $query = "UPDATE bestandteil SET barcode=$barcode, pname='$pname',menge=$menge, masseinheit='$masseinheit' WHERE artikelnr=$artikelnr";
+        $query = "UPDATE bestandteil SET menge=$menge, masseinheit='$masseinheit' WHERE bestandteilNr=$bestandteilNr";
         
         // Executes the query
         // If data inserted then set success message otherwise set error message
@@ -29,16 +27,16 @@
         }
     }
     
-    $artikelnr = $_GET['artikelnr']; // barcode from url
+    $bestandteilNr = $_GET['bestandteilNr'];
     // Prepar the query to get the row data with barcode
-    $query = "SELECT artikelnr, * FROM bestandteil WHERE artikelnr=$artikelnr";
+    $query = "SELECT bestandteilNr, * FROM bestandteil WHERE bestandteilNr=$bestandteilNr";
     $result = $db->query($query);
     $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
     ?>
 
 <!DOCTYPE html>
 <html>
-<title>Lecker: Produkte</title>
+<title>Lecker: Bestandteile</title>
 <head>
 <link rel="stylesheet" href="index.css" />
 </head>
@@ -71,15 +69,7 @@
 <div style="width: 500px; margin: 20px auto;">
 <table width="100%" cellpadding="5" cellspacing="1" border="1">
 <form action="" method="post">
-<input type="hidden" name="artikelnr" value="<?php echo $artikelnr;?>">
-<tr>
-<td>Barcode</td>
-<td><input name="barcode" type="integer" value="<?php echo $data['barcode'];?>"></td>
-</tr>
-<tr>
-<td>Name</td>
-<td><input type="char" name="pname" value="<?php echo $data['pname'];?>"> </td>
-</tr>
+<input type="hidden" name="bestandteilNr" value="<?php echo $bestandteilNr;?>">
 <tr>
 <td>Menge</td>
 <td><input name="menge" type="integer" value="<?php echo $data['menge'];?>"></td>

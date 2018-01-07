@@ -13,4 +13,4 @@ DROP TABLE einkauf;
 DROP TABLE bestellnummerzaehler;
 DROP TABLE backen;
 DROP TABLE bestandteil;
-DROP TABLE poss;
+DROP TABLE putzen;

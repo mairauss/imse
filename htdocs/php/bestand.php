@@ -62,7 +62,6 @@
     $result = $db->query($sql);
 ?>
 
-<br></br>
 <tbody>
 
 <?php
@@ -93,7 +92,7 @@
 <td><?php echo $r['pname']; ?></td>
 <td><?php echo $r['menge']; ?></td>
 <td><?php echo $r['masseinheit']; ?></td>
-<td><a href="bestand_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
+<td><a href="bestand_update.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Mutieren</a>  <a href="bestand_delete.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Delete</a></td>
 </tr>
 <?php }}
    // else echo "Es gibt keine Infos!";

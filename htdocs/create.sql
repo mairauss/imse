@@ -119,13 +119,13 @@ FOREIGN KEY (personalNr) REFERENCES konditor ON DELETE CASCADE,
 FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE );
 
 CREATE TABLE bestandteil(
+bestandteilNr INTEGER PRIMARY KEY AUTOINCREMENT,
 artikelnr integer NOT NULL,
 barcode integer NOT NULL,
 pname char(50),
 gname char(30) NOT NULL,
 menge integer,
 masseinheit char(10),
-PRIMARY KEY (artikelnr,barcode),
 FOREIGN KEY (artikelnr) REFERENCES backwaren ON DELETE CASCADE,
 FOREIGN KEY (gname) REFERENCES backwaren ON DELETE CASCADE,
 FOREIGN KEY (pname) REFERENCES produkt ON DELETE CASCADE,
@@ -137,7 +137,7 @@ CREATE TABLE putzen(
 betriebsmodus char(15),
 personalnr integer NOT NULL,
 kuecheNr integer NOT NULL,
-PRIMARY KEY (bname,personalNr,email),
+PRIMARY KEY (personalNr),
 FOREIGN KEY (kuecheNr) REFERENCES kueche ON DELETE CASCADE,
 FOREIGN KEY (personalNr) REFERENCES kuechengehilfe ON DELETE CASCADE,
 FOREIGN KEY (betriebsmodus) REFERENCES kuechengehilfe ON DELETE CASCADE );

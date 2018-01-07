@@ -11,11 +11,11 @@
 			$error = $e->getMessage();
 		}
 		
-        $DelSqlite = "DELETE FROM 'bestandteil' WHERE barcode=?";
+        $DelSqlite = "DELETE FROM 'bestandteil' WHERE bestandteilNr=?";
 		$result = $db->prepare($DelSqlite);
 		echo "löschen";
 		echo $DelSqlite;
-		$res = $result -> execute(array($_GET['barcode']));
+		$res = $result -> execute(array($_GET['bestandteilNr']));
 		if($res){
 			header('location: bestand.php');
 		} 

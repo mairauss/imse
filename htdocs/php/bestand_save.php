@@ -97,8 +97,8 @@
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             
-            $sql = "INSERT INTO bestandteil (artikelnr ,barcode, pname, gname, menge, masseinheit)
-            VALUES(:artikelnr, :barcode, :pname, :gname, :menge, :masseinheit)";
+            $sql = "INSERT INTO bestandteil (bestandteilNr, artikelnr, barcode, pname, gname, menge, masseinheit)
+            VALUES(null, :artikelnr, :barcode, :pname, :gname, :menge, :masseinheit)";
             
             
             $result = $db->prepare($sql);

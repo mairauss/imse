@@ -97,7 +97,7 @@
 <td><?php echo $r['menge']; ?></td>
 <td><?php echo $r['masseinheit']; ?></td>
 <td><?php echo $r['kuehlraumNr']; ?></td>
-<td><a href="produkte_update.php?barcode=<?php echo $r['barcode']; ?>">Mutieren</a> <a href="produkte_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
+<td><a href="produkte_update.php?barcode=<?php echo $r['barcode']; ?>">Mutieren</a>  <a href="produkte_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
 </tr>
 <?php } ?>
     </tbody>
