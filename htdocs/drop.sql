@@ -14,7 +14,3 @@ DROP TABLE bestellnummerzaehler;
 DROP TABLE backen;
 DROP TABLE bestandteil;
 DROP TABLE poss;
-DROP VIEW konditor_count;
-DROP VIEW priseAVG;
-DROP VIEW priseSUM;
-DROP VIEW kunde_count;

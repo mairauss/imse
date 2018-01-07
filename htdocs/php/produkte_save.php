@@ -79,6 +79,12 @@
 </td>
 </tr>
 
+<tr>
+<td>Menge</td>
+<td><input type="char" name="masseinheit" required class="form-control" id="input1" placeholder="Masseinheit" />
+</td>
+</tr>
+
 <br></br>
 <tr>
 <td><a href="produkte.php">Back</a></td>
@@ -96,8 +102,8 @@
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             
-            $sql = "INSERT INTO produkt (barcode, pname, ppreis, phersdatum, phaltdauer, menge, kuehlraumNr)
-            VALUES(:barcode, :pname, :ppreis, :phersdatum, :phaltdauer, :menge, 123)";
+            $sql = "INSERT INTO produkt (barcode, pname, ppreis, phersdatum, phaltdauer, menge, masseinheit, kuehlraumNr)
+            VALUES(:barcode, :pname, :ppreis, :phersdatum, :phaltdauer, :menge, :masseinheit, 123)";
             
             
             $result = $db->prepare($sql);
@@ -106,6 +112,7 @@
                                           'ppreis' => $_POST['ppreis'],
                                           'phersdatum' => $_POST['phersdatum'],
                                           'phaltdauer' => $_POST['phaltdauer'],
+                                          'masseinheit' => $_POST['masseinheit'],
                                           'menge' => $_POST['menge']
                                           ));
             if($res){

@@ -21,18 +21,13 @@
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<ul>
-<li><a href="baeckerei.php">Lecker</a></li>
-<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-<li><a href="konditor.php">Konditor</a></li>
-<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-<li><a href="kunde.php">Kunde</a></li>
-<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-<li><a href="produkte.php">Produkte</a></li>
-<li><a href="backen.php">Backen</a></li>
-<li><a class="active" href="bestand.php">Bestandteil</a></li>
-<li><a href="session_logout.php">Logout</a></li>
-</ul>
+        <ul> 
+		<li><a href="baeckerei_kunde.php">Lecker</a></li>
+        <li><a href="backwaren.php">Backwaren</a></li>
+		<li><a class="active" href="bestand.php">Bestandteil</a></li>
+        <li><a href="einkauf.php">Einkauf</a></li>
+		<li><a href="./session/logout.php">Logout</a></li>	
+       </ul>
 
 <br></br>
 
@@ -64,31 +59,18 @@
 <?php
     if (isset($_GET['search'])) {
 ?>
+        <table style="width:30%">
         <thead>
         <tr>
-        <h3>Produkte</h3>
+        <th>Produkte</th>
         </tr>
         </thead>
-
-<table style="width:50%">
-<thead>
-<tr>
-<th>Barcode</th>
-<th>Name</th>
-<th>Menge</th>
-<th>Maßeinheit</th>
-</tr>
-</thead>
-<tbody>
 
 <?php
     while($r = $result->fetch(PDO::FETCH_ASSOC)){
 ?>
 <tr>
-<td><?php echo $r['barcode']; ?></td>
 <td><?php echo $r['pname']; ?></td>
-<td><?php echo $r['menge']; ?></td>
-<td><?php echo $r['masseinheit']; ?></td>
 </tr>
 <?php }}
    // else echo "Es gibt keine Infos!";

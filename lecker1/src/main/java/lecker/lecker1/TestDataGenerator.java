@@ -469,45 +469,45 @@ public class TestDataGenerator {
 		AtomicInteger artNr = new AtomicInteger(78961);
 
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Salz', 0.30, '2017-05-20', '2018-05-23', 20, 123)");
+				+ ",'Salz', 0.30, '2017-05-20', '2018-05-23', 2000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Milch', 1.15, '2017-12-17', '2018-01-19', 70, 123)");
+				+ ",'Milch', 1.15, '2017-12-17', '2018-01-19', 5000, 'ml' ,123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Zucker', 1.15, '2017-04-02','2018-03-14', 50, 123)");
+				+ ",'Zucker', 1.15, '2017-04-02','2018-03-14', 5000, 'g',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Margarine', 0.75, '2017-08-23','2018-04-23', 200, 123)");
+				+ ",'Margarine', 0.75, '2017-08-23','2018-04-23', 2000,'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Teabutter', 1.89, '2017-11-20', '2018-01-23', 200, 123)");
+				+ ",'Teabutter', 1.89, '2017-11-20', '2018-01-23', 2000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Banane', 1.99, '2017-12-28', '2018-01-20', 5, 123)");
+				+ ",'Banane', 1.99, '2017-12-28', '2018-01-20', 50, 'st',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Erdbeere', 3.99, '2017-12-28','2018-01-20', 3, 123)");
+				+ ",'Erdbeere', 3.99, '2017-12-28','2018-01-20', 2000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Eier', 2.75, '2017-11-18', '2018-01-23', 200, 123)");
+				+ ",'Eier', 2.75, '2017-11-18', '2018-01-23', 200,'st', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Nutella', 2.89, '2017-07-14', '2018-03-23', 20, 123)");
+				+ ",'Nutella', 2.89, '2017-07-14', '2018-03-23', 2000, 'g',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Kochschokolade', 1.99, '2017-03-20','2018-05-13', 100, 123)");
+				+ ",'Kochschokolade', 1.99, '2017-03-20','2018-05-13', 5000,'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Honig', 3.15, '2017-04-20','2018-11-23', 5, 123)");
+				+ ",'Honig', 3.15, '2017-04-20','2018-11-23', 2000,'ml', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Mehl', 1.09, '2017-01-20', '2018-06-18', 100, 123)");
+				+ ",'Mehl', 1.09, '2017-01-20', '2018-06-18', 10000, 'g',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Lebensmittelfarbstoffe', 2.45, '2017-03-20','2019-01-23',10, 123)");
+				+ ",'Lebensmittelfarbstoffe', 2.45, '2017-03-20','2019-01-23',10, 'pg', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Topfen', 2.39, '2017-12-28', '2018-01-23', 10, 123)");
+				+ ",'Topfen', 2.39, '2017-12-28', '2018-01-23', 1000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Löffelbiskuit', 1.55, '2017-09-30','2018-07-13',10, 123)");
+				+ ",'Löffelbiskuit', 1.55, '2017-09-30','2018-07-13',1000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Kakaopulver', 1.75, '2016-12-20', '2018-09-23', 10, 123)");
+				+ ",'Kakaopulver', 1.75, '2016-12-20', '2018-09-23', 1000, 'g', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Walnuss', 3.89, '2017-06-24', '2018-09-24',12, 123)");
+				+ ",'Walnuss', 3.89, '2017-06-24', '2018-09-24',1200, 'g',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Kondensmilch', 1.09, '2017-09-20', '2018-09-23', 50, 123)");
+				+ ",'Kondensmilch', 1.09, '2017-09-20', '2018-09-23', 2000, 'ml',123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Sauerrahm', 0.99, '2017-12-20','2018-01-23', 100, 123)");
+				+ ",'Sauerrahm', 0.99, '2017-12-20','2018-01-23', 10000, 'ml', 123)");
 		stmt.executeUpdate("INSERT INTO produkt VALUES (" + artNr.getAndIncrement()
-				+ ",'Dinkelmehl', 2.95,'2017-06-17', '2018-03-23',100, 123)");
+				+ ",'Dinkelmehl', 2.95,'2017-06-17', '2018-03-23',10000, 'g',123)");
 
 		// check number of datasets in person table
 		ResultSet rk = stmt.executeQuery("SELECT COUNT(*) FROM kunde");
@@ -551,10 +551,10 @@ public class TestDataGenerator {
 
 		// ÄNDERN
 		// BESTANDTEIL
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78961,'Salz','Semmel')");
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78962,'Milch','Semmel')");		
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78962,'Milch','Honigtorte')");		
-		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1002,78964,'Margarine','Apfelstrudel')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78961,'Salz','Semmel', 7, 'g')");
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1000,78962,'Milch','Semmel', 250, 'ml')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1001,78962,'Milch','Honigtorte', 300, 'ml')");		
+		stmt.executeUpdate("INSERT INTO bestandteil VALUES (1002,78964,'Margarine','Apfelstrudel', 250, 'g')");		
 
 
 		// check number of datasets in person table
