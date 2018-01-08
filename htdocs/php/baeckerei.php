@@ -98,7 +98,7 @@ td{
 					<li><a href="logout.php">Logout</a></li>			
 			   </ul>
 		   		<?php endif; ?>
-				<?php if ($userdata['accesslevel'] == 1): ?>
+				<?php if ($userdata['accesslevel'] < 4): ?>
 					<ul> 
 						<li><a class="active" href="baeckerei.php">Lecker</a></li>
 						<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
