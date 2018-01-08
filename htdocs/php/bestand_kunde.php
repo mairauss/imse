@@ -24,9 +24,9 @@
         <ul> 
 		<li><a href="baeckerei_kunde.php">Lecker</a></li>
         <li><a href="backwaren.php">Backwaren</a></li>
-		<li><a class="active" href="bestand.php">Bestandteil</a></li>
+		<li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
         <li><a href="einkauf.php">Einkauf</a></li>
-		<li><a href="./session/logout.php">Logout</a></li>	
+		<li><a href="session_logout.php">Logout</a></li>
        </ul>
 
 <br></br>
@@ -34,8 +34,7 @@
 <div id="wrapper">
 <center>
   <div>
-    <form id='searchform' action='bestand.php' method='get'>
-      <a href='bestand.php'>Alles</a> ---
+    <form id='searchform' action='bestand_kunde.php' method='get'>
       Geben Sie Backware Name ein:
       <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
       <input id='submit' type='submit' class="testbutton" value='Search' />
@@ -72,9 +71,7 @@
 <tr>
 <td><?php echo $r['pname']; ?></td>
 </tr>
-<?php }}
-   // else echo "Es gibt keine Infos!";
-?>
+<?php }}?>
 </tbody>
 </table>
 </center>

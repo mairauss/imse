@@ -6,27 +6,7 @@
         $error = $e->getMessage();
     }
     
-    // Updating the table row with submited data according to barcode once form is submited
-    if( isset($_POST['submit_data']) ){
-        
-        // Gets the data from post
-        $bestandteilNr = $_POST['bestandteilNr'];
-        $menge = $_POST['menge'];
-        $masseinheit = $_POST['masseinheit'];
-        
-        // Makes query with post data
-        $query = "UPDATE bestandteil SET menge=$menge, masseinheit='$masseinheit' WHERE bestandteilNr=$bestandteilNr";
-        
-        // Executes the query
-        // If data inserted then set success message otherwise set error message
-        // Here $db
-        if( $db->exec($query)){
-            echo "Data is updated successfully.";
-        }else{
-            echo "Sorry, Data is not updated.";
-        }
-    }
-    
+
     $bestandteilNr = $_GET['bestandteilNr'];
     // Prepar the query to get the row data with barcode
     $query = "SELECT bestandteilNr, * FROM bestandteil WHERE bestandteilNr=$bestandteilNr";
@@ -65,7 +45,29 @@
 
 <div id="wrapper">
 <center><h2>Bestandteil Update</h2>
-
+<?php
+    // Updating the table row with submited data according to barcode once form is submited
+    if( isset($_POST['submit_data']) ){
+        
+        // Gets the data from post
+        $bestandteilNr = $_POST['bestandteilNr'];
+        $menge = $_POST['menge'];
+        $masseinheit = $_POST['masseinheit'];
+        
+        // Makes query with post data
+        $query = "UPDATE bestandteil SET menge=$menge, masseinheit='$masseinheit' WHERE bestandteilNr=$bestandteilNr";
+        
+        // Executes the query
+        // If data inserted then set success message otherwise set error message
+        // Here $db
+        if( $db->exec($query)){
+            echo "Data is updated successfully.";
+        }else{
+            echo "Sorry, Data is not updated.";
+        }
+    }
+    
+    ?>
 <div style="width: 500px; margin: 20px auto;">
 <table width="100%" cellpadding="5" cellspacing="1" border="1">
 <form action="" method="post">
