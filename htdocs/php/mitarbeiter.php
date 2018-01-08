@@ -12,7 +12,23 @@ if(isset($error)){ echo $error; }
  
  $sql = "SELECT * FROM mitarbeiter";
  $result = $db->query($sql);
+ 
+	$logedinuser = $login_session;
+	    if (isset($logedinuser)) {
+		$resultsession = $db->query($ses_sql);
+		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
+			//Administrator Rechte
+			if($data['accesslevel'] == 9){
+				echo "Access Level 9";
+			} else{
+				echo "Sie haben kein Zugriff auf diese Seite";
+				header('Location: baeckerei.php');
+			};
+		} else {
+        echo "Unzeireichende User Berechtigung";
+		}
 
+ 
  ?>
 
 <html>
@@ -148,6 +164,18 @@ if(isset($error)){ echo $error; }
 						</div>
 					</div>
 				
+					<div class="form-group">
+					<label for="input1" class="col-sm-2 control-label">AccessLevel</label>
+					<div class="col-sm-10">
+						<select name="accesslevel" class="form-control">
+							<option>Select AccessLevel</option>
+							<option value=1 >1: Kunde</option>
+							<option value=2 >2: Kückengehilfe</option>
+							<option value=3 >3: Konditor</option>
+							<option value=9 >9: Administrator</option>
+						</select>
+					</div>
+					</div>
 				
 					<div class="form-group">
 						<label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
@@ -176,7 +204,7 @@ if(isset($error)){ echo $error; }
 
 				
 				$sql = "INSERT INTO mitarbeiter (mname, gehalt, mgeburtsdatum, personalnr, bname, passwort, accesslevel, email) 
-				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, 'Lecker', :passwort, 9, :email)";
+				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, 'Lecker', :passwort, :accesslevel, :email)";
 				
 				
 				$result = $db->prepare($sql);
@@ -185,6 +213,7 @@ if(isset($error)){ echo $error; }
 											  'mgeburtsdatum' => $_POST['mgeburtsdatum'],
 											  'personalnr' => $_POST['personalnr'],
 											  'passwort' => $_POST['passwort'],
+											  'accesslevel' => $_POST['accesslevel'],
 											  'email' => $_POST['email'],
 											  ));
 				 if($res){

@@ -19,12 +19,13 @@
  
 		 if(isset($_POST) & !empty($_POST)){
 
-			$sql = "UPDATE mitarbeiter SET mname=:mname, gehalt=:gehalt, mgeburtsdatum=:mgeburtsdatum, passwort=:passwort WHERE email=:email";
+			$sql = "UPDATE mitarbeiter SET mname=:mname, gehalt=:gehalt, mgeburtsdatum=:mgeburtsdatum, accesslevel=:accesslevel, passwort=:passwort WHERE email=:email";
 			$result = $db->prepare($sql);
 			$res = $result->execute(array(	  'mname' => $_POST['mname'],
 											  'gehalt' => $_POST['gehalt'],
 											  'mgeburtsdatum' => $_POST['mgeburtsdatum'],
 											  'passwort' => $_POST['passwort'],
+											  'accesslevel' => $_POST['accesslevel'],
 											  'email' => $_POST['email'],
 										));
 				 if($res){
@@ -88,6 +89,19 @@
 						<div class="col-sm-10">
 						  <input type="text" name="passwort" required class="form-control" value="<?php echo $r['passwort']?>" placeholder="Passwort" />
 						</div>
+					</div>
+					
+					<div class="form-group">
+					<label for="input1" class="col-sm-2 control-label">AccessLevel</label>
+					<div class="col-sm-10">
+						<select name="accesslevel" class="form-control">
+							<option>Select AccessLevel</option>
+							<option value=1 <?php if($r['accesslevel'] == 1){ echo "selected";} ?>>1: Kunde</option>
+							<option value=2 <?php if($r['accesslevel'] == 2){ echo "selected";} ?>>2: Kückengehilfe</option>
+							<option value=3 <?php if($r['accesslevel'] == 3){ echo "selected";} ?>>3: Konditor</option>
+							<option value=9 <?php if($r['accesslevel'] == 9){ echo "selected";} ?>>9: Administrator</option>
+						</select>
+					</div>
 					</div>
 				
 				

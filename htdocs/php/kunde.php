@@ -16,7 +16,6 @@
 
 	$logedinuser = $login_session;
 	    if (isset($logedinuser)) {
-        $sql = "SELECT * FROM (SELECT email,accesslevel from kunde UNION select email,accesslevel from mitarbeiter) AS U where U.email '$logedinuser'";
 		$resultsession = $db->query($ses_sql);
 		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
 			//Administrator Rechte
