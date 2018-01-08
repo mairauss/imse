@@ -1,14 +1,12 @@
+<?php
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
 
-//<?php
-//  $user = '';
-//  $pass = '';
-//  $database = '';
- 
-  // establish database connection
-//  $conn = oci_connect($user, $pass, $database);
-//  if (!$conn) exit;
-
- //var_dump($_GET);
+if(isset($error)){ echo $error; }
 ?>
 
 <html>
@@ -26,11 +24,12 @@
 		<li><a href="konditor.php">Konditor</a></li>
 		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
                 <li><a href="kunde.php">Kunde</a></li>
-                <li><a href="backwaren.php">Backwaren</a></li>
+                <li><a href="backwaren.php">Unsere Backwaren</a></li>
                 <li><a href="produkte.php">Produkte</a></li>
            	<li><a href="backen.php">Backen</a></li>
      		<li><a class="active" href="einkauf.php">Einkauf</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>	
+		<li><a href="view.php">Views</a></li>	
        </ul>
 
 <br>
@@ -41,15 +40,31 @@
     $email = $_POST['email'];
     $bestellnummer = $_POST['bestellnummer'];
     $gesamtpreis = $_POST['gesamtpreis'];
-    $db = new SQLite3('../backshop.db');
     $artikel = new Artikel();
     for ($i = 0; isset($_POST[strval($i)]); $i++){
-        $sql = "INSERT INTO einkauf VALUES ( '". $email . "' , ". $artikel->mengeToNumber($_POST[strval($i++)]) . ", '" . $_POST[strval($i++)] . "' , " . $_POST[strval($i)] . ", " . $bestellnummer . ")";
+		$artikelNr = $artikel->mengeToNumber($_POST[strval($i++)]);
+		$datum = $_POST[strval($i++)];
+		$menge = $_POST[strval($i)];
+		
+		//Insert in die Tabelle Einkauf
+        $sql = "INSERT INTO einkauf VALUES ( '". $email . "' , ". $artikelNr . ", " . $datum . " , " . $menge . ", " . $bestellnummer . ")";
         $db->exec($sql);
-        $i = $i - 2;
-        $artikel->updateLagermenge($artikel->mengeToNumber($_POST[strval($i++)]), $_POST[strval($i++)], $_POST[strval($i)]);
+		
+		//Lagermenge wird nach der Bestätigung in der Datenbank aktualisiert
+		$update = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelNr . " AND bhersdatum =" .  $datum ."";
+		$result = $db->exec($update);
+		
+		//Prüft ob nach dem Einkauf noch was im Lager vorhanden ist. Falls nicht wird die Backware aus der Datenbank gelöscht
+		$lagermenge = "SELECT menge FROM backwaren WHERE artikelNr=" . $artikelNr . " AND bhersdatum=" . $datum ;
+		$result = $db->query($lagermenge);
+		while ($row = $result->fetch(PDO::FETCH_ASSOC)){
+			$lagermenge = $row['menge'];
+		}
+		if ($lagermenge <= 0){
+			$delete = "DELETE FROM backwaren WHERE artikelNr=" . $artikelNr . " AND bhersdatum=" . $datum;
+			$db->exec($delete);
+		}
     }
-    $db->close();
     unset($db);
     unset($artikel);
 ?>
@@ -62,27 +77,18 @@
     <br> <br>
     
 	<table style='border: 5px solid #DDDDDD'>
-	  <thead>
-	    <tr>
-	      <th>ArtikelNr</th>
-              <th>Bezeichnung</th>
-              <th>Herstellungsdatum</th>
-              <th>Preis</th>
-              <th>Menge</th>
-	    </tr>
-	  </thead>
 	  <tbody>
-	     <tr>
-                <?php
-                    echo "Vielen Dank für Ihre Bestellung" . "<br>";
-                    echo "Rechnungsbetrag: " . $_POST['gesamtpreis'] . "€ <br> <br>";
-                ?>
-	      </tr>
-              Warenkorb: <br>
-           </tbody>
-        </table>
-    </center>
-      </form>         
+	    <tr>
+        <?php
+            echo "Vielen Dank für Ihre Bestellung!" . "<br>";
+            echo "Rechnungsbetrag: " . $_POST['gesamtpreis'] . "€ <br> <br>";
+			unset($db);
+        ?>
+	    </tr>
+      </tbody>
+    </table>
+</center>
+</form>         
 </div>
 <br>
 </body>

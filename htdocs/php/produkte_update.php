@@ -30,6 +30,8 @@
 <li><a href="konditor.php">Konditor</a></li>
 <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
 <li><a href="kunde.php">Kunde</a></li>
+<li><a href="backwaren.php">Unsere Backwaren</a></li>
+<li><a href="einkauf.php">Warenkorb</a></li>
 <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
 <li><a class="active" href="produkte.php">Produkte</a></li>
 <li><a href="backen.php">Backen</a></li>

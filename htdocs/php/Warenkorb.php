@@ -1,11 +1,23 @@
 <?php
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
+
+if(isset($error)){ echo $error; }
+?>
+
+<?php
     require_once 'Artikel.php';
+	
     class Warenkorb{
         private $email;
         private $bestellNr;
         private $waren = [];
         private $anzahl = 0;
-        
+		
         public function __construct($email){
             $this->email = $email;
         }
@@ -23,26 +35,18 @@
         public function getUst($brutto){
             $ust = ($brutto*10)/100;
             if (($ust*10)%10 != 0 || ($ust*100)%10 != 0){
-		$ust = $ust*100;
-		$ust = (int)$ust;
-		$ust = $ust/100;
+				$ust = $ust*100;
+				$ust = (int)$ust;
+				$ust = $ust/100;
             }
             return $ust;
         }
-        
-        //setzt die Bestellnummer und inkrementiert sie für die nächste Bestellung in der Datenbank 
-        public function setBestellNr(){
-            $db = new SQLite3('../backshop.db');
-            $sql = "SELECT * FROM bestellnummerzaehler";
-            $list = $db->query($sql);
-            while($row = $list->fetchArray()){
-                $this->bestellNr = $row['nr'];
-            }
-            $sql = "UPDATE bestellnummerzaehler set nr=nr+1 where nr=" . $this->bestellNr;
-            $db->exec($sql);
+         
+        public function setBestellNr($nr){
+			$this->bestellNr = $nr; 
         }
         
-        //speichert einen bestellten Artikel
+        //speichert einen bestellte Backware
         public function setWare($ware){
             $obj = Artikel::copy($ware);
             $this->waren[$this->anzahl] = $obj;

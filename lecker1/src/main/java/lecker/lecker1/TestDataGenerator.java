@@ -242,58 +242,58 @@ public class TestDataGenerator {
 			AtomicInteger artNr = new AtomicInteger(1000);
 
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Semmel', 0.15, '2018-01-20', '2018-01-23', 50)");
+					+ ",'2018-01-20', 'Semmel', 0.15, '2018-01-23', 50)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Honigtorte', 2.15, '2018-01-20', '2018-01-23', 20)");
+					+ ",'2018-01-20', 'Hausbrot', 1.50, '2018-01-23', 20)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Apfelstrudel', 1.75, '2018-01-20','2018-01-23', 15)");
+					+ ",'2018-01-20', 'Kipferl', 1.75,'2018-01-23', 15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Topfenstrudel', 1.75, '2018-01-20','2018-01-23', 15)");
+					+ ",'2018-01-20','Topfenstrudel', 1.75, '2018-01-23', 15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Marillenknoedel', 1.89, '2018-01-20', '2018-01-23', 15)");
+					+ ", '2018-01-20','Marillenknoedel', 1.89, '2018-01-23', 15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Nussschnecke', 1.99, '2018-01-20', '2018-01-23', 30)");
+					+ ",'2018-01-20','Nussschnecke', 1.99, '2018-01-23', 30)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Napoleon', 2.99, '2018-01-20','2018-01-23', 10)");
+					+ ",'2018-01-20','Napoleon', 2.99, '2018-01-23', 10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Palatschinken', 2.0, '2018-01-20', '2018-01-23', 50)");
+					+ ",'2018-01-20','Palatschinken', 2.0, '2018-01-23', 50)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Erdbeerknoedel', 1.89, '2018-01-20', '2018-01-23', 15)");
+					+ ",'2018-01-20','Erdbeerknoedel', 1.89, '2018-01-23', 15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Lebkuchen', 1.99, '2018-01-20','2018-01-23', 20)");
+					+ ",'2018-01-20','Lebkuchen', 1.99, '2018-01-23', 20)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Vogelmilchtorte', 2.15, '2018-01-20','2018-01-23',10)");
+					+ ",'2018-01-20','Vogelmilchtorte', 2.15,'2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Tschaek-Tschaek', 1.49, '2018-01-20', '2018-01-23',10)");
+					+ ",'2018-01-20', 'Tschaek-Tschaek', 1.49, '2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Watruschki', 0.45, '2018-01-20','2018-01-23',30)");
+					+ ",'2018-01-20', 'Watruschki', 0.45, '2018-01-23',30)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Syrniki', 0.30, '2018-01-20', '2018-01-23',50)");
+					+ ",'2018-01-20', 'Syrniki', 0.30, '2018-01-23',50)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Tiramisu', 2.55, '2018-01-20','2018-01-23',10)");
+					+ ",'2018-01-20', 'Tiramisu', 2.55, '2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Pudding', 0.75, '2018-01-20', '2018-01-23', 30)");
+					+ ",'2018-01-20', 'Pudding', 0.75, '2018-01-23', 30)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Brownie', 1.89, '2018-01-20', '2018-01-23',10)");
+					+ ",'2018-01-20','Brownie', 1.89, '2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Panna Cotta', 1.09, '2018-01-20', '2018-01-23', 15)");
+					+ ",'2018-01-20', 'Panna Cotta', 1.09, '2018-01-23', 15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Baklava', 2.50, '2018-01-20','2018-01-23',10)");
+					+ ",'2018-01-20', 'Baklava', 2.50, '2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Cupcake', 2.95,'2018-01-20', '2018-01-23',20)");
+					+ ",'2018-01-20', 'Cupcake', 2.95, '2018-01-23',20)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Muraveinik', 1.85, '2018-01-20', '2018-01-23',15)");
+					+ ",'2018-01-20', 'Muraveinik', 1.85, '2018-01-23',15)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Donut', 0.99,'2018-01-20','2018-01-23', 30)");
+					+ ",'2018-01-20', 'Donut', 0.99, '2018-01-23', 30)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Bananenschnitte', 3.0, '2018-01-20', '2018-01-23',10)");
+					+ ",'2018-01-20','Bananenschnitte', 3.0, '2018-01-23',10)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Buttercroissant', 0.49,'2018-01-20', '2018-01-23',20)");
+					+ ",'2018-01-20', 'Buttercroissant', 0.49, '2018-01-23',20)");
 			stmt.executeUpdate("INSERT INTO backwaren VALUES (" + artNr.getAndIncrement()
-					+ ",'Bananen-Nutella Croissant', 0.89, '2018-01-20', '2018-01-23',10)");
+					+ ",'2018-01-20', 'Bananen-Nutella Croissant', 0.89, '2018-01-23',10)");
 
 		} catch (Exception e) {
-			System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
+			System.err.println("Fehler beim Einfuegen des Datensatzes (BACKWAREN): " + e.getMessage());
 		}
 
 		ResultSet rd = stmt.executeQuery("SELECT COUNT(*) FROM backwaren");
@@ -523,23 +523,24 @@ public class TestDataGenerator {
 			System.out.println("Number of datasets 'Produkt': " + count);
 		}
 
-		// ÄNDERN
-		// EINKAUF
+		// EINKAUF und BESTELLNUMMERZAEHLER für die Webseite
 		try {
 
-		/*	stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde1', 12341)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde2', 12342)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde3',12343)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde4', 12344)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde5', 12345)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde6', 12346)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde7', 12347)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde8', 12348)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde9', 12349)");
-			stmt.executeUpdate("INSERT INTO einkauf VALUES ('Kunde10', 12350)");*/
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('onur@mail.com', 12, '2018-01-01', 12, 0)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('onur@mail.com', 14, '2018-01-01', 20, 0)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('onur@mail.com', 10, '2018-01-01', 1, 0)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('onur@mail.com', 21, '2018-01-01', 2, 0)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('onur@mail.com', 17, '2018-01-01', 7, 0)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('imse@mail.com', 15, '2018-01-01', 2, 1)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('imse@mail.com', 18, '2018-01-01', 3, 1)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('imse@mail.com', 11, '2018-01-01', 5, 1)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('imse@mail.com', 17, '2018-01-01', 10, 1)");
+			stmt.executeUpdate("INSERT INTO einkauf VALUES ('baecker1@mail.com', 22, '2018-01-01', 9, 2)");
+			
+			stmt.executeUpdate("INSERT INTO bestellnummerzaehler VALUES (3)");
 
 		} catch (Exception e) {
-			System.err.println("Fehler beim Einfuegen des Datensatzes: " + e.getMessage());
+			System.err.println("Fehler beim Einfuegen des Datensatzes (EINKAUF): " + e.getMessage());
 		}
 
 		// check number of datasets in person table

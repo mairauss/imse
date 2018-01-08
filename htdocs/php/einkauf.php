@@ -1,15 +1,13 @@
+<?php
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
 
-//<?php
-//  $user = '';
-//  $pass = '';
-//  $database = '';
- 
-  // establish database connection
-//  $conn = oci_connect($user, $pass, $database);
-//  if (!$conn) exit;
-
- //var_dump($_GET);
-//?>
+if(isset($error)){ echo $error; }
+?>
 
 <html>
 <title>Lecker: Backen</title>
@@ -21,25 +19,95 @@
 <br></br>
 
         <ul> 
-		<li><a href="baeckerei_kunde.php">Lecker</a></li>
-        <li><a href="backwaren.php">Backwaren</a></li>
-		<li><a href="bestand_kunde.php">Bestandteil</a></li>
-        <li><a class="active" href="einkauf.php">Einkauf</a></li>
-        <li><a href="session_logout.php">Logout</a></li>
+		<li><a href="baeckerei.php">Lecker</a></li>
+		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+		<li><a href="konditor.php">Konditor</a></li>
+		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+                <li><a href="kunde.php">Kunde</a></li>
+                <li><a href="backwaren.php">Unsere Backwaren</a></li>
+                <li><a href="produkte.php">Produkte</a></li>
+           	<li><a href="backen.php">Backen</a></li>
+     		<li><a class="active" href="einkauf.php">Warenkorb</a></li>
+		<li><a href="bestand.php">Bestandteil</a></li>	
+                <li><a href="view.php">Views</a></li>
+                <li><a href="./session/logout.php">Logout</a></li>
        </ul>
 
 <br></br>
 
+<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
+<div>
+	<form id='searchform' action='einkauf.php' method='post'>
+	<table>
+	  Kunden E-Mail eingeben: 
+	  <input id='searchMail' name='searchMail' type='text' size='15' value='<?php if (isset($_POST['searchMail'])) echo $_POST['searchMail']; ?>' />
+	  <br> <br>
+	  Bestellnumer eingeben:
+	  <input id='searchNr' name='searchNr' type='text' size='15' value='<?php if (isset($_POST['searchNr'])) echo $_POST['searchNr']; ?>' />	  
+	  <br> <br>
+	  <input id='submit' type='submit' class="button" value='Suche Einkauf' />
+	</form>
+</div>
+<!-- /DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
+
+<?php
+  $sucheEinkauf = false;
+  // check if search view of list view
+  if (isset($_POST['searchMail']) && isset($_POST['searchNr'])) {
+	  $sucheEinkauf = true;
+	  $sqlSelect = "SELECT * FROM einkauf WHERE email like '%" . $_POST['searchMail'] . "%' AND bestellnr like '%" . $_POST['searchNr'] . "%'";
+  } else if (isset($_POST['searchMail']) && !isset($_POST['searchNr'])) {
+	$sucheEinkauf = true;
+    $sqlSelect = "SELECT * FROM einkauf WHERE email like '%" . $_POST['searchMail'] . "%'";
+  } else if (isset($_POST['searchNr']) && !isset($_POST['searchMail'])){
+	$sucheEinkauf = true;
+	$sqlSelect = "SELECT * FROM einkauf WHERE bestellnr like '%" . $_POST['searchNr'] . "%'";
+  } else {
+    $sqlSelect = "SELECT * FROM einkauf";
+  }
+?>
+
 <div id="wrapper">
 <center>
-  <div>
-    <form id='searchform' action='einkauf.php' method='get'>
-      <a href='einkauf.php'>Alles</a> ---
-      Suche nach Name: 
-      <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
-      <input id='submit' type='submit' class="testbutton" value='Search' />
-</form>
+<table style='border: 5px solid #DDDDDD'>
+    <form id='searchform' action='einkauf.php' method='post'>
+	  <br>
+	  <thead>
+	    <tr>
+			<?php
+			if ((isset($_POST['searchMail']) && $_POST['searchMail'] != null) || (isset($_POST['searchNr']) && $_POST['searchNr'] != null)) {
+				echo "<th>E-Mail des Kunden</th>";
+				echo "<th>Artikelnummer</th>";
+				echo "<th>Herstellungsdatum</th>";
+				echo "<th>Menge</th>";
+				echo "<th>Bestellnummer</th>";
+			}
+			?>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<tr>
+			<?php
+			  if ((isset($_POST['searchMail']) && $_POST['searchMail'] != null) || (isset($_POST['searchNr']) && $_POST['searchNr'] != null)){
+				$result = $db->query($sqlSelect);
+				while($row = $result->fetch(PDO::FETCH_ASSOC)){
+					echo "<tr>";
+					echo "<td>" . $row['email'] . "</td>";
+					echo "<td>" . $row['artikelnr'] . "</td>";
+					echo "<td>" . $row['bhersdatum'] . "</td>";
+					echo "<td>" . $row['menge'] . "</td>";
+					echo "<td>" . $row['bestellnr'] . "</td>";
+					echo "</tr>";
+				}
+			  }
+			?>
+		</tr>
+	  </tbody>
+	</form>
   </div>
+</table>
+</center>
+<br>
 
 <?php
     require_once 'Artikel.php';
@@ -48,12 +116,13 @@
     
 <?php
     //Die Bestellung annehmen
+	//HIER WIRD PRIMARY KEY (E-MAIL) DES KUNDEN ALS PARAMETER FÜR DEN KONSTRUKTOR ANGEGEBEN!!!
     $order = new Warenkorb('onur@mail.com');
-    $artikelNr = 1000;
+    $artikelNr = 100000;
     $ware = new Artikel();
     $gesamtPreis = 0;
     $num = 0;
-    //angekommene Informationen über die Bestellung werden in Objekte zusammengefasst
+    //angekommene Informationen über die Bestellung werden in Objekte zusammengefasst und zu POST Variablen zugewiesen
     for ($i = 0; isset($_POST["artikelnr" . strval($artikelNr)]); $i++){
         if (isset($_POST[strval($i)]) && $_POST[strval($i)] >= 1){
           if (isset($_POST['bhaltdauer' . strval($artikelNr)])){
@@ -75,59 +144,63 @@
           $order->setWare($ware);
           $num++;
         }
-        $artikelNr++;
-        
+        $artikelNr++;   
     }
-
-    
-    /*$bestellung = $order->getWaren();
-    for ($i = 0; isset($bestellung[$i]); $i++){
-        echo $bestellung[$i]->getArtikelNr() . " " . $bestellung[$i]->getBestellMenge() . "</br>";
-    }*/
 ?>
-    
-    
-   <form id='searchform' action='einkauf.php' method='post'>
-<?php
-  // check if search view of list view
-  if (isset($_POST['search'])) {
-    $sqlSelect = "SELECT * FROM einkauf WHERE kname like '%" . $_POST['search'] . "%'";
-  } else {
-    $sqlSelect = "SELECT * FROM einkauf";
-  }
-?>
-   </form>
 <div>
 
-    <p>Kunden ID: <?php echo $order->getEmail(); ?></p>
-    <p> <?php if ($gesamtPreis > 0) {$order->setBestellNr(); echo "Meine Bestellnummer: " . $order->getBestellnummer();} ?></p>
+    <p><?php 
+	if ($sucheEinkauf == false) {
+		echo "Kunden ID: " . $order->getEmail();
+	}
+	   ?>
+	</p>
+	
+    <p> <?php 
+		//setzt die Bestellnummer und inkrementiert sie in der Datenbank für die nächste Bestellung
+		if ($gesamtPreis > 0) {
+			$sql = "SELECT * FROM bestellnummerzaehler";
+			$list = $db->query($sql);
+			while($row = $list->fetch(PDO::FETCH_ASSOC)){
+				$order->setBestellNr($row['nr']);
+			}
+			$sql = "UPDATE bestellnummerzaehler set nr=nr+1 where nr=" . $order->getBestellnummer();
+			$db->exec($sql);    
+			echo "Meine Bestellnummer: " . $order->getBestellnummer();
+		}
+		?></p>
   <form id='insertform' action='confirm.php' method='post'>
 <center>
-    Warenkorb:
+    <?php if ($sucheEinkauf == false) echo "Warenkorb:"; ?>
 	<table style='border: 5px solid #DDDDDD'>
 	  <thead>
 	    <tr>
-	      <th>ArtikelNr</th>
-              <th>Bezeichnung</th>
-              <th>Herstellungsdatum</th>
-              <th>Preis (inkl. UST)</th>
-              <th>Menge</th>
+		<?php
+			if ($sucheEinkauf == false) {
+	          echo "<th>ArtikelNr</th>";
+              echo "<th>Bezeichnung</th>";
+              echo "<th>Herstellungsdatum</th>";
+              echo "<th>Preis (inkl. UST)</th>";
+              echo "<th>Menge</th>";
+			}
+		?>
 	    </tr>
 	  </thead>
 	  <tbody>
 	     <tr>
                 <?php
-                    $bestellung = $order->getWaren();
-                    for ($i = 0; isset($bestellung[$i]); $i++){
-                        echo "<tr>";
-                        echo "<td>" . $bestellung[$i]->getArtikelNr() . "</td>";
-                        echo "<td>" . $bestellung[$i]->getGName() . "</td>";
-                        echo "<td>" . $bestellung[$i]->getBhersDatum() . "</td>";
-                        echo "<td>" . $bestellung[$i]->getPreis() . "</td>";
-                        echo "<td>" . $bestellung[$i]->getBestellMenge() . "</td>";
-                        echo "</tr>";
-                        //$gesamtPreis = $gesamtPreis + ($bestellung[$i]->getPreis() * $bestellung[$i]->getBestellMenge());
-                    }
+					if ($sucheEinkauf == false){
+						$bestellung = $order->getWaren();
+						for ($i = 0; isset($bestellung[$i]); $i++){
+							echo "<tr>";
+							echo "<td>" . $bestellung[$i]->getArtikelNr() . "</td>";
+							echo "<td>" . $bestellung[$i]->getGName() . "</td>";
+							echo "<td>" . $bestellung[$i]->getBhersDatum() . "</td>";
+							echo "<td>" . $bestellung[$i]->getPreis() . "</td>";
+							echo "<td>" . $bestellung[$i]->getBestellMenge() . "</td>";
+							echo "</tr>";
+						}
+					}
                 ?>
 	      </tr>
               
@@ -136,6 +209,7 @@
         </table>
     <br>
     <?php
+	  if ($sucheEinkauf == false){
         $ust = $order->getUst($gesamtPreis);
         $netto = $gesamtPreis - $ust;
         echo "<tr>";
@@ -143,19 +217,20 @@
         echo "10 % Ust: " . $ust . " € <br>";
         echo "Rechnungsbetrag inkl. Ust: " . $gesamtPreis . " € <br>";
         echo "</tr>";
+	  }
     ?>
 
 </center>
-
+<center>
       <br>
-      <div> <?php echo $num; ?> Artikel im Warenkorb</div>
+      <div> <?php if ($sucheEinkauf == false) echo $num . " Artikel im Warenkorb"; ?></div>
       <br>
       <input id ="gesamtpreis" name="gesamtpreis" type="hidden" value="<?php echo $gesamtPreis ?>" /> 
       <input id="email" name="email" type="hidden" value="<?php echo $order->getEmail() ?>" />
       <input id="bestellnummer" name="bestellnummer" type="hidden" value="<?php echo $order->getBestellnummer() ?>" />
         <?php
         //Informationen für einen Einkauf werden mit Http-Post für die Speicherung bereitgestellt
-        if ($gesamtPreis > 0){
+        if ($gesamtPreis > 0 && $sucheEinkauf == false){
             $a = 0;
             for ($gr = 0; isset($bestellung[$gr]); $gr++){
                 echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getArtikelNr() . "' />";
@@ -168,7 +243,8 @@
             echo "<input id='submit' type='submit' class='testbutton' value='Bestellung bestätigen' />";
         }
         else
-            echo "Keine Bestellung angegeben. ";
+            if ($sucheEinkauf == false) echo "Keine Bestellung angegeben. ";
+		unset($db);
         ?>
   </form>
 </div>
