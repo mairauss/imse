@@ -44,11 +44,7 @@
 
 		<?php if (!isset($logedinuser)): ?>
 				<ul> 
-					<li><a href="baeckerei.php">Lecker</a></li>
-					<li><a href="backwaren.php">Unsere Backwaren</a></li>
-					<li><a href="einkauf.php">Warenkorb</a></li>
-					<li><a href="bestand.php">Bestandteil</a></li>		
-					<li><a href="session_logout.php">Logout</a></li>						
+					<li><a href="baeckerei.php">Lecker</a></li>					
 			   </ul>
 		<?php endif; ?>
 		<?php if (isset($logedinuser)): ?>
