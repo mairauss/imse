@@ -23,8 +23,8 @@
 			if($data['accesslevel'] == 9){
 				echo "Access Level 9";
 			} else{
-				echo "Access Level ungleich 9 unzureichende Berechtigung";
-				//header('Location: baeckerei.php');
+				echo "Sie haben kein Zugriff auf diese Seite";
+				header('Location: baeckerei.php');
 			};
 		} else {
         echo "Unzeireichende User Berechtigung";
@@ -43,33 +43,62 @@
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<ul>
-<li><a href="baeckerei.php">Lecker</a></li>
-<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-<li><a href="konditor.php">Konditor</a></li>
-<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-<li><a class="active" href="kunde.php">Kunde</a></li>
-<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-<li><a href="produkte.php">Produkte</a></li>
-<li><a href="backwaren.php">Unsere Backwaren</a></li>
-<li><a href="einkauf.php">Warenkorb</a></li>
-<li><a href="backen.php">Backen</a></li>
-<li><a href="bestand.php">Bestandteil</a></li>
-<li><a href="session_logout.php">Logout</a></li>
-</ul>
+<?php if (!isset($logedinuser)): ?>
+			<ul> 
+				<li><a href="baeckerei.php">Lecker</a></li>
+				<li><a href="backwaren.php">Unsere Backwaren</a></li>
+				<li><a href="einkauf.php">Warenkorb</a></li>
+				<li><a href="bestand.php">Bestandteil</a></li>		
+				<li><a href="session_logout.php">Logout</a></li>						
+		   </ul>
+		<?php endif; ?>
+		<?php if (isset($logedinuser)): ?>
+			<?php if ($data['accesslevel'] == 9): ?>
+				<ul> 
+					<li><a class="active" href="baeckerei.php">Lecker</a></li>
+					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+					<li><a href="konditor.php">Konditor</a></li>
+					<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+					<li><a class="active" href="kunde.php">Kunde</a></li>
+					<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+					<li><a href="produkte.php">Produkte</a></li>
+					<li><a href="backwaren.php">Unsere Backwaren</a></li>
+					<li><a href="einkauf.php">Warenkorb</a></li>
+					<li><a href="backen.php">Backen</a></li>
+					<li><a href="bestand.php">Bestandteil</a></li>	
+					<li><a href="session_logout.php">Logout</a></li>			
+			   </ul>
+		   		<?php endif; ?>
+				<?php if ($data['accesslevel'] == 1): ?>
+					<ul> 
+						<li><a href="baeckerei.php">Lecker</a></li>
+						<li><a href="backwaren.php">Unsere Backwaren</a></li>
+						<li><a href="einkauf.php">Warenkorb</a></li>
+						<li><a href="bestand.php">Bestandteil</a></li>	
+						<li><a href="session_logout.php">Logout</a></li>			
+				   </ul>
+		   		<?php endif; ?>
+		<?php endif; ?>
 
 
 
 
-<div class="undermenu">
-<span class="caret"></span></button>
-<ul class="nav-menu" role="menu" aria-labelledby="menu1">
-<li><a href="#Suche">Suche</a></li>
-<li><a href="#Speichern">Speichern</a></li>
-</ul>
-</div>
+		<?php if ($data['accesslevel'] == 9 ): ?>
+			<div class="undermenu">
+			<span class="caret"></span></button>
+			<ul class="nav-menu" role="menu" aria-labelledby="menu1">
+			<li><a href="#Suche">Suche</a></li>
+			<li><a href="#Speichern">Speichern</a></li>
+			</ul>
+			</div>
+		<?php endif; ?>
+
 <br>
-
+	<?php
+		if($data['accesslevel'] == !9 ){
+			exit();
+		}
+	?>
 
 <a name="Suche">
 <div class="container">

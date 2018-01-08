@@ -21,11 +21,15 @@ $error='';
 			$sql = "SELECT * FROM (SELECT email,passwort from kunde UNION select email,passwort from mitarbeiter) AS U where u.passwort='$passwort' AND u.email='$email'";
 			$result = $db->query($sql);
 			$data = $result->fetch(PDO::FETCH_ASSOC);
+			$userdata=$data;
 			if($data){
 				if ($data['email'] == $email && $data['passwort'] == $passwort ) {
 				// Session starten
 				$_SESSION['login_user']=$email;
 				// Zur Startseite weiterleiten
+				if($data['accesslevel'] == 9){
+					header("location: kunde.php");
+				}
 				header("location: backwaren.php");
 				}
 			} else {
@@ -46,6 +50,8 @@ $error='';
     $sql = "SELECT * FROM baeckerei";
     $result = $db->query($sql);
     
+	
+	
     ?>
 
 
@@ -58,30 +64,62 @@ $error='';
 td{
     text-align: center;
 }
+#login {
+	text-align: center;
+}
 </style>
 </head>
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
-
-        <ul> 
-		<li><a class="active" href="baeckerei.php">Lecker</a></li>
-		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-		<li><a href="konditor.php">Konditor</a></li>
-		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-        <li><a href="kunde.php">Kunde</a></li>
-        <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-        <li><a href="produkte.php">Produkte</a></li>
-		<li><a href="backwaren.php">Unsere Backwaren</a></li>
-		<li><a href="einkauf.php">Warenkorb</a></li>
-        <li><a href="backen.php">Backen</a></li>
-		<li><a href="bestand.php">Bestandteil</a></li>	
-		<li><a href="session_logout.php">Logout</a></li>			
-       </ul>
-
+		<?php if (!isset($logedinuser)): ?>
+			<ul> 
+				<li><a class="active" href="baeckerei.php">Lecker</a></li>
+				<li><a href="backwaren.php">Unsere Backwaren</a></li>
+				<li><a href="einkauf.php">Warenkorb</a></li>
+				<li><a href="bestand.php">Bestandteil</a></li>		
+				<li><a href="session_logout.php">Logout</a></li>						
+		   </ul>
+		<?php endif; ?>
+		<?php if (isset($logedinuser)): ?>
+			<?php if ($userdata['accesslevel'] == 9): ?>
+				<ul> 
+					<li><a class="active" href="baeckerei.php">Lecker</a></li>
+					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+					<li><a href="konditor.php">Konditor</a></li>
+					<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+					<li><a href="kunde.php">Kunde</a></li>
+					<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+					<li><a href="produkte.php">Produkte</a></li>
+					<li><a href="backwaren.php">Unsere Backwaren</a></li>
+					<li><a href="einkauf.php">Warenkorb</a></li>
+					<li><a href="backen.php">Backen</a></li>
+					<li><a href="bestand.php">Bestandteil</a></li>	
+					<li><a href="logout.php">Logout</a></li>			
+			   </ul>
+		   		<?php endif; ?>
+				<?php if ($userdata['accesslevel'] == 1): ?>
+					<ul> 
+						<li><a class="active" href="baeckerei.php">Lecker</a></li>
+						<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+						<li><a href="konditor.php">Konditor</a></li>
+						<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+						<li><a href="kunde.php">Kunde</a></li>
+						<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+						<li><a href="produkte.php">Produkte</a></li>
+						<li><a href="backwaren.php">Unsere Backwaren</a></li>
+						<li><a href="einkauf.php">Warenkorb</a></li>
+						<li><a href="backen.php">Backen</a></li>
+						<li><a href="bestand.php">Bestandteil</a></li>	
+						<li><a href="logout.php">Logout</a></li>			
+				   </ul>
+		   		<?php endif; ?>
+		<?php endif; ?>
 <br></br>
 
-		<div id="main">
+
+		<?php if (!isset($logedinuser)): ?>
+			<div id="main">
 			<h1>Login Lecker</h1>
 			<div id="login">
 				<form action="" method="post">
@@ -94,6 +132,7 @@ td{
 				</form>
 			</div>
 		</div>
+		<?php endif; ?>
 		
 		<div id="main">
 			<h1>Register Lecker</h1>
