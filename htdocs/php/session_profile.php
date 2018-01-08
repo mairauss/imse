@@ -4,13 +4,13 @@ include('session.php');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Your Home Page</title>
-	<link href="style.css" rel="stylesheet" type="text/css">
+    <title>Your Home Page</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
 </head>
-	<body>
-		<div id="profile">
-			<b id="welcome">Willkomen Gerhard : <i><?php echo $login_session; ?></i></b>
+<body>
+<div id="profile">
+    <b id="welcome">Willkomen Gerhard : <i><?php echo $login_session; ?></i></b>
 
-		</div>
-	</body>
+</div>
+</body>
 </html>
