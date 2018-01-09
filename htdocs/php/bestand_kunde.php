@@ -22,10 +22,10 @@
 <br></br>
 
         <ul> 
-		<li><a href="baeckerei_kunde.php">Lecker</a></li>
+		<li><a href="baeckerei.php">Lecker</a></li>
         <li><a href="backwaren.php">Unsere Backwaren</a></li>
-		<li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
         <li><a href="einkauf.php">Warenkorb</a></li>
+        <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
 		<li><a href="session_logout.php">Logout</a></li>
        </ul>
 

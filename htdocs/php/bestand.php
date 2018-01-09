@@ -65,7 +65,7 @@ if (isset($logedinuser)) {
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -90,7 +90,7 @@ if (isset($logedinuser)) {
     <?php endif; ?>
 <?php endif; ?>
 
-<?php if ($data['accesslevel'] > 1): ?>
+<?php if ($data['accesslevel'] != 1): ?>
     <div class="undermenu">
         <span class="caret"></span></button>
         <ul class="nav-menu" role="menu" aria-labelledby="menu1">
@@ -168,56 +168,6 @@ if (isset($logedinuser)) {
     </div>
 <?php endif; ?>
 
-<?php if ($data['accesslevel'] = 1): ?>
-
-<?php endif; ?>
-<div id="wrapper">
-    <center>
-        <div>
-            <form id='searchform' action='bestand_kunde.php' method='get'>
-                Geben Sie Backware Name ein:
-                <input id='search' name='search' type='text' size='15'
-                       value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
-                <input id='submit' type='submit' class="testbutton" value='Search'/>
-            </form>
-        </div>
-        <?php
-        // check if search view of list view
-        if (isset($_GET['search'])) {
-            $sql = "SELECT * FROM bestandteil WHERE gname like '%" . $_GET['search'] . "%'";
-        } else {
-            $sql = "SELECT * FROM bestandteil";
-        }
-
-        // execute sql statement
-        $result = $db->query($sql);
-        ?>
-
-        <br></br>
-        <tbody>
-
-        <?php
-        if (isset($_GET['search'])) {
-        ?>
-        <table style="width:30%">
-            <thead>
-            <tr>
-                <th>Produkte</th>
-            </tr>
-            </thead>
-
-            <?php
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                <tr>
-                    <td><?php echo $r['pname']; ?></td>
-                </tr>
-            <?php }
-            } ?>
-            </tbody>
-        </table>
-    </center>
-    <br></br>
 </div>
 </body>
 </html>
