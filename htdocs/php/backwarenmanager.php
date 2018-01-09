@@ -118,7 +118,6 @@
     $countstmt = $conn->prepare("SELECT count(*) FROM backwaren");
   }
 
-
   // execute sql statement
   $result = $stmt->execute();
 ?>
@@ -235,17 +234,19 @@
       <thead>
         <tr>
           <th>ArtikelNr</th>
-          <th>Herstell.Datum</th>
           <th>Name</th>
           <th>Preis</th>
+          <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
           <th>Update</th>
         </tr>
       </thead>
       <tbody>
-  <form id='updateForm' action='backwarenmanager.php' methode='get'>
+  <form id='updateForm' action='backwarenmanager.php' methode='post'>
+<input id ="artikel" name="artikel" type="hidden" value="artikel" />
   <?php
+
     // fetch rows of the executed sql query
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
@@ -261,7 +262,7 @@
       <td>
         <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; echo'' ?>' />
       </td>
-      <td><input id=' <?php echo "artikelnr".$row['artikelnr']?>' name= '<?php echo $row['artikelnr']?>' type="hidden" value=' <?php echo $row['artikelnr']?>'/></td>
+      <td><input id='updateartikelnr' name= 'updateartikelnr' type="hidden" value=' <?php echo $row['artikelnr']?>'/></td>
 
     <?php
       echo "</tr>";
@@ -274,6 +275,8 @@
   </form>
   <div>Insgesamt
   <?php
+
+
     $countresult = $countstmt->execute();
     $count = $countresult->fetchArray();
     if(current($count)) {
