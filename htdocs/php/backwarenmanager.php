@@ -114,7 +114,7 @@
     $stmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
     $countstmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
   } else {
-    $stmt = $conn->prepare("SELECT * FROM backwaren");
+    $stmt = $conn->prepare("SELECT backen.personalnr, backwaren.* from backwaren left join backen on backen.artikelnr like backwaren.artikelnr;");
     $countstmt = $conn->prepare("SELECT count(*) FROM backwaren");
   }
 
@@ -233,13 +233,13 @@
   <table style='border: 5px solid #DDDDDD'>
       <thead>
         <tr>
+          <th>Mitarbeiter</th>
           <th>ArtikelNr</th>
           <th>Name</th>
           <th>Preis</th>
           <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
-          <th>Update</th>
         </tr>
       </thead>
       <tbody>
@@ -251,6 +251,7 @@
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
       echo "<tr>";
+     echo "<td>" . $row['personalnr'] . "</td>";
      echo "<td>" . $row['artikelnr'] . "</td>";
      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['gname'] . "</td>";
