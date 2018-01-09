@@ -63,6 +63,9 @@ if (isset($_SESSION['login_user'])) {
 <br></br>
 
 <div id="main">
+	<h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
+	
+
     <h1>Login Lecker</h1>
     <div id="login">
         <h2>Login Form</h2>

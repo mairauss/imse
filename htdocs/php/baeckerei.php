@@ -114,7 +114,7 @@ if (isset($logedinuser)) {
 <br></br>
 
 
-
+<?php if ($data['accesslevel'] > 1): ?>
 <div id="wrapper">
     <center>
 
@@ -251,5 +251,79 @@ if (isset($logedinuser)) {
     </center>
     <br></br>
 </div>
+<?php endif; ?>
+
+<?php if ($data['accesslevel'] == 1): ?>
+	<center>
+	<h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
+	<br></br>
+  <?php
+        // check if search view of list view
+
+        $sql = "SELECT * FROM baeckerei";
+
+
+        // execute sql statement
+        $result = $db->query($sql);
+
+        ?>
+        <h1>Baeckerei</h1>
+        <table style="width:70%">
+            <thead>
+            <tr>
+                <th>Baeckerei</th>
+                <th>FirmaNr</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            // fetch rows of the executed sql query
+            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                <tr>
+                    <td><?php echo $r['bname']; ?></td>
+                    <td><?php echo $r['firmanr']; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+
+        <?php
+        // check if search view of list view
+
+        $sql = "SELECT * FROM anschrift";
+
+
+        // execute sql statement
+        $result = $db->query($sql);
+
+        ?>
+
+        <table style="width:70%">
+            <thead>
+            <tr>
+                <th>Adresse</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            // fetch rows of the executed sql query
+            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                <tr>
+                    <td><?php echo $r['bezeichnung']; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+
+
+
+
+	<div id="wrapper">
+	</center>
+
+<?php endif; ?>
+
 </body>
 </html>
