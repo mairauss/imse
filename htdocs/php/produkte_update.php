@@ -12,7 +12,7 @@ if (isset($logedinuser)) {
     $resultsession = $db->query($ses_sql);
     $data2 = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3) {
+    if ($data2['accesslevel'] == 9 || $data['accesslevel'] == 3) {
         // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";

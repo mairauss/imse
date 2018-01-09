@@ -90,7 +90,7 @@ if (isset($logedinuser)) {
     <?php endif; ?>
 <?php endif; ?>
 
-<?php if ($data['accesslevel'] != 1): ?>
+<?php if ($data['accesslevel'] > 1): ?>
     <div class="undermenu">
         <span class="caret"></span></button>
         <ul class="nav-menu" role="menu" aria-labelledby="menu1">
