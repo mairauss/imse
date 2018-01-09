@@ -10,9 +10,9 @@ try {
 $logedinuser = $login_session;
 if (isset($logedinuser)) {
     $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    $data2 = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data['accesslevel'] > 1) {
+    if ($data2['accesslevel'] > 1) {
         // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
@@ -39,20 +39,50 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<ul>
-    <li><a href="baeckerei.php">Lecker</a></li>
-    <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-    <li><a href="konditor.php">Konditor</a></li>
-    <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-    <li><a href="kunde.php">Kunde</a></li>
-    <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-    <li><a href="produkte.php">Produkte</a></li>
-    <li><a href="backwaren.php">Unsere Backwaren</a></li>
-    <li><a href="einkauf.php">Warenkorb</a></li>
-    <li><a href="backen.php">Backen</a></li>
-    <li><a class="active" href="bestand.php">Bestandteil</a></li>
-    <li><a href="session_logout.php">Logout</a></li>
-</ul>
+    <?php if ($data2['accesslevel'] == 9): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+            <li><a href="konditor.php">Konditor</a></li>
+            <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+            <li><a href="kunde.php">Kunde</a></li>
+            <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="backen.php">Backen</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data2['accesslevel'] == 1): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data2['accesslevel'] == 2): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data2['accesslevel'] == 3): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="konditor.php">Konditor</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backen.php">Backen</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
 <div class="undermenu">
     <span class="caret"></span></button>
     <ul class="nav-menu" role="menu" aria-labelledby="menu1">
