@@ -9,11 +9,13 @@
   $database = '';
 
 
+
+
   class DB extends SQLite3
 {
     function __construct()
     {
-        $this->open('backshop.db');
+        $this->open('../backshop.db');
     }
 }
 
@@ -133,7 +135,7 @@
         <tbody>
           <tr>
             <td>
-                <input id='menge' name='menge' type='number' size='10' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
+                <input id='menge' name='menge' type='number' size='10' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; echo ''?>' />
             </td>
             <td>
                 <input id='personalnr' name='personalnr' type='text' size='10' value='<?php if (isset($_GET['personalnr'])) echo $_GET['personalnr']; ?>' />
@@ -150,6 +152,7 @@
 
   <?php
     //Handle insert
+
      if (isset($_GET['artikelnr']))
     {
 
@@ -194,19 +197,17 @@
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
           <th>Update</th>
-          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
+  <form id='updateForm' action='backwarenmanager.php' methode='get'>
   <?php
     // fetch rows of the executed sql query
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-      ?>
-<form id='Form' action='backwarenmanager.php' methode='post'>
-<?php
+
       echo "<tr>";
-      echo "<td>" . $row['artikelnr'] . "</td>";
-      echo "<td>" . $row['bhersdatum'] . "</td>";
+     echo "<td>" . $row['artikelnr'] . "</td>";
+     echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['gname'] . "</td>";
       echo "<td>" . $row['bpreis'] . "</td>";
       echo "<td>" . $row['bhaltdauer'] . "</td>";
@@ -214,39 +215,19 @@
       ?>
 
       <td>
-        <input id='menge' name='menge' type='number' size='10' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
-        <input id='update' type='submit' class="testbutton" value='Update' />
-        <!-- <a href="mitarbeiter_delete.php?email=<?php echo $r['email']; ?>">Delete</a>-->
+        <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; echo'' ?>' />
       </td>
-      <td>
-        <input id='delete' type='submit' class="testbutton" value='Delete' />
-      </td>
-      <td><input id= <?php echo $row['artikelnr']?> name= <?php echo $row['artikelnr']?> type="hidden" value = <?php echo $row['artikelnr']?>/></td>
-  </form>
+      <td><input id=' <?php echo "artikelnr".$row['artikelnr']?>' name= '<?php echo $row['artikelnr']?>' type="hidden" value=' <?php echo $row['artikelnr']?>'/></td>
+
     <?php
       echo "</tr>";
     }
-    if (isset($_POST['update']))
-   {
-     echo "<script type='text/javascript'>alert('Updating');</script>";
-     $sstmt = $conn->prepare("SELECT menge FROM backwaren WHERE artikelnr like :artikelnr");
-     $sstmt->bindValue(':artikelnr', $_POST['artiketnr'], SQLITE3_INTEGER);
-
-     $sresult = NULL;
-     try{
-       $conn->enableExceptions(true);
-       // execute sql statements
-       $sresult = $sstmt->execute();
-     } catch(Exception $e){
-      echo "<script type='text/javascript'>alert('Could not update');</script>";
-     }
-    $menge =  $sresult->fetchArray();
-     echo "<script type='text/javascript'>alert('$menge');</script>";
-   }
   ?>
+
       </tbody>
     </table>
-
+    <input type="submit" id='updateBtn' name='updateBtn' class="testbutton" value="Update"/>
+  </form>
   <div>Insgesamt
   <?php
     $countresult = $countstmt->execute();
