@@ -109,12 +109,15 @@
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
-    $stmt = $conn->prepare( "SELECT * FROM backwaren WHERE artikelnr like :id ");
+    $stmt = $conn->prepare( "SELECT backen.personalnr, backwaren.* from backwaren
+                            inner join backen on backwaren.artikelnr like :id
+                            and backen.artikelnr like backwaren.artikelnr;");
     $countstmt = $conn->prepare( "SELECT count(*) FROM backwaren WHERE artikelnr like :id ");
     $stmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
     $countstmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
   } else {
-    $stmt = $conn->prepare("SELECT backen.personalnr, backwaren.* from backwaren left join backen on backen.artikelnr like backwaren.artikelnr;");
+    $stmt = $conn->prepare("SELECT backen.personalnr, backwaren.* from backwaren
+                          left join backen on backen.artikelnr like backwaren.artikelnr;");
     $countstmt = $conn->prepare("SELECT count(*) FROM backwaren");
   }
 
@@ -199,7 +202,7 @@
      if (isset($_GET['artikelnr']))
     {
 
-      $insstmt = $conn->prepare( "INSERT INTO backwaren VALUES(:nr, :herdat, :name, :preis, :haltdat, :menge)");
+      $insstmt = $conn->prepare( "INSERT INTO backwaren VALUES(:nr, :name, :preis, :herdat, :haltdat, :menge)");
       $insstmt->bindValue(':nr',$_GET['artikelnr'],SQLITE3_INTEGER);
       $insstmt->bindValue(':name',$_GET['gname'],SQLITE3_TEXT);
       $insstmt->bindValue(':preis',$_GET['bpreis'],SQLITE3_FLOAT);
@@ -223,10 +226,6 @@
       if($insresult && $backresult){
         echo "<script type='text/javascript'>alert('Successfully inserted');</script>";
       }
-      //Print potential errors and warnings
-      // else{
-      //    print("could not insert");
-      // }
     }
   ?>
 
