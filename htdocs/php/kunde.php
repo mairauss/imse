@@ -22,7 +22,7 @@ if (isset($logedinuser)) {
     $data = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
     if ($data['accesslevel'] == 9) {
-       // echo "Access Level 9";
+        // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
         header('Location: baeckerei.php');

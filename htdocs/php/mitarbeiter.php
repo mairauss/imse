@@ -21,10 +21,10 @@ if (isset($logedinuser)) {
     $data = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
     if ($data['accesslevel'] == 9) {
-        echo "Access Level 9";
+        //echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: baeckerei.php');
+        header('Location: index.php');
     };
 } else {
     echo "Unzeireichende User Berechtigung";
@@ -42,20 +42,22 @@ if (isset($logedinuser)) {
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<ul>
-    <li><a href="baeckerei.php">Lecker</a></li>
-    <li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
-    <li><a href="konditor.php">Konditor</a></li>
-    <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-    <li><a href="kunde.php">Kunde</a></li>
-    <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-    <li><a href="produkte.php">Produkte</a></li>
-    <li><a href="backwaren.php">Unsere Backwaren</a></li>
-    <li><a href="einkauf.php">Warenkorb</a></li>
-    <li><a href="backen.php">Backen</a></li>
-    <li><a href="bestand.php">Bestandteil</a></li>
-    <li><a href="session_logout.php">Logout</a></li>
-</ul>
+<?php if ($data['accesslevel'] == 9): ?>
+    <ul>
+        <li><a class="active" href="baeckerei.php">Lecker</a></li>
+        <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+        <li><a href="konditor.php">Konditor</a></li>
+        <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+        <li><a class="active" href="kunde.php">Kunde</a></li>
+        <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+        <li><a href="produkte.php">Produkte</a></li>
+        <li><a href="backwaren.php">Unsere Backwaren</a></li>
+        <li><a href="einkauf.php">Warenkorb</a></li>
+        <li><a href="backen.php">Backen</a></li>
+        <li><a href="bestand.php">Bestandteil</a></li>
+        <li><a href="session_logout.php">Logout</a></li>
+    </ul>
+<?php endif; ?>
 
 <div class="undermenu">
     <span class="caret"></span></button>

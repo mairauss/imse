@@ -49,22 +49,23 @@ if (isset($_SESSION['login_user'])) {
 <title>Lecker: Kunden</title>
 <head>
     <link rel="stylesheet" href="index.css"/>
-	<style>
-	        #login {
+    <style>
+        #login {
             text-align: center;
         }
-			        #main {
+
+        #main {
             text-align: center;
         }
-		</style>
+    </style>
 </head>
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
 <div id="main">
-	<h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
-	
+    <h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
+
 
     <h1>Login Lecker</h1>
     <div id="login">
@@ -78,85 +79,85 @@ if (isset($_SESSION['login_user'])) {
             <span><?php echo $error; ?></span>
         </form>
     </div>
-	
-	<br></br>
-	
-			<div id="main">
-			<h1>Register Lecker</h1>
-		                    <div class="container">
-                        <div class="row">
-                            <form method="post" class="form-horizontal col-md-20 col-md-offset-10">
-                                <div class="form-group">
-                                    <label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" name="email" required class="form-control" id="input1"
-                                               placeholder="E-Mail"/>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="input1" class="col-sm-5 control-label">Name</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="kname" required class="form-control" id="input1"
-                                               placeholder="Name"/>
-                                    </div>
-                                </div>
+    <br></br>
 
-                                <div class="form-group">
-                                    <label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
-                                    <div class="col-sm-10">
-                                        <input type="date" max="2000-01-01" name="kgeburtsdatum" required
-                                               class="form-control" id="input1" placeholder=""/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="input1" class="col-sm-5 control-label">Passwort</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="passwort" required class="form-control" id="input1"
-                                               placeholder="Passwort"/>
-                                    </div>
-                                </div>
-
-                                <input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit2"/>
-                            </form>
+    <div id="main">
+        <h1>Register Lecker</h1>
+        <div class="container">
+            <div class="row">
+                <form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+                    <div class="form-group">
+                        <label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
+                        <div class="col-sm-10">
+                            <input type="email" name="email" required class="form-control" id="input1"
+                                   placeholder="E-Mail"/>
                         </div>
                     </div>
 
-                    <?php
-                    /*
-                     Quellen:
-                     http://codingcyber.org/simple-crud-application-php-pdo-7284/
-                     https://www.w3schools.com/php/php_mysql_insert.asp
-                     https://www.formget.com/php-data-object/
-                     */
-                    if (isset($_POST["submit2"])) {
-                        try {
-                            require_once('dbconnection.php');
-                            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    <div class="form-group">
+                        <label for="input1" class="col-sm-5 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="kname" required class="form-control" id="input1"
+                                   placeholder="Name"/>
+                        </div>
+                    </div>
 
-                            $sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort, accesslevel)
+                    <div class="form-group">
+                        <label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
+                        <div class="col-sm-10">
+                            <input type="date" max="2000-01-01" name="kgeburtsdatum" required
+                                   class="form-control" id="input1" placeholder=""/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input1" class="col-sm-5 control-label">Passwort</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="passwort" required class="form-control" id="input1"
+                                   placeholder="Passwort"/>
+                        </div>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary col-md-6" value="submit" name="submit2"/>
+                </form>
+            </div>
+        </div>
+
+        <?php
+        /*
+         Quellen:
+         http://codingcyber.org/simple-crud-application-php-pdo-7284/
+         https://www.w3schools.com/php/php_mysql_insert.asp
+         https://www.formget.com/php-data-object/
+         */
+        if (isset($_POST["submit2"])) {
+            try {
+                require_once('dbconnection.php');
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort, accesslevel)
             VALUES(:email, :kname, :kgeburtsdatum, 'Lecker' , :passwort, 1)";
 
 
-                            $result = $db->prepare($sql);
-                            $res = $result->execute(array('email' => $_POST['email'],
-                                'kname' => $_POST['kname'],
-                                'kgeburtsdatum' => $_POST['kgeburtsdatum'],
-                                'passwort' => $_POST['passwort']
-                            ));
-                            if ($res) {
-                                echo "Ihre Daten wurden erfolgreich gespeichert";
-                            } else {
-                                echo "Fehler aufgetreten";
-                            }
-                            $db = null;
-                        } catch (PDOException $e) {
-                            echo $e->getMessage();
-                        }
-                    }
-                    ?>
-		</div>
+                $result = $db->prepare($sql);
+                $res = $result->execute(array('email' => $_POST['email'],
+                    'kname' => $_POST['kname'],
+                    'kgeburtsdatum' => $_POST['kgeburtsdatum'],
+                    'passwort' => $_POST['passwort']
+                ));
+                if ($res) {
+                    echo "Ihre Daten wurden erfolgreich gespeichert";
+                } else {
+                    echo "Fehler aufgetreten";
+                }
+                $db = null;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+        ?>
+    </div>
 </div>
 </body>
 </html>
