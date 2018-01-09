@@ -10,7 +10,7 @@ try {
 $logedinuser = $login_session;
 if (isset($logedinuser)) {
     $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    $data2 = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
     if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3) {
         // echo "Access Level 9";
@@ -39,13 +39,7 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<?php if (!isset($logedinuser)): ?>
-    <ul>
-        <li><a href="baeckerei.php">Lecker</a></li>
-    </ul>
-<?php endif; ?>
-<?php if (isset($logedinuser)): ?>
-    <?php if ($data['accesslevel'] == 9): ?>
+    <?php if ($data2['accesslevel'] == 9): ?>
         <ul>
             <li><a class="active" href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -61,7 +55,7 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-    <?php if ($data['accesslevel'] == 3): ?>
+    <?php if ($data2['accesslevel'] == 3): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="konditor.php">Konditor</a></li>
@@ -73,7 +67,7 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-<?php endif; ?>
+
 <div class="undermenu">
     <span class="caret"></span></button>
     <ul class="nav-menu" role="menu" aria-labelledby="menu1">

@@ -21,7 +21,7 @@
 		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
 			//Administrator Rechte
 			if($data['accesslevel'] == 9 || $data['accesslevel'] == 7){
-				echo "Access Level 7 oder höher";
+				//echo "Access Level 7 oder höher";
 			} else{
 				echo "Sie haben kein Zugriff auf diese Seite";
 				header('Location: baeckerei.php');
