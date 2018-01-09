@@ -17,6 +17,7 @@
 }
 
 
+
   //$conn = open('backshop.db');
   // establish database connection
   $conn = new DB();
@@ -24,6 +25,27 @@
       die($conn->lastErrorMsg());
   }
 
+  try {
+    require_once('dbconnection.php');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $e) {
+    $error = $e->getMessage();
+}
+  
+  $logedinuser = $login_session;
+if (isset($logedinuser)) {
+    $resultsession = $db->query($ses_sql);
+    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    //Administrator Rechte
+    if ($data['accesslevel'] == 9) {
+        // echo "Access Level 9";
+    } else {
+        echo "Sie haben kein Zugriff auf diese Seite";
+        header('Location: baeckerei.php');
+    };
+} else {
+    echo "Unzeireichende User Berechtigung";
+}
 
   ?>
 
@@ -36,6 +58,8 @@
       <img src="b5.png" alt="logo" width="500" height="300">
       <br></br>
 
+<?php if (isset($logedinuser)): ?>
+    <?php if ($data['accesslevel'] == 9): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -50,6 +74,36 @@
             <li><a href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 1): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 2): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 3): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="konditor.php">Konditor</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backen.php">Backen</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+<?php endif; ?>
 
     <br></br>
     <div id="wrapper">
