@@ -44,11 +44,11 @@ if (isset($logedinuser)) {
 
 <?php if ($data['accesslevel'] == 9): ?>
     <ul>
-        <li><a class="active" href="baeckerei.php">Lecker</a></li>
-        <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+        <li><a href="baeckerei.php">Lecker</a></li>
+        <li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
         <li><a href="konditor.php">Konditor</a></li>
         <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-        <li><a class="active" href="kunde.php">Kunde</a></li>
+        <li><a href="kunde.php">Kunde</a></li>
         <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
         <li><a href="produkte.php">Produkte</a></li>
         <li><a href="backwaren.php">Unsere Backwaren</a></li>
