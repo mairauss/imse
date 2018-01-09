@@ -46,7 +46,7 @@ if (isset($logedinuser)) {
 <?php if (isset($logedinuser)): ?>
     <?php if ($data['accesslevel'] == 9): ?>
         <ul>
-            <li><a class="active" href="baeckerei.php">Lecker</a></li>
+            <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
             <li><a href="konditor.php">Konditor</a></li>
             <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
