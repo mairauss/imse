@@ -1,44 +1,5 @@
 <?php
-session_start();
-
-// Variable To Store Error Message
-$error = '';
-if (!isset($logedinuser)) {
-    if (isset($_POST['submit'])) {
-        if (empty($_POST['email']) || empty($_POST['passwort'])) {
-            $error = "E-Mail Adresse oder Passwort sind fehlerhaft";
-        } else {
-            // Initializing $email and $passwort
-            $email = $_POST['email'];
-            $passwort = $_POST['passwort'];
-            // Datenbankverbindung herstellen
-            try {
-                require_once('dbconnection.php');
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (Exception $e) {
-                $error = $e->getMessage();
-            }
-            // SQL Select for all Registered Users
-            $sql = "SELECT * FROM (SELECT email,passwort from kunde UNION select email,passwort from mitarbeiter) AS U where u.passwort='$passwort' AND u.email='$email'";
-            $result = $db->query($sql);
-            $data = $result->fetch(PDO::FETCH_ASSOC);
-            $userdata = $data;
-            if ($data) {
-                if ($data['email'] == $email && $data['passwort'] == $passwort) {
-                    // Session starten
-                    $_SESSION['login_user'] = $email;
-                    // Zur Startseite weiterleiten
-                    if ($data['accesslevel'] == 9) {
-                        header("location: kunde.php");
-                    }
-                    header("location: backwaren.php");
-                }
-            } else {
-                $error = "E-Mail Adresse oder Passwort sind fehlerhaft";
-            }
-        }
-    }
-}
+include('session.php');
 
 try {
     require_once('dbconnection.php');
@@ -54,6 +15,19 @@ if (isset($error)) {
 $sql = "SELECT * FROM baeckerei";
 $result = $db->query($sql);
 
+$logedinuser = $login_session;
+if (isset($logedinuser)) {
+    $resultsession = $db->query($ses_sql);
+    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    //Administrator Rechte
+    if ($data['accesslevel'] == 9 || $data['accesslevel'] == 1 || $data['accesslevel'] == 2 || $data['accesslevel'] == 3 ) {
+    } else {
+        echo "Sie haben kein Zugriff auf diese Seite";
+        header('Location: baeckerei.php');
+    };
+} else {
+    echo "Unzeireichende User Berechtigung";
+}
 
 ?>
 
@@ -82,7 +56,7 @@ $result = $db->query($sql);
         <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
         <li><a href="konditor.php">Konditor</a></li>
         <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-        <li><a class="active" href="kunde.php">Kunde</a></li>
+        <li><a href="kunde.php">Kunde</a></li>
         <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
         <li><a href="produkte.php">Produkte</a></li>
         <li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -99,7 +73,7 @@ $result = $db->query($sql);
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
             <li><a href="konditor.php">Konditor</a></li>
             <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-            <li><a class="active" href="kunde.php">Kunde</a></li>
+            <li><a href="kunde.php">Kunde</a></li>
             <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
             <li><a href="produkte.php">Produkte</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -139,32 +113,6 @@ $result = $db->query($sql);
 <?php endif; ?>
 <br></br>
 
-
-<?php if (!isset($logedinuser)): ?>
-    <div id="main">
-        <h1>Login Lecker</h1>
-        <div id="login">
-            <form action="" method="post">
-                <label>E-Mail :</label>
-                <input id="name" name="email" placeholder="e-mail adresse" type="text">
-                <label>Passwort :</label>
-                <input id="passwort" name="passwort" placeholder="**********" type="password">
-                <input name="submit" type="submit" value=" Login ">
-                <span><?php echo $error; ?></span>
-            </form>
-        </div>
-    </div>
-<?php endif; ?>
-
-<div id="main">
-    <h1>Register Lecker</h1>
-    <div id="login">
-        <form action="" method="post">
-            <button type="button" onclick="href=" kunde_register.php
-            ">Click Me!</button>
-        </form>
-    </div>
-</div>
 
 
 <div id="wrapper">

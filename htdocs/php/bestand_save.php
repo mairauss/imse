@@ -6,6 +6,22 @@
     }catch(Exception $e){
         $error = $e->getMessage();
     }
+	
+	$logedinuser = $login_session;
+if (isset($logedinuser)) {
+    $resultsession = $db->query($ses_sql);
+    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    //Administrator Rechte
+    if ($data['accesslevel'] == 9) {
+        echo "Access Level 9";
+    } else {
+        echo "Sie haben kein Zugriff auf diese Seite";
+        header('Location: baeckerei.php');
+    };
+} else {
+    echo "Unzeireichende User Berechtigung";
+}
+	
     ?>
 
 <!DOCTYPE html><html>

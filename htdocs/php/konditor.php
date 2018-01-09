@@ -1,5 +1,5 @@
 <?php
-    
+    include('session.php');
     try{
         require_once('dbconnection.php');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -11,7 +11,21 @@
     
     $sql = "SELECT * FROM konditor";
     $result = $db->query($sql);
-    
+
+$logedinuser = $login_session;
+if (isset($logedinuser)) {
+    $resultsession = $db->query($ses_sql);
+    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
+    //Administrator Rechte
+    if($data['accesslevel'] == 3){
+        echo "Access Level 3";
+    } else {
+        echo "Sie haben kein Zugriff auf diese Seite";
+        header('Location: baeckerei.php');
+    };
+} else {
+    echo "Unzeireichende User Berechtigung";
+}
     ?>
 
 <!DOCTYPE html>
@@ -23,22 +37,57 @@
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
-
-        <ul> 
-		<li><a href="baeckerei.php">Lecker</a></li>
-		<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-		<li><a class="active" href="konditor.php">Konditor</a></li>
-		<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-        <li><a href="kunde/kunde.php">Kunde</a></li>
-        <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-        <li><a href="produkte.php">Produkte</a></li>
-		<li><a href="backwaren.php">Unsere Backwaren</a></li>
-		<li><a href="einkauf.php">Warenkorb</a></li>
-		<li><a href="backen.php">Backen</a></li>
-		<li><a href="bestand.php">Bestandteil</a></li>
-		<li><a href="session_logout.php">Logout</a></li>	
-       </ul>
-
+<?php if (!isset($logedinuser)): ?>
+    <ul>
+        <li><a href="baeckerei.php">Lecker</a></li>
+    </ul>
+<?php endif; ?>
+<?php if (isset($logedinuser)): ?>
+    <?php if ($data['accesslevel'] == 9): ?>
+        <ul>
+            <li><a class="active" href="baeckerei.php">Lecker</a></li>
+            <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+            <li><a class="active" href="konditor.php">Konditor</a></li>
+            <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+            <li><a href="kunde.php">Kunde</a></li>
+            <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="backen.php">Backen</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 1): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 2): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($data['accesslevel'] == 3): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+			<li><a class="active" href="konditor.php">Konditor</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backen.php">Backen</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+<?php endif; ?>
 <br></br>
 
 <div id="wrapper">

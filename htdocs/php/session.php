@@ -36,6 +36,6 @@ while ($data = $result->fetch(PDO::FETCH_ASSOC)) {
 
 if (!isset($login_session)) {
     // Redirecting To Home Page
-    header('Location: baeckerei.php');
+    header('Location: index.php');
 }
 ?>

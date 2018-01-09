@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
                 // Session starten
                 $_SESSION['login_user'] = $email;
                 // Zur Startseite weiterleiten
-                header("location: backwaren.php");
+                header("location: index.php");
             }
         } else {
             $error = "E-Mail Adresse oder Passwort sind fehlerhaft";

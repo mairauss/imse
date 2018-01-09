@@ -82,6 +82,7 @@ $logedinuser = $login_session;
 				<?php if ($data['accesslevel'] == 3): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
+						<li><a href="konditor.php">Konditor</a></li>
 						<li><a href="backwaren.php">Unsere Backwaren</a></li>
 						<li><a class="active" href="einkauf.php">Warenkorb</a></li>
 						<li><a href="produkte.php">Produkte</a></li>
