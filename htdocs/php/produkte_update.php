@@ -41,7 +41,7 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
 
     <?php if ($data2['accesslevel'] == 9): ?>
         <ul>
-            <li><a class="active" href="baeckerei.php">Lecker</a></li>
+            <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
             <li><a href="konditor.php">Konditor</a></li>
             <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
@@ -61,7 +61,7 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
             <li><a href="konditor.php">Konditor</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a  href="produkte.php">Produkte</a></li>
+            <li><a class="active" href="produkte.php">Produkte</a></li>
             <li><a href="backen.php">Backen</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
