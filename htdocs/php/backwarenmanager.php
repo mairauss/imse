@@ -1,8 +1,4 @@
-//TODO:
-//preis format
-//delete
-//Update
-//+Menge atribute/column
+
 <?php
   include('session.php');
   $user = '';
@@ -16,7 +12,7 @@
 {
     function __construct()
     {
-        $this->open('../backshop.db');
+        $this->open('../../backshop.db');
     }
 }
 
@@ -27,7 +23,7 @@
   if ($conn->lastErrorMsg()!="not an error") {
       die($conn->lastErrorMsg());
   }
-  
+
   if (isset($logedinuser)) {
     $resultsession = $conn->query($ses_sql);
     $data = $resultsession->fetch(PDO::FETCH_ASSOC);
@@ -41,7 +37,7 @@
 } else {
     echo "Unzeireichende User Berechtigung";
 }
-  
+
   ?>
 
   <html>
