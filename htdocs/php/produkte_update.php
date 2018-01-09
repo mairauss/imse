@@ -50,7 +50,6 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
             <li><a class="active" href="produkte.php">Produkte</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="backen.php">Backen</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
@@ -62,7 +61,6 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a class="active" href="produkte.php">Produkte</a></li>
-            <li><a href="backen.php">Backen</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>

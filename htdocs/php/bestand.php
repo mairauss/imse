@@ -55,7 +55,6 @@ if (isset($logedinuser)) {
             <li><a href="produkte.php">Produkte</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="backen.php">Backen</a></li>
             <li><a class="active" href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
@@ -83,7 +82,6 @@ if (isset($logedinuser)) {
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="backen.php">Backen</a></li>
             <li><a class="active" href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
