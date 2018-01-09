@@ -1,4 +1,35 @@
 <?php
+    include('session.php');
+
+    try{
+        require_once('dbconnection.php');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(Exception $e){
+        $error = $e->getMessage();
+    }
+    
+    if(isset($error)){ echo $error; }
+    
+    $sql = "SELECT * FROM kunde";
+    $result = $db->query($sql);
+		
+
+	$logedinuser = $login_session;
+	    if (isset($logedinuser)) {
+        $sql = "SELECT * FROM (SELECT email,accesslevel from kunde UNION select email,accesslevel from mitarbeiter) AS U where U.email '$logedinuser'";
+		$resultsession = $db->query($ses_sql);
+		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
+			//Administrator Rechte
+			if($data['accesslevel'] == 9 || $data['accesslevel'] == 7){
+				//echo "Access Level 7 oder höher";
+			} else{
+				echo "Sie haben kein Zugriff auf diese Seite";
+				header('Location: baeckerei.php');
+			};
+		} else {
+        echo "Unzeireichende User Berechtigung";
+		}
+
     class Backen{
         private $nr;
         private $name;
@@ -48,6 +79,8 @@
         <li><a href="kunde.php">Kunde</a></li>
         <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
         <li><a href="produkte.php">Produkte</a></li>
+		<li><a href="backwaren.php">Unsere Backwaren</a></li>
+		<li><a href="einkauf.php">Warenkorb</a></li>
         <li><a class="active" href="backen.php">Backen</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>
 		<li><a href="session_logout.php">Logout</a></li>

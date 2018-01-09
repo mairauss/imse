@@ -42,6 +42,8 @@
         <li><a href="kunde.php">Kunde</a></li>
         <li><a class="active" href="backwarenmanager.php">Backwaren Manager</a></li>
         <li><a href="produkte.php">Produkte</a></li>
+		<li><a href="backwaren.php">Unsere Backwaren</a></li>
+		<li><a href="einkauf.php">Warenkorb</a></li>
         <li><a href="backen.php">Backen</a></li>
         <li><a href="bestand.php">Bestandteil</a></li>
         <li><a href="session_logout.php">Logout</a></li>
@@ -121,6 +123,24 @@
           </tr>
        </tbody>
       </table>
+      <table style='border: 5px solid #DDDDDD'>
+        <thead>
+          <tr>
+            <th>Menge</th>
+            <th>Mitarbeiter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <input id='menge' name='menge' type='number' size='10' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
+            </td>
+            <td>
+                <input id='personalnr' name='personalnr' type='text' size='10' value='<?php if (isset($_GET['personalnr'])) echo $_GET['personalnr']; ?>' />
+            </td>
+          </tr>
+       </tbody>
+      </table>
 
     </table>
     </center>
@@ -133,23 +153,29 @@
      if (isset($_GET['artikelnr']))
     {
 
-      $insstmt = $conn->prepare( "INSERT INTO backwaren VALUES(:nr, :name, :preis, :herdat, :haltdat)");
+      $insstmt = $conn->prepare( "INSERT INTO backwaren VALUES(:nr, :herdat, :name, :preis, :haltdat, :menge)");
       $insstmt->bindValue(':nr',$_GET['artikelnr'],SQLITE3_INTEGER);
       $insstmt->bindValue(':name',$_GET['gname'],SQLITE3_TEXT);
       $insstmt->bindValue(':preis',$_GET['bpreis'],SQLITE3_FLOAT);
       $insstmt->bindValue(':herdat',$_GET['bhersdatum'],SQLITE3_BLOB);
       $insstmt->bindValue(':haltdat',$_GET['bhaltdauer'],SQLITE3_BLOB);
+      $insstmt->bindValue(':menge',$_GET['menge'],SQLITE3_INTEGER);
       $insresult = NULL;
+
+      $backenstmt = $conn->prepare("INSERT INTO backen VALUES(:personalnr, :artikelnr)");
+      $backenstmt->bindValue(':personalnr',$_GET['personalnr'],SQLITE3_INTEGER);
+      $backenstmt->bindValue(':artikelnr',$_GET['artikelnr'],SQLITE3_INTEGER);
+      $backresult = NULL;
       try{
         $conn->enableExceptions(true);
-        // execute sql statement
+        // execute sql statements
         $insresult = $insstmt->execute();
+        $backresult = $backenstmt->execute();
       } catch(Exception $e){
-        echo "could not insert";
+        echo "<script type='text/javascript'>alert('Could not Insert');</script>";
       }
-      if($insresult){
-        print("Successfully inserted");
-        print("<br>");
+      if($insresult && $backresult){
+        echo "<script type='text/javascript'>alert('Successfully inserted');</script>";
       }
       //Print potential errors and warnings
       // else{
@@ -162,28 +188,61 @@
       <thead>
         <tr>
           <th>ArtikelNr</th>
+          <th>Herstell.Datum</th>
           <th>Name</th>
           <th>Preis</th>
-          <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
+          <th>Menge</th>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
   <?php
     // fetch rows of the executed sql query
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+      ?>
+<form id='Form' action='backwarenmanager.php' methode='post'>
+<?php
       echo "<tr>";
       echo "<td>" . $row['artikelnr'] . "</td>";
+      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['gname'] . "</td>";
       echo "<td>" . $row['bpreis'] . "</td>";
-      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['bhaltdauer'] . "</td>";
+      echo "<td>" . $row['menge'] . "</td>";
       ?>
-      <form id='deleteForm' action='backwarenmanager.php' methode='delete'>
-      <input id='submit' type='submit' class="testbutton" value='Search' />
+
+      <td>
+        <input id='menge' name='menge' type='number' size='10' value='<?php if (isset($_GET['menge'])) echo $_GET['menge']; ?>' />
+        <input id='update' type='submit' class="testbutton" value='Update' />
+        <!-- <a href="mitarbeiter_delete.php?email=<?php echo $r['email']; ?>">Delete</a>-->
+      </td>
+      <td>
+        <input id='delete' type='submit' class="testbutton" value='Delete' />
+      </td>
+      <td><input id= <?php echo $row['artikelnr']?> name= <?php echo $row['artikelnr']?> type="hidden" value = <?php echo $row['artikelnr']?>/></td>
+  </form>
     <?php
       echo "</tr>";
     }
+    if (isset($_POST['update']))
+   {
+     echo "<script type='text/javascript'>alert('Updating');</script>";
+     $sstmt = $conn->prepare("SELECT menge FROM backwaren WHERE artikelnr like :artikelnr");
+     $sstmt->bindValue(':artikelnr', $_POST['artiketnr'], SQLITE3_INTEGER);
+
+     $sresult = NULL;
+     try{
+       $conn->enableExceptions(true);
+       // execute sql statements
+       $sresult = $sstmt->execute();
+     } catch(Exception $e){
+      echo "<script type='text/javascript'>alert('Could not update');</script>";
+     }
+    $menge =  $sresult->fetchArray();
+     echo "<script type='text/javascript'>alert('$menge');</script>";
+   }
   ?>
       </tbody>
     </table>

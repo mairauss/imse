@@ -1,20 +1,34 @@
 <?php
-//USER MUSS SICH ZUERST EINLOGGEN, DAMIT DIE SEITE AUFGERUFEN WERDEN KANN
-//  $user = '';
-//  $pass = '';
-//  $database = '';
- 
-  // establish database connection
-//  $conn = oci_connect($user, $pass, $database);
-//  if (!$conn) exit;
+ include('session.php');
+ try{
+	require_once('dbconnection.php');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(Exception $e){
+	$error = $e->getMessage();
+}
 
- //var_dump($_GET);
-//?>
+if(isset($error)){ echo $error; }
+
+$logedinuser = $login_session;
+	    if (isset($logedinuser)) {
+		$resultsession = $db->query($ses_sql);
+		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
+			//Administrator Rechte
+			
+			if($data['accesslevel'] == 9 || $data['accesslevel'] == 1 || $data['accesslevel'] == 2 || $data['accesslevel'] == 3){
+			} else{
+				echo "Sie haben kein Zugriff auf diese Seite";
+				header('Location: baeckerei.php');
+			};
+		} 
+
+
+
+?>
 
 <?php
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
-	//include('session.php');
 ?>
 
 <html>
@@ -25,28 +39,75 @@
         <body>
             <img src="b5.png" alt="logo" width="500" height="300">
             <br></br>
-            <ul> 
-		<li><a href="baeckerei_kunde.php">Lecker</a></li>
-        <li><a class="active" href="backwaren.php">Backwaren</a></li>
-		<li><a href="bestand_kunde.php">Bestandteil</a></li>
-        <li><a href="einkauf.php">Einkauf</a></li>
-        <li><a href="session_logout.php">Logout</a></li>	
-            </ul>
+
+		<?php if (!isset($logedinuser)): ?>
+				<ul> 
+					<li><a href="baeckerei.php">Lecker</a></li>
+					<li><a href="backwaren.php">Unsere Backwaren</a></li>
+					<li><a href="einkauf.php">Warenkorb</a></li>
+					<li><a href="bestand.php">Bestandteil</a></li>		
+					<li><a href="session_logout.php">Logout</a></li>						
+			   </ul>
+		<?php endif; ?>
+		<?php if (isset($logedinuser)): ?>
+			<?php if ($data['accesslevel'] == 9): ?>
+				<ul> 
+					<li><a class="active" href="baeckerei.php">Lecker</a></li>
+					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+					<li><a href="konditor.php">Konditor</a></li>
+					<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+					<li><a href="kunde.php">Kunde</a></li>
+					<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+					<li><a href="produkte.php">Produkte</a></li>
+					<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
+					<li><a href="einkauf.php">Warenkorb</a></li>
+					<li><a href="backen.php">Backen</a></li>
+					<li><a href="bestand.php">Bestandteil</a></li>	
+					<li><a href="session_logout.php">Logout</a></li>			
+			   </ul>
+		   		<?php endif; ?>
+				<?php if ($data['accesslevel'] == 1): ?>
+					<ul> 
+						<li><a href="baeckerei.php">Lecker</a></li>
+						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
+						<li><a href="einkauf.php">Warenkorb</a></li>
+						<li><a href="bestand.php">Bestandteil</a></li>	
+						<li><a href="session_logout.php">Logout</a></li>			
+				   </ul>
+		   		<?php endif; ?>
+				<?php if ($data['accesslevel'] == 2): ?>
+					<ul> 
+						<li><a href="baeckerei.php">Lecker</a></li>
+						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
+						<li><a href="session_logout.php">Logout</a></li>			
+				   </ul>
+		   		<?php endif; ?>
+				<?php if ($data['accesslevel'] == 3): ?>
+					<ul> 
+						<li><a href="baeckerei.php">Lecker</a></li>
+						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
+						<li><a href="einkauf.php">Warenkorb</a></li>
+						<li><a href="produkte.php">Produkte</a></li>
+						<li><a href="backen.php">Backen</a></li>
+						<li><a href="bestand.php">Bestandteil</a></li>	
+						<li><a href="session_logout.php">Logout</a></li>			
+				   </ul>
+		   		<?php endif; ?>
+		<?php endif; ?>
 
             <br></br>
-
 
         <div id="wrapper">
             <center>
                     <div>
                         <form id='searchform' action='backwaren.php<?php if (isset($_GET['search'])) echo "?search=" . $_GET['search']; ?>' method='get'>
                             <a href='backwaren.php'>Alle Backenwaren</a> ---
-                            Suche nach ArtikelNr:
+                            Suche nach Artikelnummer:
                             <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
                             <input id='submit' type='submit' class="testbutton" value='Search' />
                          </form>
-                     </div>
-                     
+                    </div>
+            
                     
                 <?php
                     // check if search view of list view
@@ -61,8 +122,10 @@
                     //$stmt ->close();
                     //unset($stmt);
                 ?>
+				<?php if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
+				<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
                 <div>
-                    <form id='searchform' action='backwaren.php' method='post'>
+                    <form id='insertform' action='backwaren.php' method='post'>
                     <center>
                         Neue Backwaren einfuegen:
                         <table style='border: 5px solid #DDDDDD'>
@@ -76,10 +139,10 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input id='artikelnr' name='artikelnr' type='number' size='10' value='<?php if (isset($_GET['artikelnr'])) echo $_POST['artikelnr']; ?>' />
+                                <input id='artikelnr' name='artikelnr' type='number' size='10' value='<?php if (isset($_POST['artikelnr'])) echo $_POST['artikelnr']; ?>' />
                             </td>
                             <td>
-                                <input id='bhersdatum' name='bhersdatum' type='text' size='30' value='<?php if (isset($_GET['bhersdatum'])) echo $_POST['bhersdatum']; ?>' />
+                                <input id='bhersdatum' name='bhersdatum' type='text' size='30' value='<?php if (isset($_POST['bhersdatum'])) echo $_POST['bhersdatum']; ?>' />
                             </td>
                             <td>
                                 <input id='gname' name='gname' type='text' size='10' value='<?php if (isset($_GET['gname'])) echo $_POST['gname']; ?>' />
@@ -112,34 +175,27 @@
                     </center>
                     <input id='submit' type='submit' class="testbutton" value='Insert' />                
                     </form>
-                </div>    
-                
+                </div>
+			    <!-- /DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
+                <?php endif; ?>
             <?php
             //Einfügen können nur Mitarbeiter
-            //Handle insert
-    
             if (isset($_POST['artikelnr']) && $_POST['artikelnr'] >= 1) 
             {
-                echo "  " . $_POST['artikelnr'] . "</br>";
                 //Prepare insert statementd
                 $insertstmt = "INSERT INTO backwaren VALUES(" . $_POST['artikelnr'] . ",'"  . $_POST['bhersdatum'] . "', '" . $_POST['gname'] .
                               "', ". $_POST['bpreis'] . ", '" . $_POST['bhaltdauer'] . "', " . $_POST['menge'] . ")";
                 //Parse and execute statement
-                $insert = new SQLite3('../../backshop.db');
-                $result = $insert ->exec($insertstmt);
-                $insert->close();
-                unset($insert);
+                $result = $db->exec($insertstmt);
                 if($result){
                     print("Successfully inserted");
-                    print("<br>");
+                    print("<br><br>");
                 }
                 //Print potential errors and warnings
                 else{
                     print("FAILURE");
                 }
             } 
-            //für die untere FORM mit GET für ACTION
-            //<?php if(isset($_GET['session'])){ echo "?session=" . array_values($_GET['session']); }
             ?>
             
             <div>   
@@ -161,11 +217,11 @@
                     <?php
                         // fetch rows of the executed sql query
                         // execute sql statement
-                        $stmt = new SQLite3('../backshop.db');
-                        $list = $stmt->query($sql);
+                        //$stmt = new SQLite3('../backshop.db');
+                        $list = $db->query($sql);
                         //Indizies für die http POST Methoden
                         $mengeNr = 0;
-                        $artikelNr = 1000;
+                        $artikelNr = 100000;
                         //Arrays für Http POST
                         $artikelnr = [];
                         $bhersdatum = [];
@@ -175,57 +231,67 @@
                         $lagerMenge = [];
                         
                         $ware;
-                        while ($row = $list->fetchArray()) {
-                            echo "<tr>";
-                            echo "<td>" . $row['artikelnr'] . "</td>";
-                            echo "<td>" . $row['bhersdatum'] . "</td>";
-                            echo "<td>" . $row['gname'] . "</td>";
-                            echo "<td>" . $row['bpreis'] . " €" . "</td>";
-                            echo "<td>" . $row['bhaltdauer'] . "</td>";
-                            echo "<td>" . $row['menge'] . "</td>";
-                            ?>
-                            <td> <input id='<?php echo strval($mengeNr);?>' name='<?php echo strval($mengeNr); ?>' type='number' size='4' value='"<?php echo isset($_POST[strval($mengeNr)]); ?>"'/> </td>                       
-                            <?php
-                            //Bestellungen werden in einem Array gespeichert
-                            if ($row['bhaltdauer'] == null){
-                                $ware = Artikel::construct2($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['menge']);
-                                $artikel[$mengeNr] = $ware;
-                                //<input id=' echo strval($artikelNr);' name=' echo strval($artikelNr); ' type='hidden' value='" echo isset($_POST[strval($artikelNr)]); "'/>
-                                ?>
-                                
-                                <?php
-                                //unset($ware);
-                            }
-                            //Falls Haltedatum des Produktes nicht angegeben ist
-                            else{
-                                //$ware = Artikel::constructFull($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['bhaltdauer'], $row['menge']);
-                                $artikelnr[$mengeNr] = $row['artikelnr'];
-                                $bhersdatum[$mengeNr] = $row['bhersdatum'];
-                                $gname[$mengeNr] = $row['gname'];
-                                $preis[$mengeNr] = $row['bpreis'];
-                                $bhaltdauer[$mengeNr] = $row['bhaltdauer'];
-                                $lagerMenge[$mengeNr] = $row['menge'];
-                                ?>
-                                <input id='<?php echo "artikelnr" . strval($artikelNr); ?>' name='<?php echo "artikelnr" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $artikelnr[$mengeNr]; ?>"'/>
-                                <input id='<?php echo "bhersdatum" . strval($artikelNr); ?>' name='<?php echo "bhersdatum" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $bhersdatum[$mengeNr]; ?>"'/>
-                                <input id='<?php echo "gname" . strval($artikelNr); ?>' name='<?php echo "gname" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $gname[$mengeNr]; ?>"'/>
-                                <input id='<?php echo "preis" . strval($artikelNr); ?>' name='<?php echo "preis" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $preis[$mengeNr]; ?>"'/>    
-                                <input id='<?php echo "bhaltdauer" . strval($artikelNr); ?>' name='<?php echo "bhaltdauer" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $bhaltdauer[$mengeNr]; ?>"'/>
-                                <input id='<?php echo "lagermenge" . strval($artikelNr); ?>' name='<?php echo "lagermenge" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $lagerMenge[$mengeNr]; ?>"'/>
-                                <?php
-                                //print_r($artikel[$artikelNr]);
-                                //unset($ware);
-                            }
-                            $mengeNr++;
-                            $artikelNr++;
+                        while ($row = $list->fetch(PDO::FETCH_ASSOC)) {
+							$del;
+							//Löscht aus der Datenbank, falls eine Backware nicht mehr im Lager vorhanden ist
+							if ($row['menge'] <= 0){
+								$del = "DELETE FROM backwaren WHERE artikelnr=" . $row['artikelnr'] . " AND bhersdatum='" . $row['bhersdatum'] . "'";
+								$db->exec($del);
+							} else {
+								echo "<tr>";
+								echo "<td>" . $row['artikelnr'] . "</td>";
+								echo "<td>" . $row['bhersdatum'] . "</td>";
+								echo "<td>" . $row['gname'] . "</td>";
+								echo "<td>" . $row['bpreis'] . " €" . "</td>";
+								echo "<td>" . $row['bhaltdauer'] . "</td>";
+								echo "<td>" . $row['menge'] . "</td>";
+								?>
+								<td> <input id='<?php echo strval($mengeNr);?>' name='<?php echo strval($mengeNr); ?>' type='number' size='4' value='"<?php echo isset($_POST[strval($mengeNr)]); ?>"'/> </td>                       
+								<?php
+								//Bestellungen werden in einem Array gespeichert
+								if ($row['bhaltdauer'] == null){
+									//$ware = Artikel::construct2($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['menge']);
+									$artikelnr[$mengeNr] = $row['artikelnr'];
+									$bhersdatum[$mengeNr] = $row['bhersdatum'];
+									$gname[$mengeNr] = $row['gname'];
+									$preis[$mengeNr] = $row['bpreis'];
+									$lagerMenge[$mengeNr] = $row['menge'];
+									?>
+									<input id='<?php echo "artikelnr" . strval($artikelNr); ?>' name='<?php echo "artikelnr" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $artikelnr[$mengeNr]; ?>"'/>
+									<input id='<?php echo "bhersdatum" . strval($artikelNr); ?>' name='<?php echo "bhersdatum" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $bhersdatum[$mengeNr]; ?>"'/>
+									<input id='<?php echo "gname" . strval($artikelNr); ?>' name='<?php echo "gname" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $gname[$mengeNr]; ?>"'/>
+									<input id='<?php echo "preis" . strval($artikelNr); ?>' name='<?php echo "preis" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $preis[$mengeNr]; ?>"'/>    
+									<input id='<?php echo "lagermenge" . strval($artikelNr); ?>' name='<?php echo "lagermenge" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $lagerMenge[$mengeNr]; ?>"'/>
+									<?php
+									//unset($ware);
+								}
+								//Falls Haltedatum des Produktes nicht angegeben ist
+								else{
+									//$ware = Artikel::constructFull($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['bhaltdauer'], $row['menge']);
+									$artikelnr[$mengeNr] = $row['artikelnr'];
+									$bhersdatum[$mengeNr] = $row['bhersdatum'];
+									$gname[$mengeNr] = $row['gname'];
+									$preis[$mengeNr] = $row['bpreis'];
+									$bhaltdauer[$mengeNr] = $row['bhaltdauer'];
+									$lagerMenge[$mengeNr] = $row['menge'];
+									?>
+									<input id='<?php echo "artikelnr" . strval($artikelNr); ?>' name='<?php echo "artikelnr" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $artikelnr[$mengeNr]; ?>"'/>
+									<input id='<?php echo "bhersdatum" . strval($artikelNr); ?>' name='<?php echo "bhersdatum" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $bhersdatum[$mengeNr]; ?>"'/>
+									<input id='<?php echo "gname" . strval($artikelNr); ?>' name='<?php echo "gname" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $gname[$mengeNr]; ?>"'/>
+									<input id='<?php echo "preis" . strval($artikelNr); ?>' name='<?php echo "preis" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $preis[$mengeNr]; ?>"'/>    
+									<input id='<?php echo "bhaltdauer" . strval($artikelNr); ?>' name='<?php echo "bhaltdauer" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $bhaltdauer[$mengeNr]; ?>"'/>
+									<input id='<?php echo "lagermenge" . strval($artikelNr); ?>' name='<?php echo "lagermenge" . strval($artikelNr); ?>' type="hidden"  value='"<?php echo $lagerMenge[$mengeNr]; ?>"'/>
+									<?php
+								}
+								$mengeNr++;
+								$artikelNr++;
                             
-                            /*$artikelNr = $artikelNr + 0.1;
-                            if (($artikelNr*10)%10 == 0)
-                                $artikelNr = $artikelNr + 0.1;*/
-                            echo "</tr>";   
+								/*$artikelNr = $artikelNr + 0.1;
+								if (($artikelNr*10)%10 == 0)
+									$artikelNr = $artikelNr + 0.1;*/
+								echo "</tr>";
+							}						
                         }
-                        if(isset($artikel[3])) 
-                            print_r($artikel[3]);
                         /*$k = 1.1;
                         for ($i = 0; $i < $mengeNr; $i++){
                             echo $i . " " . $_POST[strval($k)]->getGName() . " ";
@@ -234,7 +300,6 @@
                                 $k = $k + 0.1;
                         }*/
                         unset($ware);
-                        $stmt ->close();
                         unset($stmt);
                     ?>
                 </tbody>
@@ -245,7 +310,7 @@
                 <form id='insertform' action='backwaren.php' method='post'>
                 <input id='order' name='order' type='hidden' value="<?php $_POST['order'] ?>" />
                 </form>
-            <div>Insgesamt <?php echo $mengeNr; ?> Backwaren gefunden!</div>
+            <div>Insgesamt <?php echo $mengeNr; unset($db);?> Backware(n) gefunden!</div>
             </center>
             <br></br>
             </div>

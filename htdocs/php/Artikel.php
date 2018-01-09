@@ -1,4 +1,6 @@
 <?php
+	require_once('dbconnection.php');
+
     class Artikel{
         private $artikelnr;
         private $bhersdatum;
@@ -7,7 +9,7 @@
         private $bhaltdauer = null;
         private $lagerMenge;
         private $bestellMenge = 0;
-        
+		
         public function __construct(){}
     
         public static function constructFull($artikelnr, $bhersdatum, $gname, $preis, $bhaltdauer, $lagerMenge){
@@ -27,7 +29,7 @@
             $instance->bhersdatum = $bhersdatum;
             $instance->gname = $gname;
             $instance->preis = $preis;
-            $instance->lagerMenge = lagerMenge;
+            $instance->lagerMenge = $lagerMenge;
             return $instance;
         }
         
@@ -43,34 +45,53 @@
             return $instance;
         }
         
-        public function insertArtikel(){
-            $db = new SQLite3('../backshop.db');
-            $sql = "INSERT INTO backwaren VALUES "
+       /* public function insertArtikel(){
+			try{
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "INSERT INTO backwaren VALUES "
                     . "(" . $this->artikelnr .", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", '" . $this->bhaltdauer . "', " . $this->lagerMenge . ")";
-            $result = $db->exec($sql);
-            $db->close();
-            unset($db);
-            return $result;
-        }
+				$result = $db->exec($sql);
+				unset($db);
+				return $result;
+			}catch(Exception $e){
+				$error = $e->getMessage();
+			}
+			if(isset($error)){ 
+				echo $error; 
+			}
+        }*/
         
-        public function insertArtikelOhneBhaltdauer(){
-            $db = new SQLite3('../backshop.db');
-            $sql = "INSERT INTO backwaren (artikelnr, bhersdatum, gname, bpreis, menge) values " .
-                   "(" . $this->artikelnr . ", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", " . $this->lagerMenge . ")";
-            $result = $db->exec($sql);
-            $db->close();
-            unset($db);
-            return $result;
-        }
+        /*public function insertArtikelOhneBhaltdauer(){
+            try{
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
+				$sql = "INSERT INTO backwaren (artikelnr, bhersdatum, gname, bpreis, menge) values " .
+					"(" . $this->artikelnr . ", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", " . $this->lagerMenge . ")";
+				$result = $db->exec($sql);
+				unset($db);
+				return $result;
+			}catch(Exception $e){
+				$error = $e->getMessage();
+			}
+			if(isset($error)){ 
+				echo $error; 
+			}
+        }*/
         
-        public function updateLagermenge($artikelnr, $bhersdatum, $menge){
-            $db = new SQLite3('../backshop.db');
-            $sql = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelnr . " AND bhersdatum =" . $bhersdatum ."";
-            $result = $db->exec($sql);
-            $db->close();
-            unset($db);
-            return $result;
-        }
+        /*public function updateLagermenge($artikelnr, $bhersdatum, $menge){
+            try {
+				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelnr . " AND bhersdatum =" . $bhersdatum ."";
+				$result = $db->exec($sql);
+				unset($db);
+				return $result;
+			}catch(Exception $e){
+				$error = $e->getMessage();
+			}
+			if(isset($error)){ 
+				echo $error; 
+			}	
+        }*/
         
         public function mengeToNumber($menge){
             $zahl;
@@ -82,10 +103,6 @@
                 return $zahl;
             }
             return null;    
-        }
-        
-        public function sucheArtikel($artikelnummer, $bhersdatum){
-            
         }
         
         public function getArtikelNr(){
