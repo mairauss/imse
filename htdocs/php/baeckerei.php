@@ -20,7 +20,7 @@ if (isset($logedinuser)) {
     $resultsession = $db->query($ses_sql);
     $data = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data['accesslevel'] == 9 || $data['accesslevel'] == 1 || $data['accesslevel'] == 2 || $data['accesslevel'] == 3 ) {
+    if ($data['accesslevel'] == 9 || $data['accesslevel'] == 1 || $data['accesslevel'] == 2 || $data['accesslevel'] == 3) {
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
         header('Location: baeckerei.php');
@@ -115,149 +115,149 @@ if (isset($logedinuser)) {
 
 
 <?php if ($data['accesslevel'] > 1): ?>
-<div id="wrapper">
-    <center>
+    <div id="wrapper">
+        <center>
 
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM baeckerei";
-
-
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
-        <h1>Baeckerei</h1>
-        <table style="width:70%">
-            <thead>
-            <tr>
-                <th>Baeckerei</th>
-                <th>FirmaNr</th>
-            </tr>
-            </thead>
-            <tbody>
             <?php
-            // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
+            // check if search view of list view
+
+            $sql = "SELECT * FROM baeckerei";
+
+
+            // execute sql statement
+            $result = $db->query($sql);
+
+            ?>
+            <h1>Baeckerei</h1>
+            <table style="width:70%">
+                <thead>
                 <tr>
-                    <td><?php echo $r['bname']; ?></td>
-                    <td><?php echo $r['firmanr']; ?></td>
+                    <th>Baeckerei</th>
+                    <th>FirmaNr</th>
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php
+                // fetch rows of the executed sql query
+                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $r['bname']; ?></td>
+                        <td><?php echo $r['firmanr']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
 
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM anschrift";
-
-
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
-
-        <table style="width:70%">
-            <thead>
-            <tr>
-                <th>Adresse</th>
-            </tr>
-            </thead>
-            <tbody>
             <?php
-            // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
+            // check if search view of list view
+
+            $sql = "SELECT * FROM anschrift";
+
+
+            // execute sql statement
+            $result = $db->query($sql);
+
+            ?>
+
+            <table style="width:70%">
+                <thead>
                 <tr>
-                    <td><?php echo $r['bezeichnung']; ?></td>
+                    <th>Adresse</th>
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php
+                // fetch rows of the executed sql query
+                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $r['bezeichnung']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
 
 
-        <h1>Kueche</h1>
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM kueche";
-
-
-        // execute sql statement
-        $result = $db->query($sql);
-        ?>
-
-        <table style="width:70%">
-            <thead>
-            <tr>
-                <th>Kueche Nr.</th>
-                <th>Grundflaeche</th>
-                <th>Kuehlraum Nr.</th>
-            </tr>
-            </thead>
-            <tbody>
+            <h1>Kueche</h1>
             <?php
-            // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
+            // check if search view of list view
+
+            $sql = "SELECT * FROM kueche";
+
+
+            // execute sql statement
+            $result = $db->query($sql);
+            ?>
+
+            <table style="width:70%">
+                <thead>
                 <tr>
-                    <td><?php echo $r['kuecheNr']; ?></td>
-                    <td><?php echo $r['grundflaeche']; ?></td>
-                    <td><?php echo $r['kuehlraumNr']; ?></td>
+                    <th>Kueche Nr.</th>
+                    <th>Grundflaeche</th>
+                    <th>Kuehlraum Nr.</th>
                 </tr>
-            <?php } ?>
+                </thead>
+                <tbody>
+                <?php
+                // fetch rows of the executed sql query
+                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $r['kuecheNr']; ?></td>
+                        <td><?php echo $r['grundflaeche']; ?></td>
+                        <td><?php echo $r['kuehlraumNr']; ?></td>
+                    </tr>
+                <?php } ?>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <h1>Kuehlraum</h1>
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM kuehlraum";
-
-
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
-
-        <table style="width:70%">
-            <thead>
-            <tr>
-                <th>Kuehlraum Nr.</th>
-                <th>Temp.</th>
-                <th>Grundflaeche</th>
-            </tr>
-            </thead>
-            <tbody>
+            <h1>Kuehlraum</h1>
             <?php
-            // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
+            // check if search view of list view
+
+            $sql = "SELECT * FROM kuehlraum";
+
+
+            // execute sql statement
+            $result = $db->query($sql);
+
+            ?>
+
+            <table style="width:70%">
+                <thead>
                 <tr>
-                    <td><?php echo $r['kuehlraumNr']; ?></td>
-                    <td><?php echo $r['temp']; ?></td>
-                    <td><?php echo $r['grundflaeche']; ?></td>
+                    <th>Kuehlraum Nr.</th>
+                    <th>Temp.</th>
+                    <th>Grundflaeche</th>
                 </tr>
-            <?php } ?>
+                </thead>
+                <tbody>
+                <?php
+                // fetch rows of the executed sql query
+                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $r['kuehlraumNr']; ?></td>
+                        <td><?php echo $r['temp']; ?></td>
+                        <td><?php echo $r['grundflaeche']; ?></td>
+                    </tr>
+                <?php } ?>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-    </center>
-    <br></br>
-</div>
+        </center>
+        <br></br>
+    </div>
 <?php endif; ?>
 
 <?php if ($data['accesslevel'] == 1): ?>
-	<center>
-	<h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
-	<br></br>
-  <?php
+    <center>
+        <h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
+        <br></br>
+        <?php
         // check if search view of list view
 
         $sql = "SELECT * FROM baeckerei";
@@ -318,10 +318,8 @@ if (isset($logedinuser)) {
         </table>
 
 
-
-
-	<div id="wrapper">
-	</center>
+        <div id="wrapper">
+    </center>
 
 <?php endif; ?>
 
