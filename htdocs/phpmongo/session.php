@@ -8,28 +8,23 @@ https://stackoverflow.com/questions/28597617/convert-pdofetch-assoc-to-sqlite
 http://php.net/manual/en/sqlite3result.fetcharray.php
 */
 // Datenbankverbindung herstellen
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
-// Start a Session
+require 'vendor/autoload.php';
 session_start();
-// Storing the current Session
 $user_check = $_SESSION['login_user'];
 
-// SQL Select for all Registered Users
-$ses_sql = "SELECT * FROM (SELECT email,passwort,accesslevel from kunde UNION select email,passwort,accesslevel from mitarbeiter) AS U where U.email= '$user_check'";
-//$row = fetchArray($ses_sql);
-$result = $db->query($ses_sql);
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+$client = new MongoDB\Client($uri);
+$collection = $client->backshop->users;
+$result = $collection->find( [ 'accesslevel' => $user_check] );
+// Start a Session
 
-$result_items = array();
-while ($data = $result->fetch(PDO::FETCH_ASSOC)) {
+$user_check = $_SESSION['login_user'];
+
+foreach ($result as $entry) {
     //print_r($data);
-    if (!isset($data['email'])) continue;
+    if (!isset($entry['email'])) continue;
 
-    $login_session = $data['email'];
+    $login_session = $entry['email'];
 
 }
 
