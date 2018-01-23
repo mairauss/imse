@@ -123,14 +123,14 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
           </tr>
        </tbody>
       </table>
-
+			<input id='submit' type='submit' class="testbutton" value='Insert' />
     </table>
     </center>
   </form>
   </div>
 
   <?php
-  if (isset($_GET['artikelnr'])&&isset($GET_['insert']))
+  if (isset($_GET['artikelnr']))
    {
 		 echo 'Insert button';
 		 $collection->insertOne([
@@ -160,6 +160,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
         </tr>
       </thead>
       <tbody>
+<input id ="artikel" name="artikel" type="hidden" value="artikel" />
   <?php
     foreach($cursor as $row) {
       echo "<tr>";
