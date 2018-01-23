@@ -64,7 +64,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
   <div>
   <form id='insertform' action='backwarenmanager.php' method='get'>
     <center>
-        Neue Backwaren einfuegen:
+        <!-- Neue Backwaren einfuegen: -->
       <table style='border: 5px solid #DDDDDD'>
         <thead>
           <tr>
@@ -126,13 +126,13 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 
     </table>
     </center>
-    <input id='submit' type='submit' class="testbutton" value='Insert' />
   </form>
   </div>
 
   <?php
-  if (isset($_GET['artikelnr']))
+  if (isset($_GET['artikelnr'])&&isset($GET_['insert']))
    {
+		 echo 'Insert button';
 		 $collection->insertOne([
 			 'artikelnr'=>intval($_GET['artikelnr']),
 			 'bhersdatum'=>$_GET['bhersdatum'],
@@ -143,7 +143,6 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 			 'personalnr'=>$_GET['personalnr']
 		 ]);
 	 }
-
   ?>
 
   <table style='border: 5px solid #DDDDDD'>
@@ -156,6 +155,8 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
           <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
+					<th>Update Menge</th>
+					<th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -174,10 +175,10 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
       ?>
 
       <td>
-        <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; echo'' ?>' />
+        <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; ?>' />
+				<a href="update_backware.php?artikelnr=<?php echo $row['artikelnr'];?>&menge=<?php echo $row['menge'].'&updatemenge='.$_GET['updatemenge'];?>">Update</a>
       </td>
-      <td><input id='updateartikelnr' name= 'updateartikelnr' type="hidden" value=' <?php echo $row['artikelnr']?>'/></td>
-
+			<td><a href="delete_backware.php?artikelnr=<?php echo $row['artikelnr'];?>">Delete</a></td>
     <?php
       echo "</tr>";
     }
