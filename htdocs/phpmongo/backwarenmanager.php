@@ -155,13 +155,11 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
           <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
-					<th>Update Menge</th>
+					<th>Kurz vor Ablauf</th>
 					<th>Delete</th>
         </tr>
       </thead>
       <tbody>
-  <form id='updateForm' action='backwarenmanager.php' methode='post'>
-<input id ="artikel" name="artikel" type="hidden" value="artikel" />
   <?php
     foreach($cursor as $row) {
       echo "<tr>";
@@ -174,10 +172,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
       echo "<td>" . $row['menge'] . "</td>";
       ?>
 
-      <td>
-        <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; ?>' />
-				<a href="update_backware.php?artikelnr=<?php echo $row['artikelnr'];?>&menge=<?php echo $row['menge'].'&updatemenge='.$_GET['updatemenge'];?>">Update</a>
-      </td>
+      <td><a href="update_backware.php?artikelnr=<?php echo $row['artikelnr'];?>&bpreis=<?php echo $row['bpreis']?>">50% Rabatt</a></td>
 			<td><a href="delete_backware.php?artikelnr=<?php echo $row['artikelnr'];?>">Delete</a></td>
     <?php
       echo "</tr>";
@@ -186,8 +181,6 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 
       </tbody>
     </table>
-    <input type="submit" id='updateBtn' name='updateBtn' class="testbutton" value="Update"/>
-  </form>
   <div>Insgesamt <?php echo $count; ?> Backwaren gefunden!</div>
   </center>
   <br></br>
