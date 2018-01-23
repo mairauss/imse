@@ -115,7 +115,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
                                 <div class="form-group">
                                     <label for="input1" class="col-sm-5 control-label">Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="kname" required class="form-control" id="input1"
+                                        <input type="text" name="name" required class="form-control" id="input1"
                                                placeholder="Name"/>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
                                 <div class="form-group">
                                     <label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
                                     <div class="col-sm-10">
-                                        <input type="date" max="2000-01-01" name="kgeburtsdatum" required
+                                        <input type="date" max="2000-01-01" name="geburtsdatum" required
                                                class="form-control" id="input1" placeholder=""/>
                                     </div>
                                 </div>
@@ -147,33 +147,24 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
                      http://codingcyber.org/simple-crud-application-php-pdo-7284/
                      https://www.w3schools.com/php/php_mysql_insert.asp
                      https://www.formget.com/php-data-object/
-                    
+					*/
                     if (isset($_POST["submit"])) {
-                        try {
-                            require_once('dbconnection.php');
-                            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                            $sql = "INSERT INTO kunde (email, kname, kgeburtsdatum, bname, passwort, accesslevel)
-            VALUES(:email, :kname, :kgeburtsdatum, 'Lecker' , :passwort, 1)";
-
-
-                            $result = $db->prepare($sql);
-                            $res = $result->execute(array('email' => $_POST['email'],
-                                'kname' => $_POST['kname'],
-                                'kgeburtsdatum' => $_POST['kgeburtsdatum'],
-                                'passwort' => $_POST['passwort']
-                            ));
+						
+						$seedData = array(
+							'email' => $_POST['email'],
+							'passwort' => $_POST['passwort'],
+							'accesslevel' => 1,
+							'geburtsdatum' => $_POST['geburtsdatum'],
+							'name' => $_POST['name']
+						);
+						$res = $collection->insertOne($seedData);
                             if ($res) {
                                 echo "Ihre Daten wurden erfolgreich gespeichert";
                             } else {
                                 echo "Fehler aufgetreten";
                             }
-                            $db = null;
-                        } catch (PDOException $e) {
-                            echo $e->getMessage();
-                        }
                     }
-					 */
+					 
                     ?>
 
 

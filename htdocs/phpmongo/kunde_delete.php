@@ -1,25 +1,15 @@
 <?php
 /*
 Quellen:
-http://codingcyber.org/simple-crud-application-php-pdo-7284/
-https://www.tutorialspoint.com/sqlite/sqlite_delete_query.htm
+http://php.net/manual/de/mongocollection.remove.php
 */
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
+require 'vendor/autoload.php';
 
-$DelSqlite = "DELETE FROM 'kunde' WHERE email=?";
-$result = $db->prepare($DelSqlite);
-echo "löschen";
-echo $DelSqlite;
-$res = $result->execute(array($_GET['email']));
-if ($res) {
-    header('location: kunde.php');
-} else {
-    echo "Löschen fehlgeschlagen";
-}
-
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+		$document = $collection->findOne(['email' => $_GET['email']]);
+		$id = $document['_id'];
+		$collection->deleteOne(["_id" => $id]);
+		header("Location: kunde.php");
 ?>
