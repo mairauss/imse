@@ -62,16 +62,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 
 
                 <table style="width:70%">
-                    <?php
-                    if (isset($_GET['search'])) {
-						$cursor = $collection->find(['name' => $_GET['search']]);
-                    } else {
-					$cursor = $collection->find(['accesslevel' => 1]);
-                    }
-                    // execute sql statement
-                    ?>
-
-                    <tr>
+				     <tr>
                         <th>E-mail</th>
                         <th>Name</th>
                         <th>Geburtstag</th>
@@ -79,6 +70,29 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
                         <th>AccesLevel</th>
                         <th>EXTRAS</th>
                     </tr>
+                    <?php
+                    if (isset($_GET['search'])) {
+						echo $_GET['search'];
+						$document = $collection->find(['name' => "$_GET['search']"]);
+						?>
+						                        <tr>
+                            <td><?php echo $document['email']; ?></td>
+                            <td><?php echo $document['name']; ?></td>
+                            <td><?php echo $document['geburtsdatum']; ?></td>
+                            <td><?php echo $document['passwort']; ?></td>
+                            <td><?php echo $document['accesslevel']; ?></td>
+                            <td><a href="kunde_update.php?email=<?php echo $document['email']; ?>">Mutieren</a> <a
+                                        href="kunde_delete.php?email=<?php echo $document['email']; ?>">Delete</a></td>
+                        </tr>
+					<?php
+						
+                    } else {
+					$cursor = $collection->find(['accesslevel' => 1]);
+                  
+                    // execute sql statement
+                    ?>
+
+
 
                     <?php
 
@@ -94,7 +108,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
                             <td><a href="kunde_update.php?email=<?php echo $document['email']; ?>">Mutieren</a> <a
                                         href="kunde_delete.php?email=<?php echo $document['email']; ?>">Delete</a></td>
                         </tr>
-                    <?php } ?>
+                    <?php }   } ?>
                 </table>
 
 
