@@ -166,9 +166,9 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
       echo "<tr>";
       echo "<td>" . $row['personalnr'] . "</td>";
       echo "<td>" . $row['artikelnr'] . "</td>";
-      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['gname'] . "</td>";
       echo "<td>" . $row['bpreis'] . "</td>";
+      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['bhaltdauer'] . "</td>";
       echo "<td>" . $row['menge'] . "</td>";
       ?>
