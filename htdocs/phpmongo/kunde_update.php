@@ -1,55 +1,51 @@
 <?php
 /*
-Quellen:
-http://codingcyber.org/simple-crud-application-php-pdo-7284/
-https://www.tutorialspoint.com/sqlite/sqlite_delete_query.htm
+Quellen: https://github.com/chapagain/simple-crud-php-mongodb/blob/master/edit.php
 */
-include('session.php');
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
+require 'vendor/autoload.php';
 
-$logedinuser = $login_session;
-if (isset($logedinuser)) {
-    $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
-    //Administrator Rechte
-    if ($data['accesslevel'] == 9) {
-        // echo "Access Level 9";
-    } else {
-        echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: baeckerei.php');
-    };
-} else {
-    echo "Unzeireichende User Berechtigung";
-}
-
-//übergebenen PK E-Mail von der Adresse
-$selsqlite = "SELECT * FROM `kunde` WHERE email=?";
-$selresult = $db->prepare($selsqlite);
-$selres = $selresult->execute(array($_GET['email']));
-$r = $selresult->fetch(PDO::FETCH_ASSOC);
-
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+		$document = $collection->findOne(['email' => $_GET['email']]);
 
 if (isset($_POST) & !empty($_POST)) {
+	$id = $document['_id'];
+	$user = array (
+				'email' => $_GET['email'],
+				'passwort' => $_POST['passwort'],
+				'accesslevel' => 1,
+				'geburtsdatum' => $_POST['geburtsdatum'],
+				'name' => $_POST['name']
+			);
 
-    $sql = "UPDATE kunde SET email=:email, kname=:kname, kgeburtsdatum=:kgeburtsdatum, passwort=:passwort WHERE email=:email";
-    $result = $db->prepare($sql);
-    $res = $result->execute(array('email' => $_POST['email'],
-        'kname' => $_POST['kname'],
-        'kgeburtsdatum' => $_POST['kgeburtsdatum'],
-        'passwort' => $_POST['passwort']
-    ));
-    if ($res) {
+		//updating the 'users' table/collection
+		$collection->updateOne(
+						array('email' => $_GET['email']),
+						array('$set' => $user)
+					);
+		
+		//redirectig to the display page. In our case, it is index.php
+		header("Location: kunde.php");
+/*
+    $updateResult = $collection->updateOne(
+	['email' => $_POST['email']],
+	['passwort' => $_POST['passwort']],
+	['accesslevel' => 1],
+        ['geburtsdatum' => $_POST['geburtsdatum']],
+        ['name' => $_POST['name']]
+    );
+	printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
+printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
+	
+    if ($updateResult) {
         echo "Ihre Daten wurden erfolgreich mutiert";
     } else {
         echo "Fehler aufgetreten";
     }
-}
 
+*/
+}
 ?>
 
 <html>
@@ -61,7 +57,7 @@ if (isset($_POST) & !empty($_POST)) {
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<?php if ($data['accesslevel'] == 9): ?>
+
     <ul>
         <li><a class="active" href="baeckerei.php">Lecker</a></li>
         <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -75,7 +71,7 @@ if (isset($_POST) & !empty($_POST)) {
         <li><a href="bestand.php">Bestandteil</a></li>
         <li><a href="session_logout.php">Logout</a></li>
     </ul>
-<?php endif; ?>
+
 
 <div class="container">
     <div class="row">
@@ -83,7 +79,7 @@ if (isset($_POST) & !empty($_POST)) {
             <div class="form-group">
                 <label for="input1" class="col-sm-5 control-label">E-Mail Adresse</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" required class="form-control" value="<?php echo $r['email'] ?>"
+                    <input type="email" name="email" required class="form-control" value="<?php echo $document['email'] ?>"
                            placeholder="E-Mail"/>
                 </div>
             </div>
@@ -91,7 +87,7 @@ if (isset($_POST) & !empty($_POST)) {
             <div class="form-group">
                 <label for="input1" class="col-sm-5 control-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" name="kname" required class="form-control" value="<?php echo $r['kname'] ?>"
+                    <input type="text" name="name" required class="form-control" value="<?php echo $document['name'] ?>"
                            placeholder="Name"/>
                 </div>
             </div>
@@ -99,8 +95,8 @@ if (isset($_POST) & !empty($_POST)) {
             <div class="form-group">
                 <label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
                 <div class="col-sm-10">
-                    <input type="date" max="2000-01-01" name="kgeburtsdatum" required class="form-control"
-                           value="<?php echo $r['kgeburtsdatum'] ?>" placeholder=""/>
+                    <input type="date" max="2000-01-01" name="geburtsdatum" required class="form-control"
+                           value="<?php echo $document['geburtsdatum'] ?>" placeholder=""/>
                 </div>
             </div>
 
@@ -109,7 +105,7 @@ if (isset($_POST) & !empty($_POST)) {
                 <label for="input1" class="col-sm-5 control-label">Passwort</label>
                 <div class="col-sm-10">
                     <input type="text" name="passwort" required class="form-control"
-                           value="<?php echo $r['passwort'] ?>" placeholder="Passwort"/>
+                           value="<?php echo $document['passwort'] ?>" placeholder="Passwort"/>
                 </div>
             </div>
 
