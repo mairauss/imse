@@ -1,12 +1,9 @@
 <?php
- try{
-	require_once('dbconnection.php');
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(Exception $e){
-	$error = $e->getMessage();
-}
-
-if(isset($error)){ echo $error; }
+ require 'vendor/autoload.php';
+	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
+	$collectionEinkauf = $connection->backshop->einkaeufe;
+	$collectionBestellnummer = $connection->backshop->bestellnummer;
+	$collectionBackwaren = $connection->backshop->backwaren;
 ?>
 
 <html>
@@ -37,35 +34,57 @@ if(isset($error)){ echo $error; }
     require_once 'Warenkorb.php';
     //Die Bestellung wird in der Datenbank aktualisiert
     $email = $_POST['email'];
-    $bestellnummer = $_POST['bestellnummer'];
+    $bestellnummer = intval($_POST['bestellnummer']);
     $gesamtpreis = $_POST['gesamtpreis'];
     $artikel = new Artikel();
+	$lagermenge;
     for ($i = 0; isset($_POST[strval($i)]); $i++){
 		$artikelNr = $artikel->mengeToNumber($_POST[strval($i++)]);
 		$datum = $_POST[strval($i++)];
-		$menge = $_POST[strval($i)];
-		
-		//Insert in die Tabelle Einkauf
-        $sql = "INSERT INTO einkauf VALUES ( '". $email . "' , ". $artikelNr . ", " . $datum . " , " . $menge . ", " . $bestellnummer . ")";
-        $db->exec($sql);
-		
-		//Lagermenge wird nach der Bestätigung in der Datenbank aktualisiert
-		$update = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelNr . " AND bhersdatum =" .  $datum ."";
-		$result = $db->exec($update);
-		
-		//Prüft ob nach dem Einkauf noch was im Lager vorhanden ist. Falls nicht wird die Backware aus der Datenbank gelöscht
-		$lagermenge = "SELECT menge FROM backwaren WHERE artikelNr=" . $artikelNr . " AND bhersdatum=" . $datum ;
-		$result = $db->query($lagermenge);
-		while ($row = $result->fetch(PDO::FETCH_ASSOC)){
-			$lagermenge = $row['menge'];
+		$menge = intval($_POST[strval($i++)]);
+		$lagermenge = $_POST[strval($i)];
+		$artikelNr = intval($artikelNr);
+		$date = "";
+		for ($k = 1; $k < strlen($datum)-1; $k++){
+			$date = $date . $datum[$k];
 		}
+		$date = strval($date);
+		
+		//Dokument für das Einfügen
+		$doc = array(
+			"email" => $email,
+			"artikelnr" => $artikelNr,
+			"bhersdatum" => $datum,
+			"menge" => $menge,
+			"bestellnr" => $bestellnummer
+		);
+		//in die Collection Einkauf einfügen
+        $result = $collectionEinkauf->insertOne($doc);
+		if ($result->getInsertedCount() != 1)
+			print("FAILURE");
+
+		//neue Lagermenge wird in der Datenbank aktualisiert
+		$result = $collectionBackwaren->updateOne(
+			['bhersdatum' => $date, 'artikelnr' => $artikelNr],
+			['$set' => ["menge" => $lagermenge-$menge]]
+		);
+
+		//Prüft ob nach dem Einkauf noch was im Lager vorhanden ist. Falls nicht wird die Backware aus der Datenbank gelöscht
 		if ($lagermenge <= 0){
-			$delete = "DELETE FROM backwaren WHERE artikelNr=" . $artikelNr . " AND bhersdatum=" . $datum;
-			$db->exec($delete);
+			$result = $collectionBackwaren->deleteOne(['artikelnr' => $artikelNr, 'bhersdatum' => $datum]);
+			if ($result->getDeletedCount() != 1)
+				print("Löschen fehlgeschlagen");
 		}
     }
-    unset($db);
+	$update = $collectionBestellnummer->updateOne(
+				['nr' => $bestellnummer],
+				['$set' => ['nr' => ($bestellnummer+1)]]
+			); 
     unset($artikel);
+	unset($collectionBackwaren);
+	unset($collectionBestellnummer);
+	unset($collectionEinkauf);
+	unset($connection);
 ?>
 
 <div>
@@ -81,7 +100,6 @@ if(isset($error)){ echo $error; }
         <?php
             echo "Vielen Dank für Ihre Bestellung!" . "<br>";
             echo "Rechnungsbetrag: " . $_POST['gesamtpreis'] . "€ <br> <br>";
-			unset($db);
         ?>
 	    </tr>
       </tbody>

@@ -18,8 +18,12 @@ if(isset($error)){ echo $error; }
         private $waren = [];
         private $anzahl = 0;
 		
-        public function __construct($email){
-            $this->email = $email;
+		public function __construct(){}
+		
+        public static function constructEinkauf($email){
+            $instance = new self();
+			$instance->email = $email;
+			return $instance;
         }
         
         //copy constructor

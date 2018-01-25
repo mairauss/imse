@@ -1,55 +1,15 @@
 
 <?php
-  include('session.php');
-  $user = '';
-  $pass = '';
-  $database = '';
+require 'vendor/autoload.php';
 
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->backwaren;
 
-
-
-  class DB extends SQLite3
-{
-    function __construct()
-    {
-        $this->open('../../backshop.db');
-    }
-}
-
-
-
-  //$conn = open('backshop.db');
-  // establish database connection
-  $conn = new DB();
-  if ($conn->lastErrorMsg()!="not an error") {
-      die($conn->lastErrorMsg());
-  }
-
-  try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
-  
-  $logedinuser = $login_session;
-if (isset($logedinuser)) {
-    $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
-    //Administrator Rechte
-    if ($data['accesslevel'] == 9) {
-        // echo "Access Level 9";
-    } else {
-        echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: baeckerei.php');
-    };
-} else {
-    echo "Unzeireichende User Berechtigung";
-}
 
   ?>
 
-  <html>
+  <html>	
   <title>Lecker: Backwaren</title>
   <head>
       <link rel="stylesheet" href="index.css" />
@@ -58,8 +18,7 @@ if (isset($logedinuser)) {
       <img src="b5.png" alt="logo" width="500" height="300">
       <br></br>
 
-<?php if (isset($logedinuser)): ?>
-    <?php if ($data['accesslevel'] == 9): ?>
+
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -73,35 +32,7 @@ if (isset($logedinuser)) {
             <li><a href="bestand.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
-    <?php endif; ?>
-    <?php if ($data['accesslevel'] == 1): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($data['accesslevel'] == 2): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($data['accesslevel'] == 3): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="konditor.php">Konditor</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-<?php endif; ?>
+
 
     <br></br>
     <div id="wrapper">
@@ -118,20 +49,14 @@ if (isset($logedinuser)) {
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
-    $stmt = $conn->prepare( "SELECT backen.personalnr, backwaren.* from backwaren
-                            inner join backen on backwaren.artikelnr like :id
-                            and backen.artikelnr like backwaren.artikelnr;");
-    $countstmt = $conn->prepare( "SELECT count(*) FROM backwaren WHERE artikelnr like :id ");
-    $stmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
-    $countstmt->bindValue(':id',$_GET['search'],SQLITE3_INTEGER);
+		$artikel = intval($_GET['search']);
+    $cursor = $collection->find(['artikelnr' => $artikel]);
+		$count = $collection->count(['artikelnr' => $artikel]);
   } else {
-    $stmt = $conn->prepare("SELECT backen.personalnr, backwaren.* from backwaren
-                          left join backen on backen.artikelnr like backwaren.artikelnr;");
-    $countstmt = $conn->prepare("SELECT count(*) FROM backwaren");
+    $cursor = $collection->find();
+		$count = $collection->count();
   }
 
-  // execute sql statement
-  $result = $stmt->execute();
 ?>
 
 
@@ -139,7 +64,7 @@ if (isset($logedinuser)) {
   <div>
   <form id='insertform' action='backwarenmanager.php' method='get'>
     <center>
-        Neue Backwaren einfuegen:
+			<!-- Neue Backwaren einfuegen: -->
       <table style='border: 5px solid #DDDDDD'>
         <thead>
           <tr>
@@ -198,44 +123,26 @@ if (isset($logedinuser)) {
           </tr>
        </tbody>
       </table>
-
+			<input id='submit' type='submit' class="testbutton" value='Insert' />
     </table>
     </center>
-    <input id='submit' type='submit' class="testbutton" value='Insert' />
   </form>
   </div>
 
   <?php
-    //Handle insert
-
-     if (isset($_GET['artikelnr']))
-    {
-
-      $insstmt = $conn->prepare( "INSERT INTO backwaren VALUES(:nr, :name, :preis, :herdat, :haltdat, :menge)");
-      $insstmt->bindValue(':nr',$_GET['artikelnr'],SQLITE3_INTEGER);
-      $insstmt->bindValue(':name',$_GET['gname'],SQLITE3_TEXT);
-      $insstmt->bindValue(':preis',$_GET['bpreis'],SQLITE3_FLOAT);
-      $insstmt->bindValue(':herdat',$_GET['bhersdatum'],SQLITE3_BLOB);
-      $insstmt->bindValue(':haltdat',$_GET['bhaltdauer'],SQLITE3_BLOB);
-      $insstmt->bindValue(':menge',$_GET['menge'],SQLITE3_INTEGER);
-      $insresult = NULL;
-
-      $backenstmt = $conn->prepare("INSERT INTO backen VALUES(:personalnr, :artikelnr)");
-      $backenstmt->bindValue(':personalnr',$_GET['personalnr'],SQLITE3_INTEGER);
-      $backenstmt->bindValue(':artikelnr',$_GET['artikelnr'],SQLITE3_INTEGER);
-      $backresult = NULL;
-      try{
-        $conn->enableExceptions(true);
-        // execute sql statements
-        $insresult = $insstmt->execute();
-        $backresult = $backenstmt->execute();
-      } catch(Exception $e){
-        echo "<script type='text/javascript'>alert('Could not Insert');</script>";
-      }
-      if($insresult && $backresult){
-        echo "<script type='text/javascript'>alert('Successfully inserted');</script>";
-      }
-    }
+  if (isset($_GET['artikelnr']))
+   {
+		 echo 'Insert button';
+		 $collection->insertOne([
+			 'artikelnr'=>intval($_GET['artikelnr']),
+			 'bhersdatum'=>$_GET['bhersdatum'],
+			 'gname'=>$_GET['gname'],
+			 'bpreis'=>$_GET['bpreis'],
+			 'bhaltdauer'=>$_GET['bhaltdauer'],
+			 'menge'=>$_GET['menge'],
+			 'personalnr'=>$_GET['personalnr']
+		 ]);
+	 }
   ?>
 
   <table style='border: 5px solid #DDDDDD'>
@@ -248,31 +155,26 @@ if (isset($logedinuser)) {
           <th>Herstell.Datum</th>
           <th>Haltbar.Dauer</th>
           <th>Menge</th>
+					<th>Kurz vor Ablauf</th>
+					<th>Delete</th>
         </tr>
       </thead>
       <tbody>
-  <form id='updateForm' action='backwarenmanager.php' methode='post'>
 <input id ="artikel" name="artikel" type="hidden" value="artikel" />
   <?php
-
-    // fetch rows of the executed sql query
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-
+    foreach($cursor as $row) {
       echo "<tr>";
-     echo "<td>" . $row['personalnr'] . "</td>";
-     echo "<td>" . $row['artikelnr'] . "</td>";
-     echo "<td>" . $row['bhersdatum'] . "</td>";
+      echo "<td>" . $row['personalnr'] . "</td>";
+      echo "<td>" . $row['artikelnr'] . "</td>";
       echo "<td>" . $row['gname'] . "</td>";
       echo "<td>" . $row['bpreis'] . "</td>";
+      echo "<td>" . $row['bhersdatum'] . "</td>";
       echo "<td>" . $row['bhaltdauer'] . "</td>";
       echo "<td>" . $row['menge'] . "</td>";
       ?>
 
-      <td>
-        <input id='updatemenge' name='updatemenge' type='number' size='10' value='<?php if (isset($_GET['updatemenge'])) echo $_GET['updatemenge']; echo'' ?>' />
-      </td>
-      <td><input id='updateartikelnr' name= 'updateartikelnr' type="hidden" value=' <?php echo $row['artikelnr']?>'/></td>
-
+      <td><a href="update_backware.php?artikelnr=<?php echo $row['artikelnr'];?>&bpreis=<?php echo $row['bpreis']?>">50% Rabatt</a></td>
+			<td><a href="delete_backware.php?artikelnr=<?php echo $row['artikelnr'];?>">Delete</a></td>
     <?php
       echo "</tr>";
     }
@@ -280,28 +182,9 @@ if (isset($logedinuser)) {
 
       </tbody>
     </table>
-    <input type="submit" id='updateBtn' name='updateBtn' class="testbutton" value="Update"/>
-  </form>
-  <div>Insgesamt
-  <?php
-
-
-    $countresult = $countstmt->execute();
-    $count = $countresult->fetchArray();
-    if(current($count)) {
-      echo current($count);
-    }
-    else {
-      echo "0";
-    }
-  ?>
-  Backwaren gefunden!</div>
+  <div>Insgesamt <?php echo $count; ?> Backwaren gefunden!</div>
   </center>
   <br></br>
-
-  <?php
-    $conn->close();
-  ?>
   </div>
   </body>
   </html>
