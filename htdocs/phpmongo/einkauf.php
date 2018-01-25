@@ -1,5 +1,9 @@
 <?php
- include('session.php');
+//cloud db
+//username: imseteam10
+//pw: xk0%Nj2PeFTm@C12
+
+/* include('session.php');
  try{
 	require_once('dbconnection.php');
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,12 +24,18 @@ $logedinuser = $login_session;
 				echo "Sie haben kein Zugriff auf diese Seite";
 				header('Location: baeckerei.php');
 			};
-		} 
+		}
+*/
+?>
 
-
-
-
-
+<?php
+	
+    require_once 'Artikel.php';
+    require_once 'Warenkorb.php';
+	require 'vendor/autoload.php';
+	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
+	$collectionEinkauf = $connection->backshop->einkaeufe;
+	$collectionBestellnummer = $connection->backshop->bestellnummer;
 ?>
 
 <html>
@@ -37,7 +47,7 @@ $logedinuser = $login_session;
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-					<?php if (!isset($logedinuser)): ?>
+					<?php// if (!isset($logedinuser)): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -45,9 +55,9 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>		
 					<li><a href="session_logout.php">Logout</a></li>						
 			   </ul>
-		<?php endif; ?>
-		<?php if (isset($logedinuser)): ?>
-			<?php if ($data['accesslevel'] == 9): ?>
+		<?php// endif; ?>
+		<?php// if (isset($logedinuser)): ?>
+			<?php //if ($data['accesslevel'] == 9): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -61,8 +71,8 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>	
 					<li><a href="session_logout.php">Logout</a></li>			
 			   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 1): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 1): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -70,15 +80,15 @@ $logedinuser = $login_session;
                         <li><a href="bestand_kunde.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 2): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 2): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a href="backwaren.php">Unsere Backwaren</a></li>
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 3): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 3): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -87,11 +97,11 @@ $logedinuser = $login_session;
 						<li><a href="bestand.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-		<?php endif; ?>
+		   		<?php// endif; ?>
+		<?php// endif; ?>
 
 <br></br>
-<?php if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
+<?php// if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
 <!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
 <div>
 	<form id='searchform' action='einkauf.php' method='post'>
@@ -100,27 +110,30 @@ $logedinuser = $login_session;
 	  <input id='searchMail' name='searchMail' type='text' size='15' value='<?php if (isset($_POST['searchMail'])) echo $_POST['searchMail']; ?>' />
 	  <br> <br>
 	  Bestellnumer eingeben:
-	  <input id='searchNr' name='searchNr' type='text' size='15' value='<?php if (isset($_POST['searchNr'])) echo $_POST['searchNr']; ?>' />	  
+	  <input id='searchNr' name='searchNr' type='double' size='15' value='<?php if (isset($_POST['searchNr'])) echo $_POST['searchNr']; ?>' />	  
 	  <br> <br>
 	  <input id='submit' type='submit' class="button" value='Suche Einkauf' />
 	</form>
 </div>
 <!-- /DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
- <?php endif; ?>
+ <?php// endif; ?>
 <?php
   $sucheEinkauf = false;
+  $result;
   // check if search view of list view
-  if (isset($_POST['searchMail']) && isset($_POST['searchNr'])) {
-	  $sucheEinkauf = true;
-	  $sqlSelect = "SELECT * FROM einkauf WHERE email like '%" . $_POST['searchMail'] . "%' AND bestellnr like '%" . $_POST['searchNr'] . "%'";
-  } else if (isset($_POST['searchMail']) && !isset($_POST['searchNr'])) {
+  if (isset($_POST['searchMail']) && $_POST['searchMail'] != null && isset($_POST['searchNr']) && $_POST['searchNr'] != null) {
+	$gesuchteNummer = intval($_POST['searchNr']);
 	$sucheEinkauf = true;
-    $sqlSelect = "SELECT * FROM einkauf WHERE email like '%" . $_POST['searchMail'] . "%'";
-  } else if (isset($_POST['searchNr']) && !isset($_POST['searchMail'])){
+	$result = $collectionEinkauf->find(['email' => $_POST['searchMail'], 'bestellnr' => $gesuchteNummer]);
+  } else if (isset($_POST['searchMail']) && $_POST['searchMail'] != null) {
 	$sucheEinkauf = true;
-	$sqlSelect = "SELECT * FROM einkauf WHERE bestellnr like '%" . $_POST['searchNr'] . "%'";
+	$result = $collectionEinkauf->find(['email' => $_POST['searchMail']]);
+  } else if (isset($_POST['searchNr']) && $_POST['searchNr'] != null){
+	$sucheEinkauf = true;
+	$gesuchteNummer = intval($_POST['searchNr']);
+	$result = $collectionEinkauf->find(['bestellnr' => $gesuchteNummer]);
   } else {
-    $sqlSelect = "SELECT * FROM einkauf";
+    $result = $collectionEinkauf->find();
   }
 ?>
 
@@ -132,6 +145,7 @@ $logedinuser = $login_session;
 	  <thead>
 	    <tr>
 			<?php
+			//
 			if ((isset($_POST['searchMail']) && $_POST['searchMail'] != null) || (isset($_POST['searchNr']) && $_POST['searchNr'] != null)) {
 				echo "<th>E-Mail des Kunden</th>";
 				echo "<th>Artikelnummer</th>";
@@ -146,8 +160,7 @@ $logedinuser = $login_session;
 		<tr>
 			<?php
 			  if ((isset($_POST['searchMail']) && $_POST['searchMail'] != null) || (isset($_POST['searchNr']) && $_POST['searchNr'] != null)){
-				$result = $db->query($sqlSelect);
-				while($row = $result->fetch(PDO::FETCH_ASSOC)){
+				foreach($result as $row){
 					echo "<tr>";
 					echo "<td>" . $row['email'] . "</td>";
 					echo "<td>" . $row['artikelnr'] . "</td>";
@@ -165,21 +178,17 @@ $logedinuser = $login_session;
 </table>
 </center>
 <br>
-
-<?php
-    require_once 'Artikel.php';
-    require_once 'Warenkorb.php';
-?>
     
 <?php
     //Die Bestellung annehmen
+	
 	//HIER WIRD PRIMARY KEY (E-MAIL) DES KUNDEN ALS PARAMETER FÜR DEN KONSTRUKTOR ANGEGEBEN!!!
-    $order = new Warenkorb($data['email']);
+    $order = Warenkorb::constructEinkauf("onur@mail.at");
     $artikelNr = 100000;
     $ware = new Artikel();
     $gesamtPreis = 0;
     $num = 0;
-    //angekommene Informationen über die Bestellung werden in Objekte zusammengefasst und zu POST Variablen zugewiesen
+    //angekommene Informationen über die Bestellung werden in Objekte zusammengefasst
     for ($i = 0; isset($_POST["artikelnr" . strval($artikelNr)]); $i++){
         if (isset($_POST[strval($i)]) && $_POST[strval($i)] >= 1){
           if (isset($_POST['bhaltdauer' . strval($artikelNr)])){
@@ -190,13 +199,13 @@ $logedinuser = $login_session;
                 $ware->setBestellMenge($ware->getLagerMenge());
             $gesamtPreis = $gesamtPreis + ($ware->getPreis() * $ware->getBestellMenge());
           } else {
-            $ware = Artikel::construct2($_POST["artikelnr" . strval($artikelNr)], $_POST["bhersdatum" . strval($artikelNr)], $_POST["gname" . strval($artikelNr)], $ware->mengeToNumber($_POST["preis" . strval($artikelNr)]), $ware->mengeToNumber($_POST["lagermenge" . strval($artikelNr)]));
-            if ($ware->getLagerMenge() >= $_POST[strval($i)])
-              $ware->setBestellMenge($_POST[strval($i)]);
-            else
-              $ware->setBestellMenge ($ware->getLagerMenge ());			
-            $gesamtPreis = $gesamtPreis + ($ware->getPreis() * $ware->getBestellMenge());
-          }
+				$ware = Artikel::construct2($_POST["artikelnr" . strval($artikelNr)], $_POST["bhersdatum" . strval($artikelNr)], $_POST["gname" . strval($artikelNr)], $ware->mengeToNumber($_POST["preis" . strval($artikelNr)]), $ware->mengeToNumber($_POST["lagermenge" . strval($artikelNr)]));
+				if ($ware->getLagerMenge() >= $_POST[strval($i)])
+					$ware->setBestellMenge($_POST[strval($i)]);
+				else
+				$ware->setBestellMenge ($ware->getLagerMenge ());			
+				$gesamtPreis = $gesamtPreis + ($ware->getPreis() * $ware->getBestellMenge());
+			}
           $order->setWare($ware);
           $num++;
         }
@@ -215,13 +224,10 @@ $logedinuser = $login_session;
     <p> <?php 
 		//setzt die Bestellnummer und inkrementiert sie in der Datenbank für die nächste Bestellung
 		if ($gesamtPreis > 0) {
-			$sql = "SELECT * FROM bestellnummerzaehler";
-			$list = $db->query($sql);
-			while($row = $list->fetch(PDO::FETCH_ASSOC)){
+			$result = $collectionBestellnummer->find();
+			foreach($result as $row){
 				$order->setBestellNr($row['nr']);
-			}
-			$sql = "UPDATE bestellnummerzaehler set nr=nr+1 where nr=" . $order->getBestellnummer();
-			$db->exec($sql);    
+			}  
 			echo "Meine Bestellnummer: " . $order->getBestellnummer();
 		}
 		?></p>
@@ -295,12 +301,16 @@ $logedinuser = $login_session;
                 $a++;
                 echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getBestellMenge() . "' />";
                 $a++;
-            }
+				echo "<input id='" . strval($a) ."' name='" . strval($a) . "' type='hidden' value='" . $bestellung[$gr]->getLagerMenge() . "' />";
+				$a++;
+			}
             echo "<input id='submit' type='submit' class='testbutton' value='Bestellung bestätigen' />";
         }
         else
             if ($sucheEinkauf == false) echo "Keine Bestellung angegeben. ";
-		unset($db);
+		unset($collectionBestellnummer);
+		unset($collectionEinkauf);
+		unset($connection);
         ?>
   </form>
 </div>

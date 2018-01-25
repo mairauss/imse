@@ -9,7 +9,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 
   ?>
 
-  <html>
+  <html>	
   <title>Lecker: Backwaren</title>
   <head>
       <link rel="stylesheet" href="index.css" />
@@ -64,7 +64,7 @@ $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
   <div>
   <form id='insertform' action='backwarenmanager.php' method='get'>
     <center>
-        <!-- Neue Backwaren einfuegen: -->
+			<!-- Neue Backwaren einfuegen: -->
       <table style='border: 5px solid #DDDDDD'>
         <thead>
           <tr>

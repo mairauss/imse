@@ -1,4 +1,5 @@
 <?php
+/*
  include('session.php');
  try{
 	require_once('dbconnection.php');
@@ -22,13 +23,16 @@ $logedinuser = $login_session;
 			};
 		} 
 
-
-
+	
+*/
 ?>
 
 <?php
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
+	require 'vendor/autoload.php';
+	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
+	$collection = $connection->backshop->backwaren;
 ?>
 
 <html>
@@ -40,7 +44,7 @@ $logedinuser = $login_session;
             <img src="b5.png" alt="logo" width="500" height="300">
             <br></br>
 
-		<?php if (!isset($logedinuser)): ?>
+		<?php //if (!isset($logedinuser)): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -48,9 +52,9 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>		
 					<li><a href="session_logout.php">Logout</a></li>						
 			   </ul>
-		<?php endif; ?>
-		<?php if (isset($logedinuser)): ?>
-			<?php if ($data['accesslevel'] == 9): ?>
+		<?php// endif; ?>
+		<?php// if (isset($logedinuser)): ?>
+			<?php// if ($data['accesslevel'] == 9): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -64,8 +68,8 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>	
 					<li><a href="session_logout.php">Logout</a></li>			
 			   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 1): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 1): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
@@ -73,15 +77,15 @@ $logedinuser = $login_session;
 						<li><a href="bestand_kunde.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 2): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 2): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-				<?php if ($data['accesslevel'] == 3): ?>
+		   		<?php// endif; ?>
+				<?php// if ($data['accesslevel'] == 3): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
@@ -90,8 +94,8 @@ $logedinuser = $login_session;
 						<li><a href="bestand.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php endif; ?>
-		<?php endif; ?>
+		   		<?php// endif; ?>
+		<?php// endif; ?>
 
             <br></br>
 
@@ -101,18 +105,17 @@ $logedinuser = $login_session;
                         <form id='searchform' action='backwaren.php<?php if (isset($_GET['search'])) echo "?search=" . $_GET['search']; ?>' method='get'>
                             <a href='backwaren.php'>Alle Backenwaren</a> ---
                             Suche nach Artikelnummer:
-                            <input id='search' name='search' type='text' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
+                            <input id='search' name='search' type='double' size='15' value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>' />
                             <input id='submit' type='submit' class="testbutton" value='Search' />
                          </form>
                     </div>
             
-                    
                 <?php
                     // check if search view of list view
                     if (isset($_GET['search'])) {
-                        $sql = "SELECT * FROM backwaren WHERE artikelnr like '%" . $_GET['search'] . "%'";
+						$suchbegriff = intval($_GET['search']);
                     } else {
-                        $sql = "SELECT * FROM backwaren";
+                        $suchbegriff = null;
                     }
                     // execute sql statement
                     //$s    tmt = new SQLite3('backshop.db');
@@ -120,7 +123,7 @@ $logedinuser = $login_session;
                     //$stmt ->close();
                     //unset($stmt);
                 ?>
-				<?php if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
+				<?php// if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
 				<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
                 <div>
                     <form id='insertform' action='backwaren.php' method='post'>
@@ -137,7 +140,7 @@ $logedinuser = $login_session;
                     <tbody>
                         <tr>
                             <td>
-                                <input id='artikelnr' name='artikelnr' type='number' size='10' value='<?php if (isset($_POST['artikelnr'])) echo $_POST['artikelnr']; ?>' />
+                                <input id='artikelnr' name='artikelnr' type='double' size='10' value='<?php if (isset($_POST['artikelnr'])) echo $_POST['artikelnr']; ?>' />
                             </td>
                             <td>
                                 <input id='bhersdatum' name='bhersdatum' type='text' size='30' value='<?php if (isset($_POST['bhersdatum'])) echo $_POST['bhersdatum']; ?>' />
@@ -175,17 +178,18 @@ $logedinuser = $login_session;
                     </form>
                 </div>
 			    <!-- /DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
-                <?php endif; ?>
+                <?php// endif; ?>
             <?php
             //Einfügen können nur Mitarbeiter
             if (isset($_POST['artikelnr']) && $_POST['artikelnr'] >= 1) 
             {
-                //Prepare insert statementd
-                $insertstmt = "INSERT INTO backwaren VALUES(" . $_POST['artikelnr'] . ",'"  . $_POST['bhersdatum'] . "', '" . $_POST['gname'] .
-                              "', ". $_POST['bpreis'] . ", '" . $_POST['bhaltdauer'] . "', " . $_POST['menge'] . ")";
-                //Parse and execute statement
-                $result = $db->exec($insertstmt);
-                if($result){
+				if (isset($_POST['bhaltdauer']) && $_POST['bhaltdauer'] != null)
+					$neueWare = Artikel::constructFull($_POST['artikelnr'], $_POST['bhersdatum'], $_POST['gname'], $_POST['bpreis'], $_POST['bhaltdauer'], $_POST['menge']);
+				else
+					$neueWare = Artikel::construct2($_POST['artikelnr'], $_POST['bhersdatum'], $_POST['gname'], $_POST['bpreis'], $_POST['menge']);
+				$doc = $neueWare->createDocument();
+				$result = $collection->insertOne($doc);
+                if($result->getInsertedCount() == 1){
                     print("Successfully inserted");
                     print("<br><br>");
                 }
@@ -213,10 +217,13 @@ $logedinuser = $login_session;
                 <tbody>
                 <input id ="Artikel" name="Artikel" type="hidden" value="<?php echo isset($_POST['Artikel']) ?>"/>
                     <?php
-                        // fetch rows of the executed sql query
-                        // execute sql statement
-                        //$stmt = new SQLite3('../backshop.db');
-                        $list = $db->query($sql);
+						$list = null;
+                        // execute noSql statement
+						if (isset($suchbegriff) && $suchbegriff != null) {
+							$list = $collection->find(['artikelnr' => $suchbegriff]);
+						} else {
+							$list = $collection->find();
+						}
                         //Indizies für die http POST Methoden
                         $mengeNr = 0;
                         $artikelNr = 100000;
@@ -228,13 +235,13 @@ $logedinuser = $login_session;
                         $bhaltdauer= [];
                         $lagerMenge = [];
                         
-                        $ware;
-                        while ($row = $list->fetch(PDO::FETCH_ASSOC)) {
-							$del;
+                        $row;
+                        foreach ($list as $row) {
 							//Löscht aus der Datenbank, falls eine Backware nicht mehr im Lager vorhanden ist
 							if ($row['menge'] <= 0){
-								$del = "DELETE FROM backwaren WHERE artikelnr=" . $row['artikelnr'] . " AND bhersdatum='" . $row['bhersdatum'] . "'";
-								$db->exec($del);
+								$del = $collection->deleteOne(['artikelnr' => $row['artikelnr'], 'bhersdatum' => $row['bhersdatum']]);
+								if ($del->getDeletedCount() != 1)
+									echo "Löschen ist fehlgeschlagen" . "<br>";
 							} else {
 								echo "<tr>";
 								echo "<td>" . $row['artikelnr'] . "</td>";
@@ -248,7 +255,6 @@ $logedinuser = $login_session;
 								<?php
 								//Bestellungen werden in einem Array gespeichert
 								if ($row['bhaltdauer'] == null){
-									//$ware = Artikel::construct2($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['menge']);
 									$artikelnr[$mengeNr] = $row['artikelnr'];
 									$bhersdatum[$mengeNr] = $row['bhersdatum'];
 									$gname[$mengeNr] = $row['gname'];
@@ -265,7 +271,6 @@ $logedinuser = $login_session;
 								}
 								//Falls Haltedatum des Produktes nicht angegeben ist
 								else{
-									//$ware = Artikel::constructFull($row['artikelnr'], $row['bhersdatum'], $row['gname'], $row['bpreis'], $row['bhaltdauer'], $row['menge']);
 									$artikelnr[$mengeNr] = $row['artikelnr'];
 									$bhersdatum[$mengeNr] = $row['bhersdatum'];
 									$gname[$mengeNr] = $row['gname'];
@@ -297,8 +302,8 @@ $logedinuser = $login_session;
                             if (($k*10)%10 == 0)
                                 $k = $k + 0.1;
                         }*/
-                        unset($ware);
-                        unset($stmt);
+                        unset($collection); 
+						unset($connection)
                     ?>
                 </tbody>
                 </table> 
@@ -308,7 +313,7 @@ $logedinuser = $login_session;
                 <form id='insertform' action='backwaren.php' method='post'>
                 <input id='order' name='order' type='hidden' value="<?php $_POST['order'] ?>" />
                 </form>
-            <div>Insgesamt <?php echo $mengeNr; unset($db);?> Backware(n) gefunden!</div>
+            <div>Insgesamt <?php echo $mengeNr;?> Backware(n) gefunden!</div>
             </center>
             <br></br>
             </div>

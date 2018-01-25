@@ -45,53 +45,28 @@
             return $instance;
         }
         
-       /* public function insertArtikel(){
-			try{
-				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$sql = "INSERT INTO backwaren VALUES "
-                    . "(" . $this->artikelnr .", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", '" . $this->bhaltdauer . "', " . $this->lagerMenge . ")";
-				$result = $db->exec($sql);
-				unset($db);
-				return $result;
-			}catch(Exception $e){
-				$error = $e->getMessage();
+		//Erstellt ein Dokument für eine Backware
+		public function createDocument (){
+			if (isset($this->bhaltdauer) && $this->bhaltdauer != null){
+				$doc = array(
+					"artikelnr" => intval($this->artikelnr),
+					"bhersdatum" => $this->bhersdatum,
+					"gname" => $this->gname,
+					"bpreis" => (double)$this->preis,
+					"bhaltdauer" => $this->bhaltdauer,
+					"menge" => intval($this->lagerMenge)
+				);
+				return $doc;
 			}
-			if(isset($error)){ 
-				echo $error; 
-			}
-        }*/
-        
-        /*public function insertArtikelOhneBhaltdauer(){
-            try{
-				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			
-				$sql = "INSERT INTO backwaren (artikelnr, bhersdatum, gname, bpreis, menge) values " .
-					"(" . $this->artikelnr . ", '" . $this->gname . "', '" . $this->preis . "', " . $this->bhersdatum . ", " . $this->lagerMenge . ")";
-				$result = $db->exec($sql);
-				unset($db);
-				return $result;
-			}catch(Exception $e){
-				$error = $e->getMessage();
-			}
-			if(isset($error)){ 
-				echo $error; 
-			}
-        }*/
-        
-        /*public function updateLagermenge($artikelnr, $bhersdatum, $menge){
-            try {
-				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$sql = "UPDATE backwaren SET menge = menge-" . $menge . " WHERE artikelnr =" . $artikelnr . " AND bhersdatum =" . $bhersdatum ."";
-				$result = $db->exec($sql);
-				unset($db);
-				return $result;
-			}catch(Exception $e){
-				$error = $e->getMessage();
-			}
-			if(isset($error)){ 
-				echo $error; 
-			}	
-        }*/
+			$doc = array(
+					"artikelnr" => intval($this->artikelnr),
+					"bhersdatum" => $this->bhersdatum,
+					"gname" => $this->gname,
+					"bpreis" => (double)$this->preis,
+					"menge" => intval($this->lagerMenge)
+				);
+			return $doc;
+		}
         
         public function mengeToNumber($menge){
             $zahl;
