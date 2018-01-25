@@ -1,10 +1,11 @@
 <?php
 require 'vendor/autoload.php';
-
+include('session.php');
 $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 		$client = new MongoDB\Client($uri);
 		$collection = $client->backshop->users;
-		
+$user_check = $_SESSION['login_user'];
+
 ?>
 
 <!DOCTYPE html>

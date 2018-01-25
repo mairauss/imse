@@ -1,79 +1,61 @@
 <?php
 //Quellen: https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
 // This path should point to Composer's autoloader
-require 'vendor/autoload.php';
 
+require 'vendor/autoload.php';
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+
+session_start();
 $error = '';
 if (isset($_POST['submit'])) {
-    if (empty($_POST['email']) || empty($_POST['passwort'])) {
+        $email = $_POST['email'];
+        $passwort = $_POST['passwort'];
+    $_SESSION['login_user'] = $email;
+		
+	if (empty($_POST['email']) || empty($_POST['passwort'])) {
         $error = "E-Mail Adresse oder Passwort sind fehlerhaft";
     } else {
+
+
 		// Initializing $email and $passwort
         $email = $_POST['email'];
         $passwort = $_POST['passwort'];
 		//MongoDB Connection
- 		$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-		$client = new MongoDB\Client($uri);
-		$collection = $client->backshop->users;
-		$result = $collection->find( [ 'email' => $email] );
-		 foreach ($result as $entry) {
-			if ($entry['email']) {
-				if ($entry['email'] == $email && $entry['passwort'] == $passwort) {
+		
+		
+		
+		$cursor = $collection->find(['email' => $email]);
+		 foreach ($cursor as $document) {
+			echo "foreach";
+			echo "<br />\n";
+				if ($document['email'] == $email && $document['passwort'] == $passwort) {
+
+
 					// Session starten
 					$_SESSION['login_user'] = $email;
+
+					//$user_check = $_SESSION['login_user'];
+					//echo $user_check;
 					// Zur Startseite weiterleiten
-					header("location: index.php");
-				}
-			} else {
+					//header("location: index.php");
+					break;
+
+
+				} else {
 				$error = "E-Mail Adresse oder Passwort sind fehlerhaft";
         }
-        $db = null;
 		//echo $entry['passwort'], ': ', $entry['name'], "\n";
 		}
 	}
-	
-	if (isset($_SESSION['login_user'])) {
-		header("location: baeckerei.php");
-	}	
-}
-
-
-
-
-/*
-session_start();
-// Variable To Store Error Message
-$error = '';
-if (isset($_POST['submit'])) {
-    if (empty($_POST['email']) || empty($_POST['passwort'])) {
-        $error = "E-Mail Adresse oder Passwort sind fehlerhaft";
-    } else {
-        // Initializing $email and $passwort
-        $email = $_POST['email'];
-        $passwort = $_POST['passwort'];
-        // Datenbankverbindung herstellen
-		$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-		$client = new MongoDB\Client($uri);
-		$collection = $client->backshop->users;
-		$result = $collection->find( [ 'email' => $email] );
 		
-        if (1) {
-            if ($result['email'] == $email && $result['passwort'] == $passwort) {
-                // Session starten
-                $_SESSION['login_user'] = $email;
-                // Zur Startseite weiterleiten
-                header("location: index.php");
-            }
-        } else {
-            $error = "E-Mail Adresse oder Passwort sind fehlerhaft";
-        }
-        $db = null;
-    }
+	if (isset($_SESSION['login_user'])) {
+		header("location: backerei.php");
+	}	
+	
 }
 
-
-
-*/
 
 ?>
 <!DOCTYPE html>

@@ -1,10 +1,30 @@
 <?php
 include('session.php');
+require 'vendor/autoload.php';
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+$client = new MongoDB\Client($uri);
+$collection = $client->backshop->users;
+$user_check = $_SESSION['login_user'];
+/*
+$cursor = $collection->find(['email' => $user_check);
+echo "vor if";
+$logedinuser = $login_session;
+if (isset($logedinuser)) {
+	echo "erstes if";
+    //Administrator Rechte
+	foreach ($cursor as $document) {
+		if ($document['accesslevel'] == 9 || $document['accesslevel'] == 1 || $document['accesslevel'] == 2 || $document['accesslevel'] == 3) {
+			echo "2 if";
+		} else {
+			echo "Sie haben kein Zugriff auf diese Seite";
+			header('Location: kunde.php');
+		};
 
-
-
-
-
+	}
+} else {
+echo "Unzeireichende User Berechtigung";
+}
+*/
 ?>
 
 
@@ -40,7 +60,7 @@ include('session.php');
         <li><a href="bestand.php">Bestandteil</a></li>
         <li><a href="session_logout.php">Logout</a></li>
     </ul>
-<
+
 
 </body>
 </html>
