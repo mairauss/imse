@@ -117,11 +117,6 @@ $logedinuser = $login_session;
                     } else {
                         $suchbegriff = null;
                     }
-                    // execute sql statement
-                    //$s    tmt = new SQLite3('backshop.db');
-                    //$list = $stmt ->query($sql);
-                    //$stmt ->close();
-                    //unset($stmt);
                 ?>
 				<?php// if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
 				<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->

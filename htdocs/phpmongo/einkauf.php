@@ -222,7 +222,7 @@ $logedinuser = $login_session;
 	</p>
 	
     <p> <?php 
-		//setzt die Bestellnummer und inkrementiert sie in der Datenbank für die nächste Bestellung
+		//sucht die nächste Bestellnummer aus der NoSql-Datenbank und speichert sie.
 		if ($gesamtPreis > 0) {
 			$result = $collectionBestellnummer->find();
 			foreach($result as $row){
