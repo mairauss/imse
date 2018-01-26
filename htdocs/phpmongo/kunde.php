@@ -120,7 +120,6 @@ if (isset($logedinuser)) {
                     } else {
 					$cursor = $collection->find(['accesslevel' => 1]);
                     }
-                    // execute sql statement
                     ?>
 
                     <tr>

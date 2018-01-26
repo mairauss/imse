@@ -27,24 +27,6 @@ if (isset($_POST) & !empty($_POST)) {
 		
 		//redirectig to the display page. In our case, it is index.php
 		header("Location: kunde.php");
-/*
-    $updateResult = $collection->updateOne(
-	['email' => $_POST['email']],
-	['passwort' => $_POST['passwort']],
-	['accesslevel' => 1],
-        ['geburtsdatum' => $_POST['geburtsdatum']],
-        ['name' => $_POST['name']]
-    );
-	printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
-printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
-	
-    if ($updateResult) {
-        echo "Ihre Daten wurden erfolgreich mutiert";
-    } else {
-        echo "Fehler aufgetreten";
-    }
-
-*/
 }
 ?>
 

@@ -1,35 +1,25 @@
 <?php
+require 'vendor/autoload.php';
 include('session.php');
-
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
-
-if (isset($error)) {
-    echo $error;
-}
-
-$sql = "SELECT * FROM mitarbeiter";
-$result = $db->query($sql);
-
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+$user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
+$cursor = $collection->find(['email' => $user_check]);
+foreach ($cursor as $document) {
 if (isset($logedinuser)) {
-    $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data['accesslevel'] == 9) {
-        //echo "Access Level 9";
+    if ($document['accesslevel'] == 9) {
+        // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: index.php');
+        header('Location: baeckerei.php');
     };
 } else {
     echo "Unzeireichende User Berechtigung";
 }
-
+}
 
 ?>
 
@@ -42,7 +32,7 @@ if (isset($logedinuser)) {
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<?php if ($data['accesslevel'] == 9): ?>
+<?php if ($document['accesslevel'] == 9): ?>
     <ul>
         <li><a href="baeckerei.php">Lecker</a></li>
         <li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -84,41 +74,48 @@ if (isset($logedinuser)) {
 
                 <table style="width:80%">
                     <?php
+					/*
+					Quellen: 
+					https://docs.mongodb.com/manual/reference/method/db.collection.find/#examples
+					http://php.net/manual/fa/mongocollection.find.php
+					https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
+					*/
                     if (isset($_GET['search'])) {
-                        $sql = "SELECT * FROM mitarbeiter WHERE personalnr like '" . $_GET['search'] . "'";
+                        $cursor = $collection->find(['personalnr' => (int) $_GET['search']]);
                     } else {
-                        $sql = "SELECT * FROM mitarbeiter";
+						$query = array('personalnr' => array('$gte' => 1));
+						$options = array(
+							"sort" => array('decade' => 1),
+						);
+						$cursor = $collection->find($query,$options);
                     }
-                    // execute sql statement
-                    $result = $db->query($sql);
                     ?>
 
                     <tr>
-                        <th>Name</th>
-                        <th>Gehalt</th>
+                        <th>EMail</th>
+						<th>Name</th>
                         <th>Geburtstag</th>
-                        <th>PersonalNr</th>
-                        <th>BNAME</th>
                         <th>Passwort</th>
                         <th>AccessLevel</th>
-                        <th>EMail</th>
+                        <th>MitarbeiterNr</th>
+                        <th>Gehalt</th>
                         <th>EXTRAS</th>
                     </tr>
 
                     <?php
-                    while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor as $document) {
                         ?>
                         <tr>
-                            <td><?php echo $r['mname']; ?></td>
-                            <td><?php echo $r['gehalt']; ?></td>
-                            <td><?php echo $r['mgeburtsdatum']; ?></td>
-                            <td><?php echo $r['personalnr']; ?></td>
-                            <td><?php echo $r['bname']; ?></td>
-                            <td><?php echo $r['passwort']; ?></td>
-                            <td><?php echo $r['accesslevel']; ?></td>
-                            <td><?php echo $r['email']; ?></td>
-                            <td><a href="mitarbeiter_update.php?email=<?php echo $r['email']; ?>">Mutieren</a> <a
-                                        href="mitarbeiter_delete.php?email=<?php echo $r['email']; ?>">Delete</a></td>
+                            <td><?php echo $document['email']; ?></td>
+                            <td><?php echo $document['name']; ?></td>
+                            <td><?php echo $document['geburtsdatum']; ?></td>
+                            <td><?php echo $document['passwort']; ?></td>
+                            <td><?php echo $document['accesslevel']; ?></td>
+                            <td><?php echo $document['personalnr']; ?></td>
+							<td><?php echo $document['gehalt']; ?></td>
+
+                            <td><a href="mitarbeiter_update.php?email=<?php echo $document['email']; ?>">Mutieren</a> <a
+                                        href="mitarbeiter_delete.php?email=<?php echo $document['email']; ?>">Delete</a></td>
                         </tr>
                     <?php } ?>
                 </table>
@@ -135,7 +132,7 @@ if (isset($logedinuser)) {
                                 <div class="form-group">
                                     <label for="input1" class="col-sm-5 control-label">Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="mname" required class="form-control" id="input1"
+                                        <input type="text" name="name" required class="form-control" id="input1"
                                                placeholder="Name"/>
                                     </div>
                                 </div>
@@ -151,7 +148,7 @@ if (isset($logedinuser)) {
                                 <div class="form-group">
                                     <label for="input1" class="col-sm-5 control-label">Geburtsdatum</label>
                                     <div class="col-sm-10">
-                                        <input type="date" max="2000-01-01" name="mgeburtsdatum" required
+                                        <input type="date" max="2000-01-01" name="geburtsdatum" required
                                                class="form-control" id="input1" placeholder=""/>
                                     </div>
                                 </div>
@@ -207,33 +204,22 @@ if (isset($logedinuser)) {
                     https://www.formget.com/php-data-object/
                     */
                     if (isset($_POST["submit"])) {
-                        try {
-                            require_once('dbconnection.php');
-                            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-                            $sql = "INSERT INTO mitarbeiter (mname, gehalt, mgeburtsdatum, personalnr, bname, passwort, accesslevel, email) 
-				VALUES(:mname, :gehalt, :mgeburtsdatum, :personalnr, 'Lecker', :passwort, :accesslevel, :email)";
-
-
-                            $result = $db->prepare($sql);
-                            $res = $result->execute(array('mname' => $_POST['mname'],
-                                'gehalt' => $_POST['gehalt'],
-                                'mgeburtsdatum' => $_POST['mgeburtsdatum'],
-                                'personalnr' => $_POST['personalnr'],
-                                'passwort' => $_POST['passwort'],
-                                'accesslevel' => $_POST['accesslevel'],
-                                'email' => $_POST['email'],
-                            ));
+						$seedData = array(
+							'email' => $_POST['email'],
+							'passwort' => $_POST['passwort'],
+							'accesslevel' => (int) $_POST['accesslevel'],
+							'geburtsdatum' => $_POST['geburtsdatum'],
+							'name' => $_POST['name'],
+							'personalnr' => (int) $_POST['personalnr'],
+							'gehalt' => (int) $_POST['gehalt']
+						);
+						
+						$res = $collection->insertOne($seedData);
                             if ($res) {
                                 echo "Ihre Daten wurden erfolgreich gespeichert";
                             } else {
                                 echo "Fehler aufgetreten";
                             }
-                            $db = null;
-                        } catch (PDOException $e) {
-                            echo $e->getMessage();
-                        }
 
                     }
                     ?>
