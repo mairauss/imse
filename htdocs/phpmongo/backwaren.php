@@ -1,38 +1,28 @@
 <?php
-/*
- include('session.php');
- try{
-	require_once('dbconnection.php');
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(Exception $e){
-	$error = $e->getMessage();
-}
-
-if(isset($error)){ echo $error; }
-
-$logedinuser = $login_session;
-	    if (isset($logedinuser)) {
-		$resultsession = $db->query($ses_sql);
-		$data = $resultsession->fetch(PDO::FETCH_ASSOC);
-			//Administrator Rechte
-			
-			if($data['accesslevel'] == 9 || $data['accesslevel'] == 1 || $data['accesslevel'] == 2 || $data['accesslevel'] == 3){
-			} else{
-				echo "Sie haben kein Zugriff auf diese Seite";
-				header('Location: baeckerei.php');
-			};
-		} 
-
-	
-*/
-?>
-
-<?php
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
 	require 'vendor/autoload.php';
 	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
 	$collection = $connection->backshop->backwaren;
+	$collectionuser = $client->backshop->users;
+	$user_check = $_SESSION['login_user'];
+	$logedinuser = $login_session;
+	$cursor = $collectionuser->find(['email' => $user_check]);
+	foreach ($cursor as $document) {
+	if (isset($logedinuser)) {
+		//Administrator Rechte
+		if ($document['accesslevel'] == 9) {
+			// echo "Access Level 9";
+		} else {
+			echo "Sie haben kein Zugriff auf diese Seite";
+			header('Location: baeckerei.php');
+		};
+	} else {
+		echo "Unzeireichende User Berechtigung";
+	}
+}
+	
+	
 ?>
 
 <html>
@@ -44,7 +34,7 @@ $logedinuser = $login_session;
             <img src="b5.png" alt="logo" width="500" height="300">
             <br></br>
 
-		<?php //if (!isset($logedinuser)): ?>
+		<?php if (!isset($logedinuser)): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -52,9 +42,9 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>		
 					<li><a href="session_logout.php">Logout</a></li>						
 			   </ul>
-		<?php// endif; ?>
-		<?php// if (isset($logedinuser)): ?>
-			<?php// if ($data['accesslevel'] == 9): ?>
+		<?php endif; ?>
+		<?php if (isset($logedinuser)): ?>
+			<?php if ($document['accesslevel'] == 9): ?>
 				<ul> 
 					<li><a href="baeckerei.php">Lecker</a></li>
 					<li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -68,8 +58,8 @@ $logedinuser = $login_session;
 					<li><a href="bestand.php">Bestandteil</a></li>	
 					<li><a href="session_logout.php">Logout</a></li>			
 			   </ul>
-		   		<?php// endif; ?>
-				<?php// if ($data['accesslevel'] == 1): ?>
+		   		<?php endif; ?>
+				<?php if ($document['accesslevel'] == 1): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
@@ -77,15 +67,15 @@ $logedinuser = $login_session;
 						<li><a href="bestand_kunde.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php// endif; ?>
-				<?php// if ($data['accesslevel'] == 2): ?>
+		   		<?php endif; ?>
+				<?php if ($document['accesslevel'] == 2): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php// endif; ?>
-				<?php// if ($data['accesslevel'] == 3): ?>
+		   		<?php endif; ?>
+				<?php if ($document['accesslevel'] == 3): ?>
 					<ul> 
 						<li><a href="baeckerei.php">Lecker</a></li>
 						<li><a class="active" href="backwaren.php">Unsere Backwaren</a></li>
@@ -94,8 +84,8 @@ $logedinuser = $login_session;
 						<li><a href="bestand.php">Bestandteil</a></li>	
 						<li><a href="session_logout.php">Logout</a></li>			
 				   </ul>
-		   		<?php// endif; ?>
-		<?php// endif; ?>
+		   		<?php endif; ?>
+		<?php endif; ?>
 
             <br></br>
 
@@ -118,7 +108,7 @@ $logedinuser = $login_session;
                         $suchbegriff = null;
                     }
                 ?>
-				<?php// if ($data['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
+				<?php if ($document['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
 				<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
                 <div>
                     <form id='insertform' action='backwaren.php' method='post'>
@@ -173,7 +163,7 @@ $logedinuser = $login_session;
                     </form>
                 </div>
 			    <!-- /DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
-                <?php// endif; ?>
+                <?php endif; ?>
             <?php
             //Einfügen können nur Mitarbeiter
             if (isset($_POST['artikelnr']) && $_POST['artikelnr'] >= 1) 

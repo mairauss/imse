@@ -1,18 +1,16 @@
 <?php
+require 'vendor/autoload.php';
 include('session.php');
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
-
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+$user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
+$cursor = $collection->find(['email' => $user_check]);
+foreach ($cursor as $document) {
 if (isset($logedinuser)) {
-    $resultsession = $db->query($ses_sql);
-    $data2 = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data2['accesslevel'] == 9 || $data2['accesslevel'] == 3) {
+    if ($document['accesslevel'] == 9 || $document['accesslevel'] == 3) {
         // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
@@ -20,6 +18,7 @@ if (isset($logedinuser)) {
     };
 } else {
     echo "Unzeireichende User Berechtigung";
+}
 }
 
 $barcode = $_GET['barcode']; // barcode from url

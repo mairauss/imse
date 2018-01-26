@@ -1,25 +1,24 @@
 <?php
+require 'vendor/autoload.php';
 include('session.php');
-try {
-    require_once('dbconnection.php');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
-
+$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+		$client = new MongoDB\Client($uri);
+		$collection = $client->backshop->users;
+$user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
+$cursor = $collection->find(['email' => $user_check]);
+foreach ($cursor as $document) {
 if (isset($logedinuser)) {
-    $resultsession = $db->query($ses_sql);
-    $data = $resultsession->fetch(PDO::FETCH_ASSOC);
     //Administrator Rechte
-    if ($data['accesslevel'] > 1) {
-        //echo "Access Level";
+    if ($document['accesslevel'] > 1) {
+        // echo "Access Level 9";
     } else {
         echo "Sie haben kein Zugriff auf diese Seite";
         header('Location: baeckerei.php');
     };
 } else {
     echo "Unzeireichende User Berechtigung";
+}
 }
 
 ?>
@@ -39,7 +38,7 @@ if (isset($logedinuser)) {
     </ul>
 <?php endif; ?>
 <?php if (isset($logedinuser)): ?>
-    <?php if ($data['accesslevel'] == 9): ?>
+    <?php if ($document['accesslevel'] == 9): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -54,7 +53,7 @@ if (isset($logedinuser)) {
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-    <?php if ($data['accesslevel'] == 1): ?>
+    <?php if ($document['accesslevel'] == 1): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
@@ -63,14 +62,14 @@ if (isset($logedinuser)) {
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-    <?php if ($data['accesslevel'] == 2): ?>
+    <?php if ($document['accesslevel'] == 2): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-    <?php if ($data['accesslevel'] == 3): ?>
+    <?php if ($document['accesslevel'] == 3): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="konditor.php">Konditor</a></li>

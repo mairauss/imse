@@ -1,5 +1,6 @@
 <?php
-	require_once('dbconnection.php');
+	require 'vendor/autoload.php';
+
 
     class Artikel{
         private $artikelnr;
