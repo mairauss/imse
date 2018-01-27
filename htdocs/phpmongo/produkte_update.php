@@ -20,12 +20,32 @@ if (isset($logedinuser)) {
     echo "Unzeireichende User Berechtigung";
 }
 }
-
-$barcode = $_GET['barcode']; // barcode from url
-// Prepar the query to get the row data with barcode
-$query = "SELECT barcode, * FROM produkt WHERE barcode=$barcode";
-$result = $db->query($query);
-$data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
+    $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+    $client = new MongoDB\Client($uri);
+    $collection = $client->backshop->produkte;
+    $document = $collection->findOne(['barcode' => $_GET['barcode']]);
+    
+    if (isset($_POST) & !empty($_POST)) {
+        $id = $document['_id'];
+        $produkte = array (
+                       'barcode' = $_POST['barcode'];
+                       'pname' = $_POST['pname'];
+                       'ppreis' = $_POST['ppreis'];
+                       'phersdatum' = $_POST['phersdatum'];
+                       'phaltdauer' = $_POST['phaltdauer'];
+                       'menge' = $_POST['menge'];
+                       'masseinheit' = $_POST['masseinheit'];
+                       );
+        
+        //updating the 'users' table/collection
+        $collection->updateOne(
+                               array('barcode' => $_GET['barcode']),
+                               array('$set' => $produkte)
+                               );
+        
+        //redirectig to the display page. In our case, it is index.php
+        header("Location: produkt.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -74,34 +94,6 @@ $data = $result->fetch(PDO::FETCH_ASSOC);// set the row in $data
 
 <div id="wrapper">
     <center><h2>Produkte Update</h2>
-
-        <?php
-
-        // Updating the table row with submited data according to barcode once form is submited
-        if (isset($_POST['submit_data'])) {
-
-            // Gets the data from post
-            $barcode = $_POST['barcode'];
-            $pname = $_POST['pname'];
-            $ppreis = $_POST['ppreis'];
-            $phersdatum = $_POST['phersdatum'];
-            $phaltdauer = $_POST['phaltdauer'];
-            $menge = $_POST['menge'];
-            $masseinheit = $_POST['masseinheit'];
-
-            // Makes query with post data
-            $query = "UPDATE produkt SET pname='$pname', ppreis='$ppreis', phersdatum='$phersdatum',phaltdauer='$phaltdauer', menge='$menge', masseinheit='$masseinheit' WHERE barcode=$barcode";
-
-            // Executes the query
-            // If data inserted then set success message otherwise set error message
-            // Here $db
-            if ($db->exec($query)) {
-                echo "Data is updated successfully.";
-            } else {
-                echo "Sorry, Data is not updated.";
-            }
-        }
-        ?>
 
         <div style="width: 500px; margin: 20px auto;">
             <table width="100%" cellpadding="5" cellspacing="1" border="1">

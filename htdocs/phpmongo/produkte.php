@@ -100,9 +100,13 @@ if (isset($logedinuser)) {
             <?php
             // check if search view of list view
             if (isset($_GET['search'])) {
-                $sql = "SELECT * FROM produkt WHERE barcode like '%" . $_GET['search'] . "%'";
+                $barcode = intval($_GET['search']);
+                $cursor = $collection->find(['barcode' => $barcode]);
+                $count = $collection->count(['barcode' => $barcode]);
+                
             } else {
-                $sql = "SELECT * FROM produkt";
+                $cursor = $collection->find();
+                $count = $collection->count();
             }
 
             // execute sql statement
@@ -126,17 +130,17 @@ if (isset($logedinuser)) {
                 <tbody>
 
                 <?php
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                    ?>
+                    foreach ($cursor as $document) {
+                        ?>
                     <tr>
-                        <td><?php echo $r['barcode']; ?></td>
-                        <td><?php echo $r['pname']; ?></td>
-                        <td><?php echo $r['ppreis']; ?></td>
-                        <td><?php echo $r['phersdatum']; ?></td>
-                        <td><?php echo $r['phaltdauer']; ?></td>
-                        <td><?php echo $r['menge']; ?></td>
-                        <td><?php echo $r['masseinheit']; ?></td>
-                        <td><?php echo $r['kuehlraumNr']; ?></td>
+                        <td><?php echo $document['barcode']; ?></td>
+                        <td><?php echo $document['pname']; ?></td>
+                        <td><?php echo $document['ppreis']; ?></td>
+                        <td><?php echo $document['phersdatum']; ?></td>
+                        <td><?php echo $document['phaltdauer']; ?></td>
+                        <td><?php echo $document['menge']; ?></td>
+                        <td><?php echo $document['masseinheit']; ?></td>
+                        <td><?php echo $document['kuehlraumNr']; ?></td>
                         <td><a href="produkte_update.php?barcode=<?php echo $r['barcode']; ?>">Mutieren</a> <a
                                     href="produkte_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
                     </tr>

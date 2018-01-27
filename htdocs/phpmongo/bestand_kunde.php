@@ -1,15 +1,27 @@
 
 <?php
-    
-    try{
-        require_once('dbconnection.php');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }catch(Exception $e){
-        $error = $e->getMessage();
+    require 'vendor/autoload.php';
+    include('session.php');
+    $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+    $client = new MongoDB\Client($uri);
+    $collection = $client->backshop->users;
+    $user_check = $_SESSION['login_user'];
+    $logedinuser = $login_session;
+    $cursor = $collection->find(['email' => $user_check]);
+    foreach ($cursor as $document) {
+        if (isset($logedinuser)) {
+            //Administrator Rechte
+            if ($document['accesslevel'] >= 1) {
+                // echo "Access Level 9";
+            } else {
+                echo "Sie haben kein Zugriff auf diese Seite";
+                header('Location: baeckerei.php');
+            };
+        } else {
+            echo "Unzeireichende User Berechtigung";
+        }
     }
-    
-    if(isset($error)){ echo $error; }
-    
+
     ?>
 
 <html>
@@ -43,35 +55,27 @@
 <?php
   // check if search view of list view
   if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM bestandteil WHERE gname like '%" . $_GET['search'] . "%'";
+      $gname = intval($_GET['search']);
+      $cursor = $collection->find(['gname' => $gname]);
+      $count = $collection->count(['gname' => $gname]);
   } else {
-    $sql = "SELECT * FROM bestandteil";
+      $cursor = $collection->find();
+      $count = $collection->count();
   }
-
-  // execute sql statement
-    $result = $db->query($sql);
 ?>
 
 <br></br>
 <tbody>
 
 <?php
-    if (isset($_GET['search'])) {
-?>
-        <table style="width:30%">
-        <thead>
-        <tr>
-        <th>Produkte</th>
-        </tr>
-        </thead>
-
-<?php
-    while($r = $result->fetch(PDO::FETCH_ASSOC)){
-?>
+    foreach ($cursor as $document) {
+        ?>
 <tr>
-<td><?php echo $r['pname']; ?></td>
+<td><?php echo $document['barcode']; ?></td>
+<td><?php echo $document['pname']; ?></td>
 </tr>
-<?php }}?>
+<?php }
+    ?>
 </tbody>
 </table>
 </center>

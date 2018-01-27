@@ -4,22 +4,14 @@
 		http://codingcyber.org/simple-crud-application-php-pdo-7284/
 		https://www.tutorialspoint.com/sqlite/sqlite_delete_query.htm
 		*/
-		try{
-			require_once('dbconnection.php');
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}catch(Exception $e){
-			$error = $e->getMessage();
-		}
 		
-        $DelSqlite = "DELETE FROM 'bestandteil' WHERE bestandteilNr=?";
-		$result = $db->prepare($DelSqlite);
-		echo "löschen";
-		echo $DelSqlite;
-		$res = $result -> execute(array($_GET['bestandteilNr']));
-		if($res){
-			header('location: bestand.php');
-		} 
-		else{
-			echo "Löschen fehlgeschlagen";
-		}		
+        require 'vendor/autoload.php';
+        
+        $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+        $client = new MongoDB\Client($uri);
+        $collection = $client->backshop->bestandteil;
+        $document = $collection->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
+        $id = $document['_id'];
+        $collection->deleteOne(["_id" => $id]);
+        header("Location: bestand.php");
 	?>

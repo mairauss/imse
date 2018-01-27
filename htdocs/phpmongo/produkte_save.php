@@ -142,36 +142,22 @@ if (isset($logedinuser)) {
 
 <?php
     if(isset($_POST["submit"])){
-        try{
-            require_once('dbconnection.php');
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            
-            $sql = "INSERT INTO produkt (barcode, pname, ppreis, phersdatum, phaltdauer, menge, masseinheit, kuehlraumNr)
-            VALUES(:barcode, :pname, :ppreis, :phersdatum, :phaltdauer, :menge, :masseinheit, 123)";
-            
-            
-            $result = $db->prepare($sql);
-            $res = $result->execute(array('barcode' => $_POST['barcode'],
-                                          'pname' => $_POST['pname'],
-                                          'ppreis' => $_POST['ppreis'],
-                                          'phersdatum' => $_POST['phersdatum'],
-                                          'phaltdauer' => $_POST['phaltdauer'],
-                                          'masseinheit' => $_POST['masseinheit'],
-                                          'menge' => $_POST['menge']
-                                          ));
-            if($res){
-                echo "Ihre Daten wurden erfolgreich gespeichert";
-            }else{
-                echo "Fehler aufgetreten";
-            }
-            $db = null;
-        }
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
         
+        $seedData = array(
+                          'barcode' => $_POST['barcode'],
+                          'pname' => $_POST['pname'],
+                          'ppreis' => $_POST['ppreis'],
+                          'phersdatum' => $_POST['phersdatum'],
+                          'phaltdauer' => $_POST['phaltdauer'],
+                          'masseinheit' => $_POST['masseinheit'],
+                          'menge' => $_POST['menge']
+                          );
+        $res = $collection->insertOne($seedData);
+        if ($res) {
+            echo "Ihre Daten wurden erfolgreich gespeichert";
+        } else {
+            echo "Fehler aufgetreten";
+        }
     }
     ?>
 </body>

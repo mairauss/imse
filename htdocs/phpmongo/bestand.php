@@ -105,20 +105,16 @@ if (isset($logedinuser)) {
             <?php
             // check if search view of list view
             if (isset($_GET['search'])) {
-                $sql = "SELECT * FROM bestandteil WHERE gname like '%" . $_GET['search'] . "%'";
+                $gname = intval($_GET['search']);
+                $cursor = $collection->find(['gname' => $gname]);
+                $count = $collection->count(['gname' => $gname]);
             } else {
-                $sql = "SELECT * FROM bestandteil";
+                $cursor = $collection->find();
+                $count = $collection->count();
             }
-
-            // execute sql statement
-            $result = $db->query($sql);
             ?>
 
             <tbody>
-
-            <?php
-            if (isset($_GET['search'])) {
-            ?>
             <thead>
             <tr>
                 <h3>Produkte</h3>
@@ -137,29 +133,25 @@ if (isset($logedinuser)) {
                 <tbody>
 
                 <?php
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor as $document) {
                     ?>
                     <tr>
-                        <td><?php echo $r['barcode']; ?></td>
-                        <td><?php echo $r['pname']; ?></td>
-                        <td><?php echo $r['menge']; ?></td>
-                        <td><?php echo $r['masseinheit']; ?></td>
+                        <td><?php echo $document['barcode']; ?></td>
+                        <td><?php echo $document['pname']; ?></td>
+                        <td><?php echo $document['menge']; ?></td>
+                        <td><?php echo $document['masseinheit']; ?></td>
                         <td><a href="bestand_update.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Mutieren</a>
                             <a
                                     href="bestand_delete.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php }
-                }
-                // else echo "Es gibt keine Infos!";
                 ?>
                 </tbody>
             </table>
         </center>
         <br></br>
     </div>
-<?php endif; ?>
-
 </div>
 </body>
 </html>

@@ -17,11 +17,11 @@ public class TestDataGenerator {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(30); // set timeout to 30 sec.
 
-		stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
+		    /*stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
 			stmt.executeUpdate("INSERT INTO anschrift VALUES ('Lecker', 'Wien, 1200, Wehlistraße 27')");
 			stmt.executeUpdate("INSERT INTO kuehlraum VALUES (123, 4, 18.3)");
 			stmt.executeUpdate("INSERT INTO kueche VALUES (987, 32.2, 123)");
-			stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");
+			stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");*/
 
 			// MITARBEITER
 			try {

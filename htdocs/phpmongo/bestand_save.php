@@ -149,36 +149,23 @@ if (isset($logedinuser)) {
     </center>
 
     <?php
-    if (isset($_POST["submit"])) {
-        try {
-            require_once('dbconnection.php');
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-            $sql = "INSERT INTO bestandteil (bestandteilNr, artikelnr, barcode, pname, gname, menge, masseinheit)
-            VALUES(null, :artikelnr, :barcode, :pname, :gname, :menge, :masseinheit)";
-
-
-            $result = $db->prepare($sql);
-            $res = $result->execute(array(
-                'artikelnr' => $_POST['artikelnr'],
-                'barcode' => $_POST['barcode'],
-                'pname' => $_POST['pname'],
-                'gname' => $_POST['gname'],
-                'menge' => $_POST['menge'],
-                'masseinheit' => $_POST['masseinheit'],
-            ));
+        if(isset($_POST["submit"])){
+            
+            $seedData = array(
+                              'artikelnr' => $_POST['artikelnr'],
+                              'barcode' => $_POST['barcode'],
+                              'pname' => $_POST['pname'],
+                              'gname' => $_POST['gname'],
+                              'menge' => $_POST['menge'],
+                              'masseinheit' => $_POST['masseinheit'],
+                              );
+            $res = $collection->insertOne($seedData);
             if ($res) {
                 echo "Ihre Daten wurden erfolgreich gespeichert";
             } else {
                 echo "Fehler aufgetreten";
             }
-            $db = null;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
         }
-
-    }
-    ?>
+        ?>
 </body>
 </html>
