@@ -4,7 +4,7 @@
 	require 'vendor/autoload.php';
 	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
 	$collection = $connection->backshop->backwaren;
-	$collectionuser = $client->backshop->users;
+	$collectionuser = $connection->backshop->users;
 	$user_check = $_SESSION['login_user'];
 	$logedinuser = $login_session;
 	$cursor = $collectionuser->find(['email' => $user_check]);

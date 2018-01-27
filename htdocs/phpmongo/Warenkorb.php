@@ -1,15 +1,4 @@
 <?php
- try{
-	require_once('dbconnection.php');
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(Exception $e){
-	$error = $e->getMessage();
-}
-
-if(isset($error)){ echo $error; }
-?>
-
-<?php
     require_once 'Artikel.php';
 	
     class Warenkorb{

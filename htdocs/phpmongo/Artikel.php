@@ -1,7 +1,6 @@
 <?php
-	require 'vendor/autoload.php';
-
-
+	//require 'vendor/autoload.php';
+	
     class Artikel{
         private $artikelnr;
         private $bhersdatum;
