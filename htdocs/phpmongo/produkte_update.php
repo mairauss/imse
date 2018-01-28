@@ -58,7 +58,7 @@ if (isset($logedinuser)) {
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-    <?php if ($data2['accesslevel'] == 9): ?>
+    <?php if ($document['accesslevel'] == 9): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
@@ -73,7 +73,7 @@ if (isset($logedinuser)) {
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
-    <?php if ($data2['accesslevel'] == 3): ?>
+    <?php if ($document['accesslevel'] == 3): ?>
         <ul>
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="konditor.php">Konditor</a></li>
