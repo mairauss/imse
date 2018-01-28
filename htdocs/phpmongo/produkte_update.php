@@ -28,7 +28,7 @@ if (isset($logedinuser)) {
     if (isset($_POST) & !empty($_POST)) {
         $id = $document['_id'];
         $produkte = array (
-                       'barcode' => $_POST['barcode'],
+                       'barcode' => $_GET['barcode'],
                        'pname' => $_POST['pname'],
                        'ppreis' => $_POST['ppreis'],
                        'phersdatum' => $_POST['phersdatum'],
@@ -38,13 +38,13 @@ if (isset($logedinuser)) {
                        );
         
         //updating the 'users' table/collection
-        $collection->updateOne(
+        $collectionprodukte->updateOne(
                                array('barcode' => $_GET['barcode']),
                                array('$set' => $produkte)
                                );
         
         //redirectig to the display page. In our case, it is index.php
-        header("Location: produkt.php");
+        header("Location: produkte.php");
     }
 ?>
 
@@ -97,7 +97,9 @@ if (isset($logedinuser)) {
 
         <div style="width: 500px; margin: 20px auto;">
             <table width="100%" cellpadding="5" cellspacing="1" border="1">
-                <form action="" method="post">
+               // <form action="" method="post">
+<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+<div class="form-group">
                     <input type="hidden" name="barcode" value="<?php echo $barcode; ?>">
                     <tr>
                         <td>Name</td>
