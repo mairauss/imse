@@ -141,9 +141,9 @@ if (isset($logedinuser)) {
                         <td><?php echo $document['pname']; ?></td>
                         <td><?php echo $document['menge']; ?></td>
                         <td><?php echo $document['masseinheit']; ?></td>
-                        <td><a href="bestand_update.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Mutieren</a>
+                        <td><a href="bestand_update.php?bestandteilNr=<?php echo $document['bestandteilNr']; ?>">Mutieren</a>
                             <a
-                                    href="bestand_delete.php?bestandteilNr=<?php echo $r['bestandteilNr']; ?>">Delete</a>
+                                    href="bestand_delete.php?bestandteilNr=<?php echo $document['bestandteilNr']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php }
