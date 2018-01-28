@@ -99,18 +99,17 @@ if (isset($logedinuser)) {
         <table boarder="1">
             <?php
             // check if search view of list view
+			$collectionprodukte = $client->backshop->produkte;
             if (isset($_GET['search'])) {
                 $barcode = intval($_GET['search']);
-                $cursor = $collection->find(['barcode' => $barcode]);
-                $count = $collection->count(['barcode' => $barcode]);
+                $cursor2 = $collectionprodukte->find(['barcode' => $barcode]);
+                $count = $collectionprodukte->count(['barcode' => $barcode]);
                 
             } else {
-                $cursor = $collection->find();
-                $count = $collection->count();
+                $cursor2 = $collectionprodukte->find();
+                $count = $collectionprodukte->count();
             }
 
-            // execute sql statement
-            $result = $db->query($sql);
             ?>
             <br></br>
 
@@ -130,19 +129,19 @@ if (isset($logedinuser)) {
                 <tbody>
 
                 <?php
-                    foreach ($cursor as $document) {
+                    foreach ($cursor2 as $documentprodukte) {
                         ?>
                     <tr>
-                        <td><?php echo $document['barcode']; ?></td>
-                        <td><?php echo $document['pname']; ?></td>
-                        <td><?php echo $document['ppreis']; ?></td>
-                        <td><?php echo $document['phersdatum']; ?></td>
-                        <td><?php echo $document['phaltdauer']; ?></td>
-                        <td><?php echo $document['menge']; ?></td>
-                        <td><?php echo $document['masseinheit']; ?></td>
-                        <td><?php echo $document['kuehlraumNr']; ?></td>
-                        <td><a href="produkte_update.php?barcode=<?php echo $r['barcode']; ?>">Mutieren</a> <a
-                                    href="produkte_delete.php?barcode=<?php echo $r['barcode']; ?>">Delete</a></td>
+                        <td><?php echo $documentprodukte['barcode']; ?></td>
+                        <td><?php echo $documentprodukte['pname']; ?></td>
+                        <td><?php echo $documentprodukte['ppreis']; ?></td>
+                        <td><?php echo $documentprodukte['phersdatum']; ?></td>
+                        <td><?php echo $documentprodukte['phaltdauer']; ?></td>
+                        <td><?php echo $documentprodukte['menge']; ?></td>
+                        <td><?php echo $documentprodukte['masseinheit']; ?></td>
+                        <td><?php echo $documentprodukte['kuehlraumNr']; ?></td>
+                        <td><a href="produkte_update.php?barcode=<?php echo $documentprodukte['barcode']; ?>">Mutieren</a> <a
+                                    href="produkte_delete.php?barcode=<?php echo $documentprodukte['barcode']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
                 </tbody>
