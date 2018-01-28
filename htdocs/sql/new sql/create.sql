@@ -138,6 +138,14 @@ FOREIGN KEY (bname) REFERENCES baeckerei ON DELETE CASCADE,
 FOREIGN KEY (personalNr) REFERENCES mitarbeiter ON DELETE CASCADE,
 FOREIGN KEY (email) REFERENCES kunde ON DELETE CASCADE);
 
+CREATE TABLE putzplan(
+personalnr integer NOT NULL,
+kuecheNr integer NOT NULL,
+putzdatum date NOT NULL;
+PRIMARY KEY (kuecheNr, personalnr),
+FOREIGN KEY (keucheNr) REFERENCES kueche ON DELETE CASCADE,
+FOREIGN KEY (personalNr) REFERENCES kuechengehilfe ON DELETE CASCADE);
+
 /*
 CREATE VIEW konditor_count (mname)
 AS
