@@ -28,13 +28,13 @@ if (isset($logedinuser)) {
     if (isset($_POST) & !empty($_POST)) {
         $id = $document['_id'];
         $produkte = array (
-                       'barcode' = $_POST['barcode'];
-                       'pname' = $_POST['pname'];
-                       'ppreis' = $_POST['ppreis'];
-                       'phersdatum' = $_POST['phersdatum'];
-                       'phaltdauer' = $_POST['phaltdauer'];
-                       'menge' = $_POST['menge'];
-                       'masseinheit' = $_POST['masseinheit'];
+                       'barcode' => $_POST['barcode'];
+                       'pname' => $_POST['pname'];
+                       'ppreis' => $_POST['ppreis'];
+                       'phersdatum' => $_POST['phersdatum'];
+                       'phaltdauer' => $_POST['phaltdauer'];
+                       'menge' => $_POST['menge'];
+                       'masseinheit' => $_POST['masseinheit'];
                        );
         
         //updating the 'users' table/collection
