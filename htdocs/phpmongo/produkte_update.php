@@ -22,19 +22,19 @@ if (isset($logedinuser)) {
 }
     $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
     $client = new MongoDB\Client($uri);
-    $collection = $client->backshop->produkte;
-    $document = $collection->findOne(['barcode' => $_GET['barcode']]);
+    $collectionprodukte = $client->backshop->produkte;
+    $document = $collectionprodukte->findOne(['barcode' => $_GET['barcode']]);
     
     if (isset($_POST) & !empty($_POST)) {
         $id = $document['_id'];
         $produkte = array (
-                       'barcode' => $_POST['barcode'];
-                       'pname' => $_POST['pname'];
-                       'ppreis' => $_POST['ppreis'];
-                       'phersdatum' => $_POST['phersdatum'];
-                       'phaltdauer' => $_POST['phaltdauer'];
-                       'menge' => $_POST['menge'];
-                       'masseinheit' => $_POST['masseinheit'];
+                       'barcode' => $_POST['barcode'],
+                       'pname' => $_POST['pname'],
+                       'ppreis' => $_POST['ppreis'],
+                       'phersdatum' => $_POST['phersdatum'],
+                       'phaltdauer' => $_POST['phaltdauer'],
+                       'menge' => $_POST['menge'],
+                       'masseinheit' => $_POST['masseinheit']
                        );
         
         //updating the 'users' table/collection

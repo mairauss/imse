@@ -9,9 +9,9 @@
         
         $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
         $client = new MongoDB\Client($uri);
-        $collection = $client->backshop->bestandteil;
-        $document = $collection->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
+        $collectionbestandteile = $client->backshop->bestandteil;
+        $document = $collectionbestandteile->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
         $id = $document['_id'];
-        $collection->deleteOne(["_id" => $id]);
+        $collectionbestandteile->deleteOne(["_id" => $id]);
         header("Location: bestand.php");
 	?>
