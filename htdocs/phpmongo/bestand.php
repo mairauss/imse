@@ -104,13 +104,14 @@ if (isset($logedinuser)) {
             </div>
             <?php
             // check if search view of list view
+			$collectionbestandteile = $client->backshop->bestandteile;
             if (isset($_GET['search'])) {
                 $gname = intval($_GET['search']);
-                $cursor = $collection->find(['gname' => $gname]);
-                $count = $collection->count(['gname' => $gname]);
+                $cursor = $collectionbestandteile->find(['gname' => $gname]);
+                $count = $collectionbestandteile->count(['gname' => $gname]);
             } else {
-                $cursor = $collection->find();
-                $count = $collection->count();
+                $cursor = $collectionbestandteile->find();
+                $count = $collectionbestandteile->count();
             }
             ?>
 
@@ -153,5 +154,6 @@ if (isset($logedinuser)) {
         <br></br>
     </div>
 </div>
+<?php endif; ?>
 </body>
 </html>

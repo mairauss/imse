@@ -33,13 +33,55 @@
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-        <ul> 
-		<li><a href="baeckerei.php">Lecker</a></li>
-        <li><a href="backwaren.php">Unsere Backwaren</a></li>
-        <li><a href="einkauf.php">Warenkorb</a></li>
-        <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
-		<li><a href="session_logout.php">Logout</a></li>
-       </ul>
+<?php if (!isset($logedinuser)): ?>
+    <ul>
+        <li><a href="baeckerei.php">Lecker</a></li>
+    </ul>
+<?php endif; ?>
+<?php if (isset($logedinuser)): ?>
+    <?php if ($document['accesslevel'] == 9): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
+            <li><a href="konditor.php">Konditor</a></li>
+            <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+            <li><a href="kunde.php">Kunde</a></li>
+            <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($document['accesslevel'] == 1): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="bestand_kunde.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($document['accesslevel'] == 2): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+    <?php if ($document['accesslevel'] == 3): ?>
+        <ul>
+            <li><a href="baeckerei.php">Lecker</a></li>
+            <li><a href="konditor.php">Konditor</a></li>
+            <li><a href="backwaren.php">Unsere Backwaren</a></li>
+            <li><a href="einkauf.php">Warenkorb</a></li>
+            <li><a href="produkte.php">Produkte</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="session_logout.php">Logout</a></li>
+        </ul>
+    <?php endif; ?>
+<?php endif; ?>
 
 <br></br>
 

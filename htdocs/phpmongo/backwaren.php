@@ -2,6 +2,7 @@
     require_once 'Artikel.php';
     require_once 'Warenkorb.php';
 	require 'vendor/autoload.php';
+	include('session.php');
 	$connection = new MongoDB\Client("mongodb://team10:pass10@ds159187.mlab.com:59187/backshop");
 	$collection = $connection->backshop->backwaren;
 	$collectionuser = $connection->backshop->users;
