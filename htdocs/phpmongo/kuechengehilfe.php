@@ -95,7 +95,7 @@ if (isset($logedinuser)) {
                 foreach ($cursor as $document) {
                 ?>
                 <tr>
-       <?php if ($document['accesslevel'] == 2): ?>
+
                     <td><?php echo $document['personalnr']; ?></td>
                     <td><?php echo $document['betriebsmodus']; ?></td>
                     <td><?php echo $document['email']; ?></td>
