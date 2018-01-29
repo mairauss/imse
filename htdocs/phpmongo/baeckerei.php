@@ -111,16 +111,11 @@ echo "Unzeireichende User Berechtigung";
     <div id="wrapper">
         <center>
 
-            <?php
-            // check if search view of list view
-
-            $sql = "SELECT * FROM baeckerei";
-
-
-            // execute sql statement
-            $result = $db->query($sql);
-
-            ?>
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+        $cursor1 = $collectionbaeckerei->find();
+    ?>
             <h1>Baeckerei</h1>
             <table style="width:70%">
                 <thead>
@@ -132,26 +127,17 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor1 as $documenbaeckerei) {
                     ?>
                     <tr>
-                        <td><?php echo $r['bname']; ?></td>
-                        <td><?php echo $r['firmanr']; ?></td>
+                        <td><?php echo $documenbaeckerei['bname']; ?></td>
+                        <td><?php echo $documenbaeckerei['firmanr']; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
             </table>
 
-            <?php
-            // check if search view of list view
 
-            $sql = "SELECT * FROM anschrift";
-
-
-            // execute sql statement
-            $result = $db->query($sql);
-
-            ?>
 
             <table style="width:70%">
                 <thead>
@@ -162,10 +148,10 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor1 as $documenbaeckerei) {
                     ?>
                     <tr>
-                        <td><?php echo $r['bezeichnung']; ?></td>
+                        <td><?php echo $documenbaeckerei['bezeichnung']; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -173,15 +159,6 @@ echo "Unzeireichende User Berechtigung";
 
 
             <h1>Kueche</h1>
-            <?php
-            // check if search view of list view
-
-            $sql = "SELECT * FROM kueche";
-
-
-            // execute sql statement
-            $result = $db->query($sql);
-            ?>
 
             <table style="width:70%">
                 <thead>
@@ -194,12 +171,12 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor1 as $documenbaeckerei) {
                     ?>
                     <tr>
-                        <td><?php echo $r['kuecheNr']; ?></td>
-                        <td><?php echo $r['grundflaeche']; ?></td>
-                        <td><?php echo $r['kuehlraumNr']; ?></td>
+                        <td><?php echo $documenbaeckerei['kuecheNr']; ?></td>
+                        <td><?php echo $documenbaeckerei['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei['kuehlraumNr']; ?></td>
                     </tr>
                 <?php } ?>
 
@@ -207,16 +184,6 @@ echo "Unzeireichende User Berechtigung";
             </table>
 
             <h1>Kuehlraum</h1>
-            <?php
-            // check if search view of list view
-
-            $sql = "SELECT * FROM kuehlraum";
-
-
-            // execute sql statement
-            $result = $db->query($sql);
-
-            ?>
 
             <table style="width:70%">
                 <thead>
@@ -229,12 +196,12 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($cursor1 as $documenbaeckerei) {
                     ?>
                     <tr>
-                        <td><?php echo $r['kuehlraumNr']; ?></td>
-                        <td><?php echo $r['temp']; ?></td>
-                        <td><?php echo $r['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei['kuehlraumNr']; ?></td>
+                        <td><?php echo $documenbaeckerei['temp']; ?></td>
+                        <td><?php echo $documenbaeckerei['grundflaeche']; ?></td>
                     </tr>
                 <?php } ?>
 
@@ -250,16 +217,8 @@ echo "Unzeireichende User Berechtigung";
     <center>
         <h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
         <br></br>
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM baeckerei";
 
 
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
         <h1>Baeckerei</h1>
         <table style="width:70%">
             <thead>
@@ -271,26 +230,16 @@ echo "Unzeireichende User Berechtigung";
             <tbody>
             <?php
             // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($cursor1 as $documenbaeckerei) {
                 ?>
                 <tr>
-                    <td><?php echo $r['bname']; ?></td>
-                    <td><?php echo $r['firmanr']; ?></td>
+                    <td><?php echo $documenbaeckerei['bname']; ?></td>
+                    <td><?php echo $documenbaeckerei['firmanr']; ?></td>
                 </tr>
             <?php } ?>
             </tbody>
         </table>
 
-        <?php
-        // check if search view of list view
-
-        $sql = "SELECT * FROM anschrift";
-
-
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
 
         <table style="width:70%">
             <thead>
@@ -301,10 +250,10 @@ echo "Unzeireichende User Berechtigung";
             <tbody>
             <?php
             // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($cursor1 as $documenbaeckerei) {
                 ?>
                 <tr>
-                    <td><?php echo $r['bezeichnung']; ?></td>
+                    <td><?php echo $documenbaeckerei['bezeichnung']; ?></td>
                 </tr>
             <?php } ?>
             </tbody>
