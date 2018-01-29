@@ -49,8 +49,8 @@ foreach ($cursor as $document) {
             <li><a href="produkte.php">Produkte</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a class="active" href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a class="active" href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -59,7 +59,7 @@ foreach ($cursor as $document) {
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
+            <li><a href="bestand_kunde.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -77,8 +77,8 @@ foreach ($cursor as $document) {
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="produkte.php">Produkte</a></li>
-            <li><a class="active" href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a></li>
+            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a class="active" href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -136,7 +136,7 @@ foreach ($cursor as $document) {
                 <tbody>
 
                 <?php
-                    foreach ($cursor2 as $documentbestand) {
+                    foreach ($cursor2 as $documentputzplan) {
                     ?>
                     <tr>
                         <td><?php echo $documentputzplan['personalnr']; ?></td>
