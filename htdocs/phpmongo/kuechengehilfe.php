@@ -62,10 +62,21 @@ if (isset($logedinuser)) {
                 <input id='submit' type='submit' class="testbutton" value='Search'/>
             </form>
         </div>
-if (isset($_GET['search'])) {
-    $cursor = $collection->find(['accesslevel' => 2]);
-}
-?>
+
+<table style="width:80%">
+<?php
+    /*
+     Quellen:
+     https://docs.mongodb.com/manual/reference/method/db.collection.find/#examples
+     http://php.net/manual/fa/mongocollection.find.php
+     https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
+     */
+    if (isset($_GET['search'])) {
+        $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
+    } else {
+        $cursor = $collection->find(['accesslevel' => 2]);
+    }
+    ?>
 
         <br></br>
 
