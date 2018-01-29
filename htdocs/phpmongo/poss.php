@@ -31,7 +31,7 @@
 		<li><a href="einkauf.php">Warenkorb</a></li>
         <li><a href="backen.php">Backen</a></li>
 		<li><a href="bestand.php">Bestandteil</a></li>
-        <li><a href="putzplan.php">Putzplan</a><l/i>	
+        <li><a href="putzplan.php">Putzplan</a></li>
 		<li><a class="active" href="poss.php">Possessionem</a></li>
 		<li><a href="logout.php">Logout</a></li>	
        </ul>

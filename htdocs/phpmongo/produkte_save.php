@@ -46,7 +46,7 @@ $collectionprodukte = $client->backshop->produkte;
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
+            <li><a href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -75,7 +75,7 @@ $collectionprodukte = $client->backshop->produkte;
             <li><a class="active" href="produkte.php">Produkte</a></li>
             <li><a href="backen.php">Backen</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
+            <li><a href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
