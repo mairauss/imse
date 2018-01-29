@@ -22,20 +22,25 @@ if (isset($logedinuser)) {
 }
 
     $collectionbestandteile = $client->backshop->bestandteile;
-    $document = $collectionbestandteile->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
+    $documentbestand = $collectionbestandteile->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
 
 
     if (isset($_POST) & !empty($_POST)) {
-        $id = $document['_id'];
+        $id = $documentbestand['_id'];
 
         $bestandteil = array (
-                           'menge' => $_POST['menge'],
-                           'masseinheit' => $_POST['masseinheit']
+													 'bestandteilNr' => $_GET['bestandteilNr'],
+													 'artikelnr' => $_GET['artikelnr'],
+													 'barcode' => $_GET['barcode'],
+													 'pname' => $_GET['pname'],
+													 'gname' => $_GET['gname'],
+													 'menge' => $_POST['menge'],
+													 'masseinheit' => $_POST['masseinheit']
                            );
 
         //updating the 'users' table/collection
         $collectionbestandteile->updateOne(
-                               array('bestandteilNr' => $_GET['bestandteilNr']),
+                               array('bestandteilNr' =>intval(  $_GET['bestandteilNr'])),
                                array('$set' => $bestandteil)
                                );
 
@@ -112,13 +117,19 @@ if (isset($logedinuser)) {
             <table width="100%" cellpadding="5" cellspacing="1" border="1">
                 <form action="" method="post">
                     <input type="hidden" name="bestandteilNr" value="<?php echo $bestandteilNr; ?>">
-                    <tr>
+										<input type="hidden" name="artikelnr" value="<?php echo $artikelnr; ?>">
+										<input type="hidden" name="barcode" value="<?php echo $barcode; ?>">
+										<input type="hidden" name="pname" value="<?php echo $pname; ?>">
+										<input type="hidden" name="gname" value="<?php echo $gname; ?>">
+
+
+									  <tr>
                         <td>Menge</td>
-                        <td><input name="menge" type="integer" value="<?php echo $document['menge']; ?>"></td>
+                        <td><input name="menge" type="integer" value="<?php echo $documentbestand['menge']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Maßeinheit</td>
-                        <td><input name="masseinheit" type="char" value="<?php echo $document['masseinheit']; ?>"></td>
+                        <td><input name="masseinheit" type="char" value="<?php echo $documentbestand['masseinheit']; ?>"></td>
                     </tr>
                     <tr>
                         <td><a href="bestand.php">Back</a></td>

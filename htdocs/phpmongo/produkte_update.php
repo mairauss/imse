@@ -38,7 +38,7 @@ if (isset($logedinuser)) {
 
         //updating the 'users' table/collection
         $collectionprodukte->updateOne(
-                               array('barcode' => $_GET['barcode']),
+                               array('barcode' =>intval( $_GET['barcode'])),
                                array('$set' => $produkte)
                                );
 

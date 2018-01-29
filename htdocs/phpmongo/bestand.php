@@ -113,7 +113,6 @@ if (isset($logedinuser)) {
 							//$artikel = intval($_GET['search']);
               $cursor2 = $collectionbestandteile->find(['gname' => $_GET['search']]);
             } else {
-							echo "ALLLLLL";
               $cursor2 = $collectionbestandteile->find();
             }
             ?>

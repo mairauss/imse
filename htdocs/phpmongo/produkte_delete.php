@@ -9,8 +9,6 @@
         $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
         $client = new MongoDB\Client($uri);
         $collectionprodukte = $client->backshop->produkte;
-        $document = $collectionprodukte->findOne(['barcode' => $_GET['barcode']]);
-        $id = $document['_id'];
-        $collectionprodukte->deleteOne(["_id" => $id]);
+				$collectionprodukte->deleteOne(['barcode'=>intval($_GET['barcode'])]);
         header("Location: produkte.php");
 	?>

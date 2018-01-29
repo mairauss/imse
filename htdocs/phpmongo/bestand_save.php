@@ -160,7 +160,7 @@ if (isset($logedinuser)) {
                               'pname' => $_POST['pname'],
                               'gname' => $_POST['gname'],
                               'menge' => $_POST['menge'],
-                              'masseinheit' => $_POST['masseinheit'],
+                              'masseinheit' => $_POST['masseinheit']
                               );
             $res = $collectionbestandteile->insertOne($seedData);
             if ($res) {
