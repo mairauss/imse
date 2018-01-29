@@ -92,15 +92,15 @@ if (isset($_POST) & !empty($_POST)) {
                     <input type="hidden" name="personalnr" value="<?php echo $personalnr; ?>">
                     <tr>
                         <td>Personal Nr</td>
-                        <td><input name="personalnr" type="integer" value="<?php echo $data['personalnr']; ?>"></td>
+                        <td><input name="personalnr" type="integer" value="<?php echo $documentputzplan['personalnr']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Kuechen Nr</td>
-                        <td><input name="kuecheNr" type="intger" value="<?php echo $data['kuecheNr']; ?>"></td>
+                        <td><input name="kuecheNr" type="intger" value="<?php echo $documentputzplan['kuecheNr']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Putz-Datum</td>
-                        <td><input name="putzdatum" type="date" value="<?php echo $data['putzdatum']; ?>"></td>
+                        <td><input name="putzdatum" type="date" value="<?php echo $documentputzplan['putzdatum']; ?>"></td>
                     </tr>
                         <td><a href="putzplan.php">Back</a></td>
                         <td><input name="submit_data" class="testbutton" type="submit" value="Update"></td>
