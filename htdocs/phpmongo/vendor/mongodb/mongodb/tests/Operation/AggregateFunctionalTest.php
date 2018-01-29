@@ -4,68 +4,10 @@ namespace MongoDB\Tests\Operation;
 
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Operation\Aggregate;
-use MongoDB\Tests\CommandObserver;
-use stdClass;
 
 class AggregateFunctionalTest extends FunctionalTestCase
 {
-    public function testDefaultReadConcernIsOmitted()
-    {
-        (new CommandObserver)->observe(
-            function() {
-                $operation = new Aggregate(
-                    $this->getDatabaseName(),
-                    $this->getCollectionName(),
-                    [['$match' => ['x' => 1]]],
-                    ['readConcern' => $this->createDefaultReadConcern()]
-                );
-
-                $operation->execute($this->getPrimaryServer());
-            },
-            function(stdClass $command) {
-                $this->assertObjectNotHasAttribute('readConcern', $command);
-            }
-        );
-    }
-
-    public function testDefaultWriteConcernIsOmitted()
-    {
-        if (version_compare($this->getServerVersion(), '2.6.0', '<')) {
-            $this->markTestSkipped('$out pipeline operator is not supported');
-        }
-
-        (new CommandObserver)->observe(
-            function() {
-                $operation = new Aggregate(
-                    $this->getDatabaseName(),
-                    $this->getCollectionName(),
-                    [['$out' => $this->getCollectionName() . '.output']],
-                    ['writeConcern' => $this->createDefaultWriteConcern()]
-                );
-
-                $operation->execute($this->getPrimaryServer());
-            },
-            function(stdClass $command) {
-                $this->assertObjectNotHasAttribute('writeConcern', $command);
-            }
-        );
-    }
-
-    public function testEmptyPipelineReturnsAllDocuments()
-    {
-        $this->createFixtures(3);
-
-        $operation = new Aggregate($this->getDatabaseName(), $this->getCollectionName(), []);
-        $results = iterator_to_array($operation->execute($this->getPrimaryServer()));
-
-        $expectedDocuments = [
-            (object) ['_id' => 1, 'x' => (object) ['foo' => 'bar']],
-            (object) ['_id' => 2, 'x' => (object) ['foo' => 'bar']],
-            (object) ['_id' => 3, 'x' => (object) ['foo' => 'bar']],
-        ];
-
-        $this->assertEquals($expectedDocuments, $results);
-    }
+    private static $wireVersionForCursor = 2;
 
     /**
      * @expectedException MongoDB\Driver\Exception\RuntimeException
@@ -77,7 +19,7 @@ class AggregateFunctionalTest extends FunctionalTestCase
     }
 
     /**
-     * @dataProvider provideTypeMapOptionsAndExpectedDocuments
+     * @dataProvider provideTypeMapOptionsAndExpectedDocument
      */
     public function testTypeMapOption(array $typeMap = null, array $expectedDocuments)
     {
@@ -90,7 +32,7 @@ class AggregateFunctionalTest extends FunctionalTestCase
         $this->assertEquals($expectedDocuments, $results);
     }
 
-    public function provideTypeMapOptionsAndExpectedDocuments()
+    public function provideTypeMapOptionsAndExpectedDocument()
     {
         return [
             [

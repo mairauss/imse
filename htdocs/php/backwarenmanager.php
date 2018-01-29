@@ -31,7 +31,7 @@
 } catch (Exception $e) {
     $error = $e->getMessage();
 }
-  
+
   $logedinuser = $login_session;
 if (isset($logedinuser)) {
     $resultsession = $db->query($ses_sql);

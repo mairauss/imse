@@ -20,6 +20,9 @@ if (isset($logedinuser)) {
     echo "Unzeireichende User Berechtigung";
 }
 }
+
+$collectionprodukte = $client->backshop->produkte;
+
 ?>
 
 <!DOCTYPE html><html>
@@ -144,7 +147,7 @@ if (isset($logedinuser)) {
 
 <?php
     if(isset($_POST["submit"])){
-        
+
         $seedData = array(
                           'barcode' => $_POST['barcode'],
                           'pname' => $_POST['pname'],
@@ -152,9 +155,10 @@ if (isset($logedinuser)) {
                           'phersdatum' => $_POST['phersdatum'],
                           'phaltdauer' => $_POST['phaltdauer'],
                           'masseinheit' => $_POST['masseinheit'],
-                          'menge' => $_POST['menge']
+                          'menge' => $_POST['menge'],
+													'kuehlraumNr' => 123
                           );
-        $res = $collection->insertOne($seedData);
+        $res = 	$collectionprodukte->insertOne($seedData);
         if ($res) {
             echo "Ihre Daten wurden erfolgreich gespeichert";
         } else {

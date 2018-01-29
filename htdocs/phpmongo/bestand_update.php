@@ -21,24 +21,24 @@ if (isset($logedinuser)) {
 }
 }
 
-    $collectionbestandteile = $client->backshop->bestandteil;
-    $documentbestand = $collectionbestandteile->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
+    $collectionbestandteile = $client->backshop->bestandteile;
+    $document = $collectionbestandteile->findOne(['bestandteilNr' => $_GET['bestandteilNr']]);
 
 
     if (isset($_POST) & !empty($_POST)) {
-        $id = $documentbestand['_id'];
-		
+        $id = $document['_id'];
+
         $bestandteil = array (
                            'menge' => $_POST['menge'],
                            'masseinheit' => $_POST['masseinheit']
                            );
-        
+
         //updating the 'users' table/collection
         $collectionbestandteile->updateOne(
                                array('bestandteilNr' => $_GET['bestandteilNr']),
                                array('$set' => $bestandteil)
                                );
-        
+
         //redirectig to the display page. In our case, it is index.php
         header("Location: bestand.php");
     }
@@ -47,7 +47,7 @@ if (isset($logedinuser)) {
 
 <!DOCTYPE html>
 <html>
-<title>Lecker: Bestandteile</title>
+<title>Lecker: Bestandteil</title>
 <head>
     <link rel="stylesheet" href="index.css"/>
 </head>
@@ -114,11 +114,11 @@ if (isset($logedinuser)) {
                     <input type="hidden" name="bestandteilNr" value="<?php echo $bestandteilNr; ?>">
                     <tr>
                         <td>Menge</td>
-                        <td><input name="menge" type="integer" value="<?php echo $documentbestand['menge']; ?>"></td>
+                        <td><input name="menge" type="integer" value="<?php echo $document['menge']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Maßeinheit</td>
-                        <td><input name="masseinheit" type="char" value="<?php echo $documentbestand['masseinheit']; ?>"></td>
+                        <td><input name="masseinheit" type="char" value="<?php echo $document['masseinheit']; ?>"></td>
                     </tr>
                     <tr>
                         <td><a href="bestand.php">Back</a></td>

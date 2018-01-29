@@ -22,7 +22,6 @@ use MongoDB\Driver\Query;
 use MongoDB\Driver\Server;
 use MongoDB\Driver\Exception\RuntimeException as DriverRuntimeException;
 use MongoDB\Exception\InvalidArgumentException;
-use MongoDB\Model\CachingIterator;
 use MongoDB\Model\CollectionInfoCommandIterator;
 use MongoDB\Model\CollectionInfoIterator;
 use MongoDB\Model\CollectionInfoLegacyIterator;
@@ -108,7 +107,7 @@ class ListCollections implements Executable
         $cursor = $server->executeCommand($this->databaseName, new Command($cmd));
         $cursor->setTypeMap(['root' => 'array', 'document' => 'array']);
 
-        return new CollectionInfoCommandIterator(new CachingIterator($cursor));
+        return new CollectionInfoCommandIterator($cursor);
     }
 
     /**
@@ -139,6 +138,6 @@ class ListCollections implements Executable
         $cursor = $server->executeQuery($this->databaseName . '.system.namespaces', new Query($filter, $options));
         $cursor->setTypeMap(['root' => 'array', 'document' => 'array']);
 
-        return new CollectionInfoLegacyIterator(new CachingIterator($cursor));
+        return new CollectionInfoLegacyIterator($cursor);
     }
 }

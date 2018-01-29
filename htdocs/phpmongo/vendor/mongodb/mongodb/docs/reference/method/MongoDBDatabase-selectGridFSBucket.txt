@@ -49,25 +49,25 @@ overridden via the ``$options`` parameter.
 Example
 -------
 
-The following example selects the default ``fs.files`` bucket in the ``test``
+The following example selects the default ``fs.files`` bucket in the ``demo``
 database:
 
 .. code-block:: php
 
    <?php
 
-   $db = (new MongoDB\Client)->test;
+   $db = (new MongoDB\Client)->demo;
 
    $bucket = $db->selectGridFSBucket();
 
-The following example selects the custom ``images.files`` bucket in the ``test``
+The following example selects the custom ``images.files`` bucket in the ``demo``
 database with a custom read preference:
 
 .. code-block:: php
 
    <?php
 
-   $db = (new MongoDB\Client)->test;
+   $db = (new MongoDB\Client)->demo;
 
    $imagesBucket = $db->selectGridFSBucket([
        'bucketName' => 'images',

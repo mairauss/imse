@@ -73,7 +73,7 @@ if (isset($logedinuser)) {
             <li><a class="active" href="produkte.php">Produkte</a></li>
             <li><a href="backen.php">Backen</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>            
+            <li><a href="putzplan.php">Putzplan</a><l/i>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -103,13 +103,10 @@ if (isset($logedinuser)) {
             // check if search view of list view
 			$collectionprodukte = $client->backshop->produkte;
             if (isset($_GET['search'])) {
-                $barcode = intval($_GET['search']);
-                $cursor2 = $collectionprodukte->find(['barcode' => $barcode]);
-                $count = $collectionprodukte->count(['barcode' => $barcode]);
-                
+							$artikel = intval($_GET['search']);
+							$cursor2 = $collectionprodukte->find(['barcode' => $artikel]);
             } else {
                 $cursor2 = $collectionprodukte->find();
-                $count = $collectionprodukte->count();
             }
 
             ?>

@@ -104,16 +104,17 @@ if (isset($logedinuser)) {
                     <input id='submit' type='submit' class="testbutton" value='Search'/>
                 </form>
             </div>
+
+						<table boarder="1">
             <?php
             // check if search view of list view
-			$collectionbestandteile = $client->backshop->bestandteile;
+						$collectionbestandteile = $client->backshop->bestandteile;
             if (isset($_GET['search'])) {
-                $gname = intval($_GET['search']);
-                $cursor = $collectionbestandteile->find(['gname' => $gname]);
-                $count = $collectionbestandteile->count(['gname' => $gname]);
+							//$artikel = intval($_GET['search']);
+              $cursor2 = $collectionbestandteile->find(['gname' => $_GET['search']]);
             } else {
-                $cursor = $collectionbestandteile->find();
-                $count = $collectionbestandteile->count();
+							echo "ALLLLLL";
+              $cursor2 = $collectionbestandteile->find();
             }
             ?>
 
@@ -136,26 +137,24 @@ if (isset($logedinuser)) {
                 <tbody>
 
                 <?php
-                    foreach ($cursor as $document) {
+                    foreach ($cursor2 as $documentbestand) {
                     ?>
                     <tr>
-                        <td><?php echo $document['barcode']; ?></td>
-                        <td><?php echo $document['pname']; ?></td>
-                        <td><?php echo $document['menge']; ?></td>
-                        <td><?php echo $document['masseinheit']; ?></td>
-                        <td><a href="bestand_update.php?bestandteilNr=<?php echo $document['bestandteilNr']; ?>">Mutieren</a>
+                        <td><?php echo $documentbestand['barcode']; ?></td>
+                        <td><?php echo $documentbestand['pname']; ?></td>
+                        <td><?php echo $documentbestand['menge']; ?></td>
+                        <td><?php echo $documentbestand['masseinheit']; ?></td>
+                        <td><a href="bestand_update.php?bestandteilNr=<?php echo $documentbestand['bestandteilNr']; ?>">Mutieren</a>
                             <a
-                                    href="bestand_delete.php?bestandteilNr=<?php echo $document['bestandteilNr']; ?>">Delete</a>
+                                    href="bestand_delete.php?bestandteilNr=<?php echo $documentbestand['bestandteilNr']; ?>">Delete</a>
                         </td>
                     </tr>
-                <?php }
-                ?>
+                <?php }  ?>
                 </tbody>
             </table>
         </center>
         <br></br>
-    </div>
-</div>
-<?php endif; ?>
+			<?php endif; ?>
+
 </body>
 </html>

@@ -30,20 +30,20 @@ The namespace of this collection as a string.
 Example
 -------
 
-The following returns the namespace of the ``zips`` collection in the ``test``
+The following returns the namespace of the ``zips`` collection in the ``demo``
 database.
 
 .. code-block:: php
 
    <?php
 
-   $collection = (new MongoDB\Client)->test->zips;
+   $collection = (new MongoDB\Client)->demo->zips;
 
    echo $collection->getNamespace();
 
 The output would then resemble::
 
-   test.zips
+   demo.zips
 
 See Also
 --------

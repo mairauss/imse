@@ -8,6 +8,15 @@ class AggregateTest extends TestCase
 {
     /**
      * @expectedException MongoDB\Exception\InvalidArgumentException
+     * @expectedExceptionMessage $pipeline is empty
+     */
+    public function testConstructorPipelineArgumentMustNotBeEmpty()
+    {
+        new Aggregate($this->getDatabaseName(), $this->getCollectionName(), []);
+    }
+
+    /**
+     * @expectedException MongoDB\Exception\InvalidArgumentException
      * @expectedExceptionMessage $pipeline is not a list (unexpected index: "1")
      */
     public function testConstructorPipelineArgumentMustBeAList()

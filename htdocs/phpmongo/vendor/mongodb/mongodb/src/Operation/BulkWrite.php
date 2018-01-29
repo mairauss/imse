@@ -86,11 +86,8 @@ class BulkWrite implements Executable
      *
      * Supported options for the bulk write operation:
      *
-     *  * bypassDocumentValidation (boolean): If true, allows the write to
-     *    circumvent document level validation. The default is false.
-     *
-     *    For servers < 3.2, this option is ignored as document level validation
-     *    is not available.
+     *  * bypassDocumentValidation (boolean): If true, allows the write to opt
+     *    out of document level validation.
      *
      *  * ordered (boolean): If true, when an insert fails, return without
      *    performing the remaining writes. If false, when a write fails,
@@ -266,10 +263,6 @@ class BulkWrite implements Executable
             throw InvalidArgumentException::invalidType('"writeConcern" option', $options['writeConcern'], 'MongoDB\Driver\WriteConcern');
         }
 
-        if (isset($options['writeConcern']) && $options['writeConcern']->isDefault()) {
-            unset($options['writeConcern']);
-        }
-
         $this->databaseName = (string) $databaseName;
         $this->collectionName = (string) $collectionName;
         $this->operations = $operations;
@@ -311,7 +304,14 @@ class BulkWrite implements Executable
                     break;
 
                 case self::INSERT_ONE:
-                    $insertedIds[$i] = $bulk->insert($args[0]);
+                    $insertedId = $bulk->insert($args[0]);
+
+                    if ($insertedId !== null) {
+                        $insertedIds[$i] = $insertedId;
+                    } else {
+                        $insertedIds[$i] = \MongoDB\extract_id_from_inserted_document($args[0]);
+                    }
+
                     break;
 
                 case self::REPLACE_ONE:

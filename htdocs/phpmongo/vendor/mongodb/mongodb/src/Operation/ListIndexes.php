@@ -22,7 +22,6 @@ use MongoDB\Driver\Query;
 use MongoDB\Driver\Server;
 use MongoDB\Driver\Exception\RuntimeException as DriverRuntimeException;
 use MongoDB\Exception\InvalidArgumentException;
-use MongoDB\Model\CachingIterator;
 use MongoDB\Model\IndexInfoIterator;
 use MongoDB\Model\IndexInfoIteratorIterator;
 use EmptyIterator;
@@ -115,7 +114,7 @@ class ListIndexes implements Executable
 
         $cursor->setTypeMap(['root' => 'array', 'document' => 'array']);
 
-        return new IndexInfoIteratorIterator(new CachingIterator($cursor));
+        return new IndexInfoIteratorIterator($cursor);
     }
 
     /**
@@ -137,6 +136,6 @@ class ListIndexes implements Executable
         $cursor = $server->executeQuery($this->databaseName . '.system.indexes', new Query($filter, $options));
         $cursor->setTypeMap(['root' => 'array', 'document' => 'array']);
 
-        return new IndexInfoIteratorIterator(new CachingIterator($cursor));
+        return new IndexInfoIteratorIterator($cursor);
     }
 }

@@ -198,16 +198,6 @@ class CollectionWrapper
     }
 
     /**
-     * Return the chunks collection.
-     *
-     * @return Collection
-     */
-    public function getChunksCollection()
-    {
-        return $this->chunksCollection;
-    }
-
-    /**
      * Return the database name.
      *
      * @return string
@@ -215,16 +205,6 @@ class CollectionWrapper
     public function getDatabaseName()
     {
         return $this->databaseName;
-    }
-
-    /**
-     * Return the files collection.
-     *
-     * @return Collection
-     */
-    public function getFilesCollection()
-    {
-        return $this->filesCollection;
     }
 
     /**

@@ -63,14 +63,14 @@ Errors/Exceptions
 Example
 -------
 
-The following example creates a ``users`` collection in the ``test``
+The following example creates a ``users`` collection in the ``demo``
 database with document validation criteria:
 
 .. code-block:: php
 
    <?php
 
-   $db = (new MongoDB\Client)->test;
+   $db = (new MongoDB\Client)->demo;
 
    $result = $db->createCollection('users', [
        'validator' => [

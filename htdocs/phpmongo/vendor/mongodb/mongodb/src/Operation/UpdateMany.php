@@ -39,11 +39,8 @@ class UpdateMany implements Executable
      *
      * Supported options:
      *
-     *  * bypassDocumentValidation (boolean): If true, allows the write to
-     *    circumvent document level validation.
-     *
-     *    For servers < 3.2, this option is ignored as document level validation
-     *    is not available.
+     *  * bypassDocumentValidation (boolean): If true, allows the write to opt
+     *    out of document level validation.
      *
      *  * collation (document): Collation specification.
      *

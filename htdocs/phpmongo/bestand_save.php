@@ -4,6 +4,7 @@ include('session.php');
 $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 		$client = new MongoDB\Client($uri);
 		$collection = $client->backshop->users;
+		$collectionbestandteile = $client->backshop->bestandteile;
 $user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
 $cursor = $collection->find(['email' => $user_check]);
@@ -25,7 +26,7 @@ if (isset($logedinuser)) {
 
 <!DOCTYPE html>
 <html>
-<title>Lecker: Produkte</title>
+<title>Lecker: Bestandteil</title>
 <head>
     <link rel="stylesheet" href="index.css"/>
 </head>
@@ -152,7 +153,7 @@ if (isset($logedinuser)) {
 
     <?php
         if(isset($_POST["submit"])){
-            
+
             $seedData = array(
                               'artikelnr' => $_POST['artikelnr'],
                               'barcode' => $_POST['barcode'],
@@ -161,7 +162,7 @@ if (isset($logedinuser)) {
                               'menge' => $_POST['menge'],
                               'masseinheit' => $_POST['masseinheit'],
                               );
-            $res = $collection->insertOne($seedData);
+            $res = $collectionbestandteile->insertOne($seedData);
             if ($res) {
                 echo "Ihre Daten wurden erfolgreich gespeichert";
             } else {

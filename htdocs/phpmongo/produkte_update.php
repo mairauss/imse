@@ -20,13 +20,11 @@ if (isset($logedinuser)) {
     echo "Unzeireichende User Berechtigung";
 }
 }
-    $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-    $client = new MongoDB\Client($uri);
     $collectionprodukte = $client->backshop->produkte;
-    $document = $collectionprodukte->findOne(['barcode' => $_GET['barcode']]);
-    
+    $documentprodukte = $collectionprodukte->findOne(['barcode' => $_GET['barcode']]);
+
     if (isset($_POST) & !empty($_POST)) {
-        $id = $document['_id'];
+        $id = $documentprodukte['_id'];
         $produkte = array (
                        'barcode' => $_GET['barcode'],
                        'pname' => $_POST['pname'],
@@ -34,15 +32,16 @@ if (isset($logedinuser)) {
                        'phersdatum' => $_POST['phersdatum'],
                        'phaltdauer' => $_POST['phaltdauer'],
                        'menge' => $_POST['menge'],
-                       'masseinheit' => $_POST['masseinheit']
+                       'masseinheit' => $_POST['masseinheit'],
+											 'kuehlraumNr' => 123
                        );
-        
+
         //updating the 'users' table/collection
         $collectionprodukte->updateOne(
                                array('barcode' => $_GET['barcode']),
                                array('$set' => $produkte)
                                );
-        
+
         //redirectig to the display page. In our case, it is index.php
         header("Location: produkte.php");
     }
@@ -70,7 +69,7 @@ if (isset($logedinuser)) {
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>            
+            <li><a href="putzplan.php">Putzplan</a><l/i>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -99,33 +98,33 @@ if (isset($logedinuser)) {
 
         <div style="width: 500px; margin: 20px auto;">
             <table width="100%" cellpadding="5" cellspacing="1" border="1">
-               // <form action="" method="post">
+             <form action="" method="post">
 <form method="post" class="form-horizontal col-md-20 col-md-offset-10">
 <div class="form-group">
                     <input type="hidden" name="barcode" value="<?php echo $barcode; ?>">
                     <tr>
                         <td>Name</td>
-                        <td><input type="char" name="pname" value="<?php echo $data['pname']; ?>"></td>
+                        <td><input type="char" name="pname" value="<?php echo $documentprodukte['pname']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Preis</td>
-                        <td><input name="ppreis" type="double precision" value="<?php echo $data['ppreis']; ?>"></td>
+                        <td><input name="ppreis" type="double precision" value="<?php echo $documentprodukte['ppreis']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Hers.datum</td>
-                        <td><input name="phersdatum" type="date" value="<?php echo $data['phersdatum']; ?>"></td>
+                        <td><input name="phersdatum" type="date" value="<?php echo $documentprodukte['phersdatum']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Haltdauer</td>
-                        <td><input name="phaltdauer" type="date" value="<?php echo $data['phaltdauer']; ?>"></td>
+                        <td><input name="phaltdauer" type="date" value="<?php echo $documentprodukte['phaltdauer']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Menge</td>
-                        <td><input name="menge" type="integer" value="<?php echo $data['menge']; ?>"></td>
+                        <td><input name="menge" type="integer" value="<?php echo $documentprodukte['menge']; ?>"></td>
                     </tr>
                     <tr>
                         <td>Maßeinheit</td>
-                        <td><input name="masseinheit" type="char" value="<?php echo $data['masseinheit']; ?>"></td>
+                        <td><input name="masseinheit" type="char" value="<?php echo $documentprodukte['masseinheit']; ?>"></td>
                     </tr>
                     <tr>
                         <td><a href="produkte.php">Back</a></td>

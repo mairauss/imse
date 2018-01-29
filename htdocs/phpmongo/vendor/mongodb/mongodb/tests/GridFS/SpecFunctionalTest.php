@@ -118,7 +118,7 @@ class SpecFunctionalTest extends FunctionalTestCase
     /**
      * Convert encoded types in the array and return the modified array.
      *
-     * Nested arrays with "$oid" and "$date" keys will be converted to ObjectId
+     * Nested arrays with "$oid" and "$date" keys will be converted to ObjectID
      * and UTCDateTime instances, respectively. Nested arrays with "$hex" keys
      * will be converted to a string or Binary object.
      *

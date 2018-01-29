@@ -45,11 +45,8 @@ class InsertOne implements Executable
      *
      * Supported options:
      *
-     *  * bypassDocumentValidation (boolean): If true, allows the write to
-     *    circumvent document level validation.
-     *
-     *    For servers < 3.2, this option is ignored as document level validation
-     *    is not available.
+     *  * bypassDocumentValidation (boolean): If true, allows the write to opt
+     *    out of document level validation.
      *
      *  * writeConcern (MongoDB\Driver\WriteConcern): Write concern.
      *
@@ -71,10 +68,6 @@ class InsertOne implements Executable
 
         if (isset($options['writeConcern']) && ! $options['writeConcern'] instanceof WriteConcern) {
             throw InvalidArgumentException::invalidType('"writeConcern" option', $options['writeConcern'], 'MongoDB\Driver\WriteConcern');
-        }
-
-        if (isset($options['writeConcern']) && $options['writeConcern']->isDefault()) {
-            unset($options['writeConcern']);
         }
 
         $this->databaseName = (string) $databaseName;
@@ -101,6 +94,10 @@ class InsertOne implements Executable
 
         $bulk = new Bulk($options);
         $insertedId = $bulk->insert($this->document);
+
+        if ($insertedId === null) {
+            $insertedId = \MongoDB\extract_id_from_inserted_document($this->document);
+        }
 
         $writeConcern = isset($this->options['writeConcern']) ? $this->options['writeConcern'] : null;
         $writeResult = $server->executeBulkWrite($this->databaseName . '.' . $this->collectionName, $bulk, $writeConcern);
