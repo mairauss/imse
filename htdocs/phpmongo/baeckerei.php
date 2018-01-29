@@ -185,7 +185,7 @@ echo "Unzeireichende User Berechtigung";
                     ?>
                     <tr>
                         <td><?php echo $documenbaeckerei3['kuecheNr']; ?></td>
-                        <td><?php echo $documenbaeckerei3['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei3['grundflaeche_kueche']; ?></td>
                         <td><?php echo $documenbaeckerei3['kuehlraumNr']; ?></td>
                     </tr>
                 <?php } ?>
@@ -217,7 +217,7 @@ echo "Unzeireichende User Berechtigung";
                     <tr>
                         <td><?php echo $documenbaeckerei4['kuehlraumNr']; ?></td>
                         <td><?php echo $documenbaeckerei4['temp']; ?></td>
-                        <td><?php echo $documenbaeckerei4['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei4['grundflaeche_kuehlraum']; ?></td>
                     </tr>
                 <?php } ?>
 
