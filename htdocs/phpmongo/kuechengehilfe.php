@@ -63,13 +63,7 @@ if (isset($logedinuser)) {
             </form>
         </div>
 if (isset($_GET['search'])) {
-    $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
-} else {
-    $query = array('personalnr' => array('$gte' => 2));
-    $options = array(
-                     "sort" => array('decade' => 2),
-                     );
-    $cursor = $collection->find($query, $options);
+    $cursor = $collection->find(['accesslevel' => 2]);
 }
 ?>
 
@@ -90,6 +84,7 @@ if (isset($_GET['search'])) {
                 foreach ($cursor as $document) {
                 ?>
                 <tr>
+       <?php if ($document['accesslevel'] == 2): ?>
                     <td><?php echo $document['personalnr']; ?></td>
                     <td><?php echo $document['betriebsmodus']; ?></td>
                     <td><?php echo $document['email']; ?></td>
