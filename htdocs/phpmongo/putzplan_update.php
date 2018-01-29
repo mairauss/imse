@@ -24,7 +24,7 @@ $documentputzplan = $collectionputzplan->findOne(['personalnr' => $_GET['persona
 
 if (isset($_POST) & !empty($_POST)) {
 	$id = $documentputzplan['_id'];
-	$produkte = array (
+	$putzplan = array (
 			'personalnr' => $_GET['personalnr'],
 			'kuecheNr' => $_POST['kuecheNr'],
 			'putzdatum' => $_POST['putzdatum'],
