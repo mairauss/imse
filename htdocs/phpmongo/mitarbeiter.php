@@ -2,23 +2,23 @@
 require 'vendor/autoload.php';
 include('session.php');
 $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-		$client = new MongoDB\Client($uri);
-		$collection = $client->backshop->users;
+$client = new MongoDB\Client($uri);
+$collection = $client->backshop->users;
 $user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
 $cursor = $collection->find(['email' => $user_check]);
 foreach ($cursor as $document) {
-if (isset($logedinuser)) {
-    //Administrator Rechte
-    if ($document['accesslevel'] == 9) {
-        // echo "Access Level 9";
+    if (isset($logedinuser)) {
+        //Administrator Rechte
+        if ($document['accesslevel'] == 9) {
+            // echo "Access Level 9";
+        } else {
+            echo "Sie haben kein Zugriff auf diese Seite";
+            header('Location: baeckerei.php');
+        };
     } else {
-        echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: baeckerei.php');
-    };
-} else {
-    echo "Unzeireichende User Berechtigung";
-}
+        echo "Unzeireichende User Berechtigung";
+    }
 }
 
 ?>
@@ -44,7 +44,9 @@ if (isset($logedinuser)) {
         <li><a href="backwaren.php">Unsere Backwaren</a></li>
         <li><a href="einkauf.php">Warenkorb</a></li>
         <li><a href="bestand.php">Bestandteil</a></li>
-        <li><a href="putzplan.php">Putzplan</a><l/i>
+        <li><a href="putzplan.php">Putzplan</a>
+            <l
+            /i>
         <li><a href="session_logout.php">Logout</a></li>
     </ul>
 <?php endif; ?>
@@ -75,26 +77,26 @@ if (isset($logedinuser)) {
 
                 <table style="width:80%">
                     <?php
-					/*
-					Quellen: 
-					https://docs.mongodb.com/manual/reference/method/db.collection.find/#examples
-					http://php.net/manual/fa/mongocollection.find.php
-					https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
-					*/
+                    /*
+                    Quellen:
+                    https://docs.mongodb.com/manual/reference/method/db.collection.find/#examples
+                    http://php.net/manual/fa/mongocollection.find.php
+                    https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
+                    */
                     if (isset($_GET['search'])) {
-                        $cursor = $collection->find(['personalnr' => (int) $_GET['search']]);
+                        $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
                     } else {
-						$query = array('personalnr' => array('$gte' => 1));
-						$options = array(
-							"sort" => array('decade' => 1),
-						);
-						$cursor = $collection->find($query,$options);
+                        $query = array('personalnr' => array('$gte' => 1));
+                        $options = array(
+                            "sort" => array('decade' => 1),
+                        );
+                        $cursor = $collection->find($query, $options);
                     }
                     ?>
 
                     <tr>
                         <th>EMail</th>
-						<th>Name</th>
+                        <th>Name</th>
                         <th>Geburtstag</th>
                         <th>Passwort</th>
                         <th>AccessLevel</th>
@@ -113,10 +115,11 @@ if (isset($logedinuser)) {
                             <td><?php echo $document['passwort']; ?></td>
                             <td><?php echo $document['accesslevel']; ?></td>
                             <td><?php echo $document['personalnr']; ?></td>
-							<td><?php echo $document['gehalt']; ?></td>
+                            <td><?php echo $document['gehalt']; ?></td>
 
                             <td><a href="mitarbeiter_update.php?email=<?php echo $document['email']; ?>">Mutieren</a> <a
-                                        href="mitarbeiter_delete.php?email=<?php echo $document['email']; ?>">Delete</a></td>
+                                        href="mitarbeiter_delete.php?email=<?php echo $document['email']; ?>">Delete</a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </table>
@@ -205,22 +208,22 @@ if (isset($logedinuser)) {
                     https://www.formget.com/php-data-object/
                     */
                     if (isset($_POST["submit"])) {
-						$seedData = array(
-							'email' => $_POST['email'],
-							'passwort' => $_POST['passwort'],
-							'accesslevel' => (int) $_POST['accesslevel'],
-							'geburtsdatum' => $_POST['geburtsdatum'],
-							'name' => $_POST['name'],
-							'personalnr' => (int) $_POST['personalnr'],
-							'gehalt' => (int) $_POST['gehalt']
-						);
-						
-						$res = $collection->insertOne($seedData);
-                            if ($res) {
-                                echo "Ihre Daten wurden erfolgreich gespeichert";
-                            } else {
-                                echo "Fehler aufgetreten";
-                            }
+                        $seedData = array(
+                            'email' => $_POST['email'],
+                            'passwort' => $_POST['passwort'],
+                            'accesslevel' => (int)$_POST['accesslevel'],
+                            'geburtsdatum' => $_POST['geburtsdatum'],
+                            'name' => $_POST['name'],
+                            'personalnr' => (int)$_POST['personalnr'],
+                            'gehalt' => (int)$_POST['gehalt']
+                        );
+
+                        $res = $collection->insertOne($seedData);
+                        if ($res) {
+                            echo "Ihre Daten wurden erfolgreich gespeichert";
+                        } else {
+                            echo "Fehler aufgetreten";
+                        }
 
                     }
                     ?>

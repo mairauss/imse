@@ -2,23 +2,23 @@
 require 'vendor/autoload.php';
 include('session.php');
 $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-		$client = new MongoDB\Client($uri);
-		$collection = $client->backshop->users;
+$client = new MongoDB\Client($uri);
+$collection = $client->backshop->users;
 $user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
 $cursor = $collection->find(['email' => $user_check]);
 foreach ($cursor as $document) {
-if (isset($logedinuser)) {
-    //Administrator Rechte
-    if ($document['accesslevel'] == 9) {
-        // echo "Access Level 9";
+    if (isset($logedinuser)) {
+        //Administrator Rechte
+        if ($document['accesslevel'] == 9) {
+            // echo "Access Level 9";
+        } else {
+            echo "Sie haben kein Zugriff auf diese Seite";
+            header('Location: baeckerei.php');
+        };
     } else {
-        echo "Sie haben kein Zugriff auf diese Seite";
-        header('Location: baeckerei.php');
-    };
-} else {
-    echo "Unzeireichende User Berechtigung";
-}
+        echo "Unzeireichende User Berechtigung";
+    }
 }
 ?>
 
@@ -50,7 +50,9 @@ if (isset($logedinuser)) {
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
+            <li><a href="putzplan.php">Putzplan</a>
+                <l
+                /i>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -78,7 +80,9 @@ if (isset($logedinuser)) {
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="produkte.php">Produkte</a></li>
             <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
+            <li><a href="putzplan.php">Putzplan</a>
+                <l
+                /i>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -96,7 +100,6 @@ if (isset($logedinuser)) {
         </ul>
     </div>
 <?php endif; ?>
-
 
 
 <a name="Suche">
@@ -118,9 +121,9 @@ if (isset($logedinuser)) {
                 <table style="width:70%">
                     <?php
                     if (isset($_GET['search'])) {
-						$cursor = $collection->find(['name' => $_GET['search']]);
+                        $cursor = $collection->find(['name' => $_GET['search']]);
                     } else {
-					$cursor = $collection->find(['accesslevel' => 1]);
+                        $cursor = $collection->find(['accesslevel' => 1]);
                     }
                     ?>
 
@@ -136,7 +139,7 @@ if (isset($logedinuser)) {
                     <?php
 
 
-					foreach ($cursor as $document) {
+                    foreach ($cursor as $document) {
                         ?>
                         <tr>
                             <td><?php echo $document['email']; ?></td>
@@ -202,22 +205,22 @@ if (isset($logedinuser)) {
                      https://www.formget.com/php-data-object/
 					*/
                     if (isset($_POST["submit"])) {
-						
-						$seedData = array(
-							'email' => $_POST['email'],
-							'passwort' => $_POST['passwort'],
-							'accesslevel' => 1,
-							'geburtsdatum' => $_POST['geburtsdatum'],
-							'name' => $_POST['name']
-						);
-						$res = $collection->insertOne($seedData);
-                            if ($res) {
-                                echo "Ihre Daten wurden erfolgreich gespeichert";
-                            } else {
-                                echo "Fehler aufgetreten";
-                            }
+
+                        $seedData = array(
+                            'email' => $_POST['email'],
+                            'passwort' => $_POST['passwort'],
+                            'accesslevel' => 1,
+                            'geburtsdatum' => $_POST['geburtsdatum'],
+                            'name' => $_POST['name']
+                        );
+                        $res = $collection->insertOne($seedData);
+                        if ($res) {
+                            echo "Ihre Daten wurden erfolgreich gespeichert";
+                        } else {
+                            echo "Fehler aufgetreten";
+                        }
                     }
-					 
+
                     ?>
 
 
