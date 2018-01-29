@@ -32,7 +32,7 @@ if (isset($_POST) & !empty($_POST)) {
 	
 	//updating the 'users' table/collection
 	$collectionputzplan->updateOne(
-	array('personalnr' =>intval( $_GET['personalnr'])),
+	array('personalnr' => $_GET['personalnr']),
 	array('$set' => $putzplan)
 	);
 	
