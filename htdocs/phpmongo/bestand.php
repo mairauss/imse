@@ -105,7 +105,7 @@ if (isset($logedinuser)) {
                 </form>
             </div>
 
-						<table boarder="1">
+            <table boarder="1">
             <?php
             // check if search view of list view
 						$collectionbestandteile = $client->backshop->bestandteile;

@@ -32,56 +32,23 @@ if (isset($logedinuser)) {
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
 
-<?php if (!isset($logedinuser)): ?>
-    <ul>
-        <li><a href="baeckerei.php">Lecker</a></li>
-    </ul>
-<?php endif; ?>
-<?php if (isset($logedinuser)): ?>
-    <?php if ($document['accesslevel'] == 9): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-            <li><a href="konditor.php">Konditor</a></li>
-            <li><a class="active" href="kuechengehilfe.php">Kuechengehilfe</a></li>
-            <li><a href="kunde.php">Kunde</a></li>
-            <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-            <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 1): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 2): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 3): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="konditor.php">Konditor</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
+<?php if ($document['accesslevel'] == 9): ?>
+<ul>
+<li><a href="baeckerei.php">Lecker</a></li>
+<li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
+<li><a href="konditor.php">Konditor</a></li>
+<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+<li><a href="kunde.php">Kunde</a></li>
+<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+<li><a href="produkte.php">Produkte</a></li>
+<li><a href="backwaren.php">Unsere Backwaren</a></li>
+<li><a href="einkauf.php">Warenkorb</a></li>
+<li><a href="bestand.php">Bestandteil</a></li>
+<li><a href="putzplan.php">Putzplan</a>
+<l
+/i>
+<li><a href="session_logout.php">Logout</a></li>
+</ul>
 <?php endif; ?>
 
 <br></br>
@@ -97,17 +64,17 @@ if (isset($logedinuser)) {
                 <input id='submit' type='submit' class="testbutton" value='Search'/>
             </form>
         </div>
-        <?php
-        // check if search view of list view
-        if (isset($_GET['search'])) {
-            $sql = "SELECT * FROM kuechengehilfe WHERE personalnr like '%" . $_GET['search'] . "%'";
-        } else {
-            $sql = "SELECT * FROM kuechengehilfe";
-        }
+if (isset($_GET['search'])) {
+    $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
+} else {
+    $query = array('personalnr' => array('$gte' => 2));
+    $options = array(
+                     "sort" => array('decade' => 2),
+                     );
+    $cursor = $collection->find($query, $options);
+}
+?>
 
-        // execute sql statement
-        $result = $db->query($sql);
-        ?>
         <br></br>
 
         <table style="width:70%">
@@ -122,13 +89,13 @@ if (isset($logedinuser)) {
             <tbody>
             <?php
             // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($cursor as $document) {
                 ?>
                 <tr>
-                    <td><?php echo $r['personalnr']; ?></td>
-                    <td><?php echo $r['betriebsmodus']; ?></td>
-                    <td><?php echo $r['email']; ?></td>
-                    <td><?php echo $r['kuecheNr']; ?></td>
+                    <td><?php echo $document['personalnr']; ?></td>
+                    <td><?php echo $document['betriebsmodus']; ?></td>
+                    <td><?php echo $document['email']; ?></td>
+                    <td><?php echo $document['kuecheNr']; ?></td>
                 </tr>
             <?php } ?>
             </tbody>
@@ -170,41 +137,30 @@ if (isset($logedinuser)) {
                 </div>
             </div>
 
-            <?php
-            /*
-             Quellen:
-             http://codingcyber.org/simple-crud-application-php-pdo-7284/
-             https://www.w3schools.com/php/php_mysql_insert.asp
-             https://www.formget.com/php-data-object/
-             */
-            if (isset($_POST["submit"])) {
-                try {
-                    require_once('dbconnection.php');
-                    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-                    $sql = "INSERT INTO kuechengehilfe (personalnr, betriebsmodus, email, kuecheNr)
-            VALUES(:personalnr, :betriebsmodus, :email, 987)";
-
-
-                    $result = $db->prepare($sql);
-                    $res = $result->execute(array('personalnr' => $_POST['personalnr'],
-                        'betriebsmodus' => $_POST['betriebsmodus'],
-                        'email' => $_POST['email'],
-                    ));
-                    if ($res) {
-                        echo "Ihre Daten wurden erfolgreich gespeichert";
-                    } else {
-                        echo "Fehler aufgetreten";
-                    }
-                    $db = null;
-                } catch (PDOException $e) {
-                    echo $e->getMessage();
-                }
-
-            }
-            ?>
-
+<?php
+    /*
+     Quellen:
+     http://codingcyber.org/simple-crud-application-php-pdo-7284/
+     https://www.w3schools.com/php/php_mysql_insert.asp
+     https://www.formget.com/php-data-object/
+     */
+    if (isset($_POST["submit"])) {
+        $seedData = array(
+                          'personalnr' => $_POST['personalnr'],
+                          'betriebsmodus' => $_POST['betriebsmodus'],
+                          'email' => $_POST['email']
+                          );
+        
+        $res = $collection->insertOne($seedData);
+        if ($res) {
+            echo "Ihre Daten wurden erfolgreich gespeichert";
+        } else {
+            echo "Fehler aufgetreten";
+        }
+        
+    }
+    ?>
 </div>
 </body>
 </html>

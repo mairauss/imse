@@ -1,15 +1,8 @@
-
 <?php
-    
-    try{
-        require_once('dbconnection.php');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }catch(Exception $e){
-        $error = $e->getMessage();
-    }
-    
-    if(isset($error)){ echo $error; }
-    
+    require 'vendor/autoload.php';
+    include('session.php');
+    $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
+    $client = new MongoDB\Client($uri);
     ?>
 
 <html>
@@ -40,17 +33,18 @@
       <input id='submit' type='submit' class="testbutton" value='Search' />
 </form>
   </div>
+<table boarder="1">
 <?php
-  // check if search view of list view
-  if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM bestandteil WHERE gname like '%" . $_GET['search'] . "%'";
-  } else {
-    $sql = "SELECT * FROM bestandteil";
-  }
+    // check if search view of list view
+    $collectionbestandteile = $client->backshop->bestandteile;
+    if (isset($_GET['search'])) {
+        //$artikel = intval($_GET['search']);
+        $cursor2 = $collectionbestandteile->find(['gname' => $_GET['search']]);
+    } else {
+        $cursor2 = $collectionbestandteile->find();
+    }
+    ?>
 
-  // execute sql statement
-    $result = $db->query($sql);
-?>
 
 <br></br>
 <tbody>
@@ -66,12 +60,12 @@
         </thead>
 
 <?php
-    while($r = $result->fetch(PDO::FETCH_ASSOC)){
-?>
+    foreach ($cursor2 as $documentbestand) {
+        ?>
 <tr>
-<td><?php echo $r['pname']; ?></td>
+<td><?php echo $documentbestand['pname']; ?></td>
 </tr>
-<?php }}?>
+<?php }  ?>
 </tbody>
 </table>
 </center>

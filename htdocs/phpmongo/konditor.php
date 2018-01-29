@@ -31,82 +31,60 @@ if (isset($logedinuser)) {
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
-<?php if (!isset($logedinuser)): ?>
-    <ul>
-        <li><a href="baeckerei.php">Lecker</a></li>
-    </ul>
-<?php endif; ?>
-<?php if (isset($logedinuser)): ?>
-    <?php if ($document['accesslevel'] == 9): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="mitarbeiter.php">Mitarbeiter</a></li>
-            <li><a class="active" href="konditor.php">Konditor</a></li>
-            <li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
-            <li><a href="kunde.php">Kunde</a></li>
-            <li><a href="backwarenmanager.php">Backwaren Manager</a></li>
-            <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 1): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 2): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-    <?php if ($document['accesslevel'] == 3): ?>
-        <ul>
-            <li><a href="baeckerei.php">Lecker</a></li>
-            <li><a class="active" href="konditor.php">Konditor</a></li>
-            <li><a href="backwaren.php">Unsere Backwaren</a></li>
-            <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a href="putzplan.php">Putzplan</a><l/i>
-            <li><a href="session_logout.php">Logout</a></li>
-        </ul>
-    <?php endif; ?>
-<?php endif; ?>
-<br></br>
 
+<?php if ($document['accesslevel'] == 9): ?>
+<ul>
+<li><a href="baeckerei.php">Lecker</a></li>
+<li><a class="active" href="mitarbeiter.php">Mitarbeiter</a></li>
+<li><a href="konditor.php">Konditor</a></li>
+<li><a href="kuechengehilfe.php">Kuechengehilfe</a></li>
+<li><a href="kunde.php">Kunde</a></li>
+<li><a href="backwarenmanager.php">Backwaren Manager</a></li>
+<li><a href="produkte.php">Produkte</a></li>
+<li><a href="backwaren.php">Unsere Backwaren</a></li>
+<li><a href="einkauf.php">Warenkorb</a></li>
+<li><a href="bestand.php">Bestandteil</a></li>
+<li><a href="putzplan.php">Putzplan</a>
+<l
+/i>
+<li><a href="session_logout.php">Logout</a></li>
+</ul>
+<?php endif; ?>
+
+
+<a name="Suche">
+<div class="container">
 <div id="wrapper">
-    <center>
-        <div>
-            <form id='searchform' action='konditor.php' method='get'>
-                <a href='konditor.php'>Alle Konditoren</a> ---
-                Suche nach Personal Nr.:
-                <input id='search' name='search' type='text' size='15'
-                       value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
-                <input id='submit' type='submit' class="testbutton" value='Search'/>
-            </form>
-        </div>
-        <?php
-        // check if search view of list view
-        if (isset($_GET['search'])) {
-            $sql = "SELECT * FROM konditor WHERE personalnr like '%" . $_GET['search'] . "%'";
-        } else {
-            $sql = "SELECT * FROM konditor";
-        }
+<center>
+<div>
+<h2>Mitarbeiter Suchen</h2>
+<form id='searchform' action='konditor.php' method='get'>
+<a href='konditor.php'>Alle Mitarbeiter</a> ---
+Suche nach PersonalNr:
+<input id='search' name='search' type='text' size='15'
+value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
+<input id='submit' type='submit' class="testbutton" value='Search'/>
+</form>
+</div>
 
-        // execute sql statement
-        $result = $db->query($sql);
-
-        ?>
+<table style="width:80%">
+<?php
+    /*
+     Quellen:
+     https://docs.mongodb.com/manual/reference/method/db.collection.find/#examples
+     http://php.net/manual/fa/mongocollection.find.php
+     https://github.com/mongolab/mongodb-driver-examples/blob/master/php/php_simple_example.php
+     */
+    if (isset($_GET['search'])) {
+        $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
+    } else {
+        $query = array('personalnr' => array('$gte' => 3));
+        $options = array(
+                         "sort" => array('decade' => 3),
+                         );
+        $cursor = $collection->find($query, $options);
+    }
+    ?>
 
 
         <br></br>
@@ -122,19 +100,18 @@ if (isset($logedinuser)) {
             </tr>
             </thead>
             <tbody>
-            <?php
-            // fetch rows of the executed sql query
-            while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                <tr>
-                    <td><?php echo $r['personalnr']; ?></td>
-                    <td><?php echo $r['berufserfahrung']; ?></td>
-                    <td><?php echo $r['ausbildung']; ?></td>
-                    <td><?php echo $r['bonus']; ?></td>
-                    <td><?php echo $r['email']; ?></td>
-                    <td><?php echo $r['kuecheNr']; ?></td>
-                </tr>
-            <?php } ?>
+<?php
+    foreach ($cursor as $document) {
+        ?>
+<tr>
+<td><?php echo $document['personalnr']; ?></td>
+<td><?php echo document['berufserfahrung']; ?></td>
+<td><?php echo $document['ausbildung']; ?></td>
+<td><?php echo $document['bonus']; ?></td>
+<td><?php echo $document['email']; ?></td>
+<td><?php echo $document['kuecheNr']; ?></td>
+</tr>
+<?php } ?>
             </tbody>
         </table>
     </center>
@@ -193,42 +170,31 @@ if (isset($logedinuser)) {
             </div>
         </div>
 
-        <?php
-        /*
-         Quellen:
-         http://codingcyber.org/simple-crud-application-php-pdo-7284/
-         https://www.w3schools.com/php/php_mysql_insert.asp
-         https://www.formget.com/php-data-object/
-         */
-        if (isset($_POST["submit"])) {
-            try {
-                require_once('dbconnection.php');
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-                $sql = "INSERT INTO konditor (personalnr, berufserfahrung, ausbildung, bonus, email, kuecheNr)
-            VALUES(:personalnr, :berufserfahrung, :ausbildung, :bonus, :email, 987)";
-
-
-                $result = $db->prepare($sql);
-                $res = $result->execute(array('personalnr' => $_POST['personalnr'],
-                    'berufserfahrung' => $_POST['berufserfahrung'],
-                    'ausbildung' => $_POST['ausbildung'],
-                    'bonus' => $_POST['bonus'],
-                    'email' => $_POST['email'],
-                ));
-                if ($res) {
-                    echo "Ihre Daten wurden erfolgreich gespeichert";
-                } else {
-                    echo "Fehler aufgetreten";
-                }
-                $db = null;
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
-
+<?php
+    /*
+     Quellen:
+     http://codingcyber.org/simple-crud-application-php-pdo-7284/
+     https://www.w3schools.com/php/php_mysql_insert.asp
+     https://www.formget.com/php-data-object/
+     */
+    if (isset($_POST["submit"])) {
+        $seedData = array(
+                          'personalnr' => $_POST['personalnr'],
+                          'berufserfahrung' => $_POST['berufserfahrung'],
+                          'ausbildung' => $_POST['ausbildung'],
+                          'bonus' => $_POST['bonus'],
+                          'email' => $_POST['email']
+                          );
+        
+        $res = $collection->insertOne($seedData);
+        if ($res) {
+            echo "Ihre Daten wurden erfolgreich gespeichert";
+        } else {
+            echo "Fehler aufgetreten";
         }
-        ?>
+        
+    }
+    ?>
 
 </div>
 </body>
