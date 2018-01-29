@@ -92,9 +92,9 @@ foreach ($cursor as $document) {
     <center>
         <div>
             <form id='searchform' action='putzplan' method='get'>
-                <a href='produkte.php'>Putzplan</a> ---
+                <a href='putzplan.php'>Putzplan</a> ---
                 Suche Putzplan:
-                <         <input id='search' name='search' type='text' size='15'
+                       <input id='search' name='search' type='text' size='15'
                        value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
                 <input id='submit' type='submit' class="testbutton" value='Search'/>
             </form>
