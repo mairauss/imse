@@ -142,7 +142,8 @@ if (isset($_GET['search'])) {
         $seedData = array(
                           'personalnr' => $_POST['personalnr'],
                           'betriebsmodus' => $_POST['betriebsmodus'],
-                          'email' => $_POST['email']
+                          'email' => $_POST['email'],
+                          'kuecheNr'=>123
                           );
         
         $res = $collection->insertOne($seedData);
