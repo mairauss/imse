@@ -36,7 +36,7 @@ if (isset($logedinuser)) {
 											 'kuehlraumNr' => 123
                        );
 
-        //updating the 'users' table/collection
+        //updating the 'putzplan' table/collection
         $collectionprodukte->updateOne(
                                array('barcode' =>intval( $_GET['barcode'])),
                                array('$set' => $produkte)
