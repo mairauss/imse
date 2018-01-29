@@ -97,19 +97,33 @@
 </form>
   </div>
 <?php
+    $collectionbestand = $client->backshop->bestandteile;
   // check if search view of list view
   if (isset($_GET['search'])) {
       $gname = intval($_GET['search']);
-      $cursor = $collection->find(['gname' => $gname]);
-      $count = $collection->count(['gname' => $gname]);
+      $cursor = $collectionbestand->find(['gname' => $gname]);
+      $count = $collectionbestand->count(['gname' => $gname]);
   } else {
-      $cursor = $collection->find();
-      $count = $collection->count();
+      $cursor = $collectionbestand->find();
+      $count = $collectionbestand->count();
   }
 ?>
 
-<br></br>
-<tbody>
+            <tbody>
+            <thead>
+            <tr>
+                <h3>Produkte</h3>
+            </tr>
+            </thead>
+
+            <table style="width:50%">
+                <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
 
 <?php
     foreach ($cursor as $document) {

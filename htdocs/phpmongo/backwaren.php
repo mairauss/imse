@@ -12,7 +12,7 @@
 	foreach ($cursor as $document) {
 	if (isset($logedinuser)) {
 		//Administrator Rechte
-		if ($document['accesslevel'] == 9) {
+		if ($document['accesslevel'] >= 1) {
 			// echo "Access Level 9";
 		} else {
 			echo "Sie haben kein Zugriff auf diese Seite";
