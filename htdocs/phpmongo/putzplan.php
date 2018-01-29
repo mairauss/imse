@@ -109,7 +109,7 @@ foreach ($cursor as $document) {
             
             <?php
             // check if search view of list view
-			$collectionputzplam = $client->backshop->produkte;
+			$collectionputzplan = $client->backshop->produkte;
             if (isset($_GET['search'])) {
             		$putzplan = intval($_GET['search']);
 				$cursor2 = $collectionputzplan->find(['personalnr' => $putzplan]);
