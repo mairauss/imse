@@ -75,14 +75,10 @@ value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
      */
     if (isset($_GET['search'])) {
         $cursor = $collection->find(['personalnr' => (int)$_GET['search']]);
-    } else {
-        $query = array('personalnr' => array('$gte' => 3));
-        $options = array(
-                         "sort" => array('decade' => 3),
-                         );
-        $cursor = $collection->find($query, $options);
-    }
-    ?>
+                    } else {
+						$cursor = $collection->find(['accesslevel' => 3]);
+                    }
+                    ?>
 
 
         <br></br>
@@ -90,11 +86,8 @@ value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
             <thead>
             <tr>
                 <th>Personal Nr.</th>
-                <th>Berufserfahrung</th>
-                <th>Ausbildung</th>
                 <th>Bonus</th>
                 <th>E-mail</th>
-                <th>Kueche Nr.</th>
             </tr>
             </thead>
             <tbody>
@@ -103,11 +96,9 @@ value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
         ?>
 <tr>
 <td><?php echo $document['personalnr']; ?></td>
-<td><?php echo document['berufserfahrung']; ?></td>
-<td><?php echo $document['ausbildung']; ?></td>
 <td><?php echo $document['bonus']; ?></td>
 <td><?php echo $document['email']; ?></td>
-<td><?php echo $document['kuecheNr']; ?></td>
+
 </tr>
 <?php } ?>
             </tbody>
