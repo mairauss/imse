@@ -139,6 +139,11 @@ echo "Unzeireichende User Berechtigung";
 
 
 
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+    $cursor2 = $collectionbaeckerei->find();
+    ?>
             <table style="width:70%">
                 <thead>
                 <tr>
@@ -148,16 +153,21 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                    foreach ($cursor1 as $documenbaeckerei) {
+                    foreach ($cursor2 as $documenbaeckerei2) {
                     ?>
                     <tr>
-                        <td><?php echo $documenbaeckerei['bezeichnung']; ?></td>
+                        <td><?php echo $documenbaeckerei2['bezeichnung']; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
             </table>
 
 
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+    $cursor3 = $collectionbaeckerei->find();
+    ?>
             <h1>Kueche</h1>
 
             <table style="width:70%">
@@ -171,18 +181,24 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                    foreach ($cursor1 as $documenbaeckerei) {
+                    foreach ($cursor3 as $documenbaeckerei3) {
                     ?>
                     <tr>
-                        <td><?php echo $documenbaeckerei['kuecheNr']; ?></td>
-                        <td><?php echo $documenbaeckerei['grundflaeche']; ?></td>
-                        <td><?php echo $documenbaeckerei['kuehlraumNr']; ?></td>
+                        <td><?php echo $documenbaeckerei3['kuecheNr']; ?></td>
+                        <td><?php echo $documenbaeckerei3['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei3['kuehlraumNr']; ?></td>
                     </tr>
                 <?php } ?>
 
                 </tbody>
             </table>
 
+
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+    $cursor4 = $collectionbaeckerei->find();
+    ?>
             <h1>Kuehlraum</h1>
 
             <table style="width:70%">
@@ -196,12 +212,12 @@ echo "Unzeireichende User Berechtigung";
                 <tbody>
                 <?php
                 // fetch rows of the executed sql query
-                    foreach ($cursor1 as $documenbaeckerei) {
+                    foreach ($cursor4 as $documenbaeckerei4) {
                     ?>
                     <tr>
-                        <td><?php echo $documenbaeckerei['kuehlraumNr']; ?></td>
-                        <td><?php echo $documenbaeckerei['temp']; ?></td>
-                        <td><?php echo $documenbaeckerei['grundflaeche']; ?></td>
+                        <td><?php echo $documenbaeckerei4['kuehlraumNr']; ?></td>
+                        <td><?php echo $documenbaeckerei4['temp']; ?></td>
+                        <td><?php echo $documenbaeckerei4['grundflaeche']; ?></td>
                     </tr>
                 <?php } ?>
 
@@ -218,7 +234,11 @@ echo "Unzeireichende User Berechtigung";
         <h2 style="color:rgb(150, 29, 29)">Herzlich Willkommen in der Bäckerei "Lecker"!</h2>
         <br></br>
 
-
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+    $cursor5 = $collectionbaeckerei->find();
+    ?>
         <h1>Baeckerei</h1>
         <table style="width:70%">
             <thead>
@@ -230,17 +250,22 @@ echo "Unzeireichende User Berechtigung";
             <tbody>
             <?php
             // fetch rows of the executed sql query
-                foreach ($cursor1 as $documenbaeckerei) {
+                foreach ($cursor5 as $documenbaeckerei5) {
                 ?>
                 <tr>
-                    <td><?php echo $documenbaeckerei['bname']; ?></td>
-                    <td><?php echo $documenbaeckerei['firmanr']; ?></td>
+                    <td><?php echo $documenbaeckerei5['bname']; ?></td>
+                    <td><?php echo $documenbaeckerei5['firmanr']; ?></td>
                 </tr>
             <?php } ?>
             </tbody>
         </table>
 
 
+<?php
+    // check if search view of list view
+    $collectionbaeckerei = $client->backshop->baeckerei;
+    $cursor6 = $collectionbaeckerei->find();
+    ?>
         <table style="width:70%">
             <thead>
             <tr>
@@ -250,10 +275,10 @@ echo "Unzeireichende User Berechtigung";
             <tbody>
             <?php
             // fetch rows of the executed sql query
-                foreach ($cursor1 as $documenbaeckerei) {
+                foreach ($cursor6 as $documenbaeckerei6) {
                 ?>
                 <tr>
-                    <td><?php echo $documenbaeckerei['bezeichnung']; ?></td>
+                    <td><?php echo $documenbaeckerei6['bezeichnung']; ?></td>
                 </tr>
             <?php } ?>
             </tbody>
