@@ -88,6 +88,8 @@ value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
                 <th>Personal Nr.</th>
                 <th>Bonus</th>
                 <th>E-mail</th>
+				<th>Berufserfahrung</th>
+                <th>Ausbildung</th>
             </tr>
             </thead>
             <tbody>
@@ -98,7 +100,8 @@ value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
 <td><?php echo $document['personalnr']; ?></td>
 <td><?php echo $document['bonus']; ?></td>
 <td><?php echo $document['email']; ?></td>
-
+<td><?php echo $document['berufserfahrung']; ?></td>
+<td><?php echo $document['ausbildung']; ?></td>
 </tr>
 <?php } ?>
             </tbody>
