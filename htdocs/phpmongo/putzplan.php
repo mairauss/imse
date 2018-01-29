@@ -10,7 +10,7 @@ $cursor = $collection->find(['email' => $user_check]);
 foreach ($cursor as $document) {
 	if (isset($logedinuser)) {
 		//Administrator Rechte
-		if ($document['accesslevel'] == 9 || $document['accesslevel'] == 3) {
+		if ($document['accesslevel'] >= 1) {
 			// echo "Access Level 9";
 		} else {
 			echo "Sie haben kein Zugriff auf diese Seite";
@@ -20,9 +20,9 @@ foreach ($cursor as $document) {
 		echo "Unzeireichende User Berechtigung";
 	}
 }
+
 ?>
 
-<!DOCTYPE html>
 <html>
 <title>Lecker: Putzplan</title>
 <head>
@@ -31,6 +31,12 @@ foreach ($cursor as $document) {
 <body>
 <img src="b5.png" alt="logo" width="500" height="300">
 <br></br>
+
+<?php if (!isset($logedinuser)): ?>
+    <ul>
+        <li><a href="baeckerei.php">Lecker</a></li>
+    </ul>
+<?php endif; ?>
 <?php if (isset($logedinuser)): ?>
     <?php if ($document['accesslevel'] == 9): ?>
         <ul>
@@ -43,8 +49,8 @@ foreach ($cursor as $document) {
             <li><a href="produkte.php">Produkte</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a class="active" href="putzplan.php">Putzplan</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -53,7 +59,7 @@ foreach ($cursor as $document) {
             <li><a href="baeckerei.php">Lecker</a></li>
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
+            <li><a class="active" href="bestand_kunde.php">Bestandteil</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
@@ -71,71 +77,81 @@ foreach ($cursor as $document) {
             <li><a href="backwaren.php">Unsere Backwaren</a></li>
             <li><a href="einkauf.php">Warenkorb</a></li>
             <li><a href="produkte.php">Produkte</a></li>
-            <li><a href="backen.php">Backen</a></li>
-            <li><a href="bestand.php">Bestandteil</a></li>
-            <li><a class="active" href="putzplan.php">Putzplan</a></li>
+            <li><a class="active" href="bestand.php">Bestandteil</a></li>
+            <li><a href="putzplan.php">Putzplan</a></li>
             <li><a href="session_logout.php">Logout</a></li>
         </ul>
     <?php endif; ?>
 <?php endif; ?>
 
+<?php if ($document['accesslevel'] > 1): ?>
+    <div class="undermenu">
+        <span class="caret"></span></button>
+        <ul class="nav-menu" role="menu" aria-labelledby="menu1">
+            <li><a href="putzplan_save.php">Speichern</a></li>
+        </ul>
+    </div>
 
-<div class="undermenu">
-    <span class="caret"></span></button>
-    <ul class="nav-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="putzplan_update.php">Bearbeiten</a></li>
-    </ul>
-</div>
-<br></br>
+    <br></br>
 
-<div id="wrapper">
-    <center>
-        <div>
-            <form id='searchform' action='putzplan' method='get'>
-                <a href='putzplan.php'>Putzplan</a> ---
-                Suche Putzplan:
-                       <input id='search' name='search' type='text' size='15'
-                       value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
-                <input id='submit' type='submit' class="testbutton" value='Search'/>
-            </form>
-        </div>
-        <?php
-        // check if search view of list view
-        if (isset($_GET['search'])) {
-            $sql = "SELECT * FROM putzplan WHERE personalnr like '%" . $_GET['search'] . "%'";
-        } else {
-            $sql = "SELECT * FROM putzplan";
-        }
+    <div id="wrapper">
+        <center>
+            <div>
+                <form id='searchform' action='bestand.php' method='get'>
+                    Geben Sie ihre PersonalNr ein:
+                    <input id='search' name='search' type='text' size='15'
+                           value='<?php if (isset($_GET['search'])) echo $_GET['search']; ?>'/>
+                    <input id='submit' type='submit' class="testbutton" value='Search'/>
+                </form>
+            </div>
 
-        // execute sql statement
-        $result = $db->query($sql);
+            <table boarder="1">
+            
+            <?php
+            // check if search view of list view
+			$collectionputzplam = $client->backshop->produkte;
+            if (isset($_GET['search'])) {
+            		$putzplan = intval($_GET['search']);
+				$cursor2 = $collectionputzplan->find(['personalnr' => $putzplan]);
+            } else {
+                $cursor2 = $collectionputzplan->find();
+            }
+            ?>
+            
+            <tbody>
+            <thead>
+            <tr>
+                <h3>Putzplan</h3>
+            </tr>
+            </thead>
 
-        ?>
-            <table style="width:70%">
+            <table style="width:50%">
                 <thead>
                 <tr>
-                    <th>Personal Nr.</th>
-                    <th>Kuechen Nr.</th>
-                    <th>Putz-Datum</th>
+                    <th>PersonalNr</th>
+                    <th>KuecheNr</th>
+                    <th>Putzdatum</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <?php
-                // fetch rows of the executed sql query
-                while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
-                	?>
-                <tr>
-                    <td><?php echo $r['personalnr']; ?></td>
-                    <td><?php echo $r['kuecheNr']; ?></td>
-                    <td><?php echo $r['putzdatum']; ?></td>
-                </tr>
-                <?php } ?>
+                    foreach ($cursor2 as $documentbestand) {
+                    ?>
+                    <tr>
+                        <td><?php echo $documentputzplan['personalnr']; ?></td>
+                        <td><?php echo $documentputzplan['kuecheNr']; ?></td>
+                        <td><?php echo $documentputzplan['putzdatum']; ?></td>
+                        <td><a href="putzplan_update.php?personalnr=<?php echo $documentputzplan['personalnr']; ?>">Mutieren</a>
+                            <a
+                                    href="putzplan_delete.php?personalnr=<?php echo $documentputzplan['personalnr']; ?>">Delete</a>
+                        </td>
+                    </tr>
+                <?php }  ?>
                 </tbody>
             </table>
-    </center>
-
-    <br></br>
-
+        </center>
+        <br></br>
+			<?php endif; ?>
 </body>
-</html></html>
+</html>

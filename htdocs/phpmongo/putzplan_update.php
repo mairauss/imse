@@ -3,15 +3,14 @@ require 'vendor/autoload.php';
 include('session.php');
 $uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
 $client = new MongoDB\Client($uri);
-$collection = $client->backshop->putzplan;
+$collection = $client->backshop->users;
 $user_check = $_SESSION['login_user'];
 $logedinuser = $login_session;
 $cursor = $collection->find(['email' => $user_check]);
 foreach ($cursor as $document) {
 	if (isset($logedinuser)) {
-		//Administrator Rechte
+		//Admin
 		if ($document['accesslevel'] == 9 || $document['accesslevel'] == 3) {
-			// echo "Access Level 9";
 		} else {
 			echo "Sie haben kein Zugriff auf diese Seite";
 			header('Location: baeckerei.php');
@@ -20,24 +19,22 @@ foreach ($cursor as $document) {
 		echo "Unzeireichende User Berechtigung";
 	}
 }
-$uri = "mongodb://team10:pass10@ds159187.mlab.com:59187/backshop";
-$client = new MongoDB\Client($uri);
-$collection = $client->backshop->putzplan;
-$document = $collection->findOne(['personalnr' => $_GET['personalnr']]);
+$collectionputzplan = $client->backshop->putzplan;
+$documentputzplan = $collectionputzplan->findOne(['personalnr' => $_GET['personalnr']]);
 
 if (isset($_POST) & !empty($_POST)) {
-	$id = $document['_id'];
+	$id = $documentputzplan['_id'];
 	$produkte = array (
-	'personalnr' => $_POST['barcode'];
-	'kuecheNr' => $_POST['kuecheNr'];
-	'putzdatum' => $_POST['putzdatum'];
+			'personalnr' => $_GET['personalnr'],
+			'kuecheNr' => $_POST['kuecheNr'],
+			'putzdatum' => $_POST['putzdatum'],
 	);
 	
-
-	$collection->updateOne(
-			array('personalnr' => $_GET['personalnr']),
-			array('$set' => $putzplan)
-			);
+	//updating the 'users' table/collection
+	$collectionputzplan->updateOne(
+	array('personalnr' =>intval( $_GET['personalnr'])),
+	array('$set' => $putzplan)
+	);
 	
 	//redirectig to the display page. In our case, it is index.php
 	header("Location: putzplan.php");
@@ -90,6 +87,8 @@ if (isset($_POST) & !empty($_POST)) {
         <div style="width: 500px; margin: 20px auto;">
             <table width="100%" cellpadding="5" cellspacing="1" border="1">
                 <form action="" method="post">
+<form method="post" class="form-horizontal col-md-20 col-md-offset-10">
+<div class="form-group">        
                     <input type="hidden" name="personalnr" value="<?php echo $personalnr; ?>">
                     <tr>
                         <td>Personal Nr</td>
