@@ -110,7 +110,6 @@ if (isset($logedinuser)) {
             // check if search view of list view
 						$collectionbestandteile = $client->backshop->bestandteile;
             if (isset($_GET['search'])) {
-							//$artikel = intval($_GET['search']);
               $cursor2 = $collectionbestandteile->find(['gname' => $_GET['search']]);
             } else {
               $cursor2 = $collectionbestandteile->find();

@@ -17,11 +17,11 @@ public class TestDataGenerator {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(30); // set timeout to 30 sec.
 
-		    /*stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
+		    stmt.executeUpdate("INSERT INTO baeckerei VALUES ('Lecker', 841101)");
 			stmt.executeUpdate("INSERT INTO anschrift VALUES ('Lecker', 'Wien, 1200, Wehlistraße 27')");
 			stmt.executeUpdate("INSERT INTO kuehlraum VALUES (123, 4, 18.3)");
 			stmt.executeUpdate("INSERT INTO kueche VALUES (987, 32.2, 123)");
-			stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");*/
+			stmt.executeUpdate("INSERT INTO kuechenzeile VALUES (987, 'irgendetwas')");
 
 			// MITARBEITER
 			try {
@@ -36,59 +36,59 @@ public class TestDataGenerator {
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Devan Vincent', 848, '1997-06-17',"
 						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Xander Medina', 2588, '1984-09-07',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Garcia', 2605, '1971-03-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Holden', 1579, '1965-06-27',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jaylen Jensen', 1825, '1996-06-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Miles Burks', 1601, '1972-03-06',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Cantrell', 1852, '1971-04-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Johan King', 1998, '1973-05-27',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Elianna Brown', 1744, '1990-10-07',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Audrina Cohen', 2489, '1962-03-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Colby Shields', 1694,'1967-08-09',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Caroline Rivers', 2174, '1984-02-17',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kiara Hardin', 2760, '1985-07-23',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jonathan Christensen', 765, '1960-12-26',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Jade Gregory', 2492, '1978-10-20',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dayana Mack', 903, '1963-04-19',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kallie Nash', 2424, '1975-10-22',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Rey Bradley', 2852, '1984-07-05',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 3 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Campbell Christensen', 848, '1997-06-17',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Dilan Mccow', 848, '1997-06-17',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Fracik Medina', 2588, '1984-09-07',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Justice Gabriella', 2605, '1971-03-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Salvador Dali', 1579, '1965-06-27',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Kim Li', 1825, '1996-06-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Donauer Franziska', 1601, '1972-03-06',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Chelsea Carly', 1852, '1971-04-15',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Leo Ching', 1998, '1973-05-27',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				stmt.executeUpdate("INSERT INTO mitarbeiter VALUES ('Lisa Brown', 1744, '1990-10-07',"
-						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 9 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
+						+ id.getAndIncrement() + ", 'Lecker','pass"+ id2.getAndIncrement() + "'," + 2 + "," + "'mitarbeiter" + id3.getAndIncrement() + "@gmail.com'" + ")");
 				/*
 				 * stmt.
 				 * executeUpdate("INSERT INTO mitarbeiter VALUES ('Audri Cocks', 2489, '1962-03-15',"
@@ -307,7 +307,7 @@ public class TestDataGenerator {
 		// KONDITOR && KÜCHENGEHILFE
 		try {
 			AtomicInteger id3 = new AtomicInteger(100);
-			for (int i = 0; i < 20; i++) {
+			for (int i = 3; i < 20; i++) {
 				if (i < 10) {
 					String sql = "INSERT INTO konditor VALUES(" + 10 + i + "," + i + ",'Kochschule'," + 1 + i
 							+ ",'mitarbeiter" + id3.getAndIncrement() + "@gmail.com', 987)";

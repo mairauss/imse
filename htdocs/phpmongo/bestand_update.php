@@ -29,13 +29,13 @@ if (isset($logedinuser)) {
         $id = $documentbestand['_id'];
 
         $bestandteil = array (
-													 'bestandteilNr' => $_GET['bestandteilNr'],
-													 'artikelnr' => $_GET['artikelnr'],
-													 'barcode' => $_GET['barcode'],
-													 'pname' => $_GET['pname'],
-													 'gname' => $_GET['gname'],
-													 'menge' => $_POST['menge'],
-													 'masseinheit' => $_POST['masseinheit']
+									'bestandteilNr' => $_GET['bestandteilNr'],
+                                    'artikelnr' => $_GET['artikelnr'],
+									'barcode' => $_GET['barcode'],
+									'pname' => $_GET['pname'],
+									'gname' => $_GET['gname'],
+									'menge' => $_POST['menge'],
+									'masseinheit' => $_POST['masseinheit']
                            );
 
         //updating the 'users' table/collection
