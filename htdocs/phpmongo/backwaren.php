@@ -111,7 +111,7 @@
                         $suchbegriff = null;
                     }
                 ?>
-				<?php if ($document['accesslevel'] == 9 || $data['accesslevel'] == 3): ?>
+				<?php if ($document['accesslevel'] == 9 || $document['accesslevel'] == 3): ?>
 				<!-- DIESER TEIL SOLLTE NUR FÜR MITARBEITER SICHTBAR SEIN -->
                 <div>
                     <form id='insertform' action='backwaren.php' method='post'>
